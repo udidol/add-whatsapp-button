@@ -1,5 +1,4 @@
-# Add WhatsApp Button
-
+=== Add WhatsApp Button ===
 Contributors: udidol
 Tags: whatsapp, button, whatsapp button
 Requires at least: 4.6
@@ -12,7 +11,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Add WhatsApp Button enables adding a customizeable click-to-chat WhatsApp button.
 The plugin lets you choose between a simple WhatsApp icon and a rectangle with a custom text label.
 
-## Description
+== Description ==
 
 To enable the WhatsApp button, check the first box in the settings page. You will find this settings page in the admin dashboard menu, under Settings->Add WhatsApp Button.
 
@@ -26,14 +25,14 @@ The plugin settings page has two tabs: "General Settings" and "Button Design".
 
 The plugin detects whether the site visitor is using a desktop or mobile device and serves a different link for each accordingly.
 
-## Installation
+== Installation ==
 
 1. Upload the plugin files (the contents of add-whatsapp-button.zip) to the `/wp-content/plugins/add-whatsapp-button` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. On the WordPress Admin menu, go to Settings->Add WhatsApp Button to configure the plugin
 
-## Frequently Asked Questions
+== Frequently Asked Questions ==
 
-- I see there is a setting for limiting the display hours for the WhatsApp button. What timezone does the plugin use for this setting?
+= I see there is a setting for limiting the display hours for the WhatsApp button. What timezone does the plugin use for this setting? =
 
 *Add WhatsApp Button* uses Javascript to check the time on the client's device. So it will be displayed/hidden according to the set time in each client's timezone.
