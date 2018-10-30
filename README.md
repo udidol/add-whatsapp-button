@@ -1,14 +1,5 @@
 # Add WhatsApp Button
 
-Contributors: udidol
-Tags: whatsapp, button, whatsapp button
-Requires at least: 4.6
-Tested up to: 4.9.8
-Stable tag: 1.0.0
-Requires PHP: 5.4
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
-
 Add WhatsApp Button enables adding a customizeable click-to-chat WhatsApp button.
 The plugin lets you choose between a simple WhatsApp icon and a rectangle with a custom text label.
 
@@ -28,9 +19,16 @@ The plugin detects whether the site visitor is using a desktop or mobile device 
 
 ## Installation
 
-1. Upload the plugin files (the contents of add-whatsapp-button.zip) to the `/wp-content/plugins/add-whatsapp-button` directory, or install the plugin through the WordPress plugins screen directly.
-2. Activate the plugin through the 'Plugins' screen in WordPress
-3. On the WordPress Admin menu, go to Settings->Add WhatsApp Button to configure the plugin
+### Method 1
+1. Download the plugin zip file from https://wordpress.org/plugins/add-whatsapp-button/
+2. Upload the plugin files (the contents of add-whatsapp-button.zip) to the `/wp-content/plugins/add-whatsapp-button` directory, or install the plugin through the WordPress plugins screen directly.
+3. Activate the plugin through the 'Plugins' screen in WordPress
+4. On the WordPress Admin menu, go to Settings->Add WhatsApp Button to configure the plugin
+
+### Method 2
+1. In your WordPress dashboard, go to Plugins > Add New
+2. Search for "Add WhatsApp Button"
+3. Find this plugin in the search results and click on "Install", and then "Activate".
 
 ## Frequently Asked Questions
 

@@ -66,12 +66,13 @@ function awb_html() {
     $displayNoneIfIcon = ( $awb_options['button_type'] == 'wab-icon-plain' || $awb_options['button_type'] == 'wab-icon-styled' ) ? 'awb-displaynone' : '';
     $button_style = !empty( $awb_options['button_type'] ) ? $awb_options['button_type'] : 'wab-side-rectangle';
     $button_location = isset( $awb_options['button_location'] ) ? 'wab-pull-'.$awb_options['button_location'] : 'wab-pull-left';
+    $user_agent = $_SERVER['HTTP_USER_AGENT'];
 
 	ob_start(); 
 	?>
 
         <div id="wab_cont" class="wab-cont <?php echo $button_style; ?> <?php echo $button_location; ?>">
-			<a id="whatsAppButton" class="ui-draggable" href="https://<?php echo wp_is_mobile() ? 'api' : 'web'; ?>.whatsapp.com/send?phone=<?php echo $awb_options['phone_number']; ?><?php echo ( !empty($awb_options['default_message']) && $awb_options['enable_message'] == '1' ) ? '&text='. rawurlencode($awb_options['default_message']) : ''; ?>" target="_blank"><span class="<?php echo $displayNoneIfIcon; ?>"><?php echo $button_text; ?></span></a>
+			<a id="whatsAppButton" class="ui-draggable" href="https://<?php echo ( wp_is_mobile() || strpos($user_agent, 'iPhone') !== false || strpos($user_agent, 'iPad') !== false ) ? 'api' : 'web'; ?>.whatsapp.com/send?phone=<?php echo $awb_options['phone_number']; ?><?php echo ( !empty($awb_options['default_message']) && $awb_options['enable_message'] == '1' ) ? '&text='. rawurlencode($awb_options['default_message']) : ''; ?>" target="_blank"><span class="<?php echo $displayNoneIfIcon; ?>"><?php echo $button_text; ?></span></a>
 		</div>
 		
 	<?php 
@@ -124,7 +125,7 @@ function enqueue_awb_styles() {
 
         .wab-side-rectangle.wab-cont {
             position: fixed;
-            <?php echo $button_location; ?>: 0;
+            /* <?php //echo $button_location; ?>: 0; */
             bottom: <?php echo $distance_from_bottom; echo $distance_from_bottom_mu; ?>;
             z-index: 99997;
         }
