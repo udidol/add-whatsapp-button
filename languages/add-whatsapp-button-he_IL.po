@@ -114,7 +114,7 @@ msgstr ""
 
 #: includes/awb-settings.php:153
 msgid "Breakpoint"
-msgstr "נקודת שבירה"
+msgstr "התאמה לניידים"
 
 #: includes/awb-settings.php:156
 msgid ""

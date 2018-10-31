@@ -95,7 +95,7 @@ awbButtonTypeSelect.addEventListener('change',  function() {
     wabcont.classList.remove('wab-side-rectangle', 'wab-bottom-rectangle', 'wab-icon-styled', 'wab-icon-plain');
     wabcont.classList.add(awbButtonTypeSelect.value);
     
-    if (awbButtonTypeSelect.value === 'wab-icon-styled' || awbButtonTypeSelect.value === 'wab-icon-plain') {
+    if (awbButtonTypeSelect.value === 'wab-icon-plain') {
         wabButtonText.classList.add('awb-displaynone');
     } 
     else if (wabButtonText.classList.contains('awb-displaynone')) {
