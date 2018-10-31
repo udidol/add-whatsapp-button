@@ -3,7 +3,7 @@ Contributors: udidol
 Tags: whatsapp, button, whatsapp button
 Requires at least: 4.6
 Tested up to: 4.9.8
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -14,9 +14,20 @@ The plugin lets you choose between a simple WhatsApp icon and a rectangle with a
 == Description ==
 
 Add WhatsApp Button enables adding a customizable click-to-chat WhatsApp button.
-The plugin lets you choose between a simple WhatsApp icon and a rectangle with a custom text label.
+The plugin lets you choose between a simple WhatsApp icon and a rectangle with a custom text label (see screenshots).
 
-To enable the WhatsApp button, check the first box in the settings page. You will find this settings page in the admin dashboard menu, under Settings->Add WhatsApp Button.
+== Screenshots ==
+
+1. The "General Settings" tab in the plugin settings page
+2. The "Button Design" tab in the plugin settings page
+3. An example of the side-floating rectangle button design. You can customize the text on the button, as well as the button's background and text colors, in the "Button Design" tab.
+4. An example of the plain WhatsApp icon that can be used as the floating button
+5. An example of a fixed button anchored in the bottom of the page
+ 
+
+== Usage == 
+
+To enable the WhatsApp button, check the first checkbox in the settings page. You will find the settings page in the admin dashboard menu, under Settings->Add WhatsApp Button.
 
 You must enter an international phone number (only numbers, **NO plus sign (+), NO dashes(-)**) in order to enable the WhatsApp button. Even if you manage to save settings into the database without entering a phone number, your button might not work properly.
 
