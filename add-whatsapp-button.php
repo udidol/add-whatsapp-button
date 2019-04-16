@@ -5,7 +5,7 @@ Description: Adds a Floating Whatsapp button to your website
 Author: Udi Dollberg
 Text Domain: add-whatsapp-button
 Domain Path: /languages
-Version: 1.0.2
+Version: 1.0.4
 Author URI: http://udidollberg.com/
 */
 
@@ -67,13 +67,13 @@ function awb_html() {
     $button_style = !empty( $awb_options['button_type'] ) ? $awb_options['button_type'] : 'wab-side-rectangle';
     $button_location = isset( $awb_options['button_location'] ) ? 'wab-pull-'.$awb_options['button_location'] : 'wab-pull-left';
     $user_agent = $_SERVER['HTTP_USER_AGENT'];
+	$subdomain = ( wp_is_mobile() ) ? 'api' : 'web';
 
 	ob_start(); 
 	?>
 
         <div id="wab_cont" class="wab-cont <?php echo $button_style; ?> <?php echo $button_location; ?>">
-			<a id="whatsAppButton" class="ui-draggable" href="https://<?php echo ( wp_is_mobile() ) ? 'api' : 'web'; ?>.whatsapp.com/send?phone=<?php echo $awb_options['phone_number']; ?><?php echo ( !empty($awb_options['default_message']) && $awb_options['enable_message'] == '1' ) ? '&text='. rawurlencode($awb_options['default_message']) : ''; ?>" target="_blank"><span class="<?php echo $displayNoneIfIcon; ?>"><?php echo $button_text; ?></span></a>
-            <?php echo $is_mobile; ?>
+			<a id="whatsAppButton" class="ui-draggable" href="https://<?php echo $subdomain; ?>.whatsapp.com/send?phone=<?php echo $awb_options['phone_number']; ?><?php echo ( !empty($awb_options['default_message']) && $awb_options['enable_message'] == '1' ) ? '&text='. rawurlencode($awb_options['default_message']) : ''; ?>" target="_blank"><span class="<?php echo $displayNoneIfIcon; ?>"><?php echo $button_text; ?></span></a>
 		</div>
 		
 	<?php 

@@ -210,15 +210,15 @@ var awbDistanceBottomMU = document.getElementById('awb_settings[distance_from_bo
 jQuery(document).ready(function( $ ) {
 
     awbDistanceBottom.addEventListener('change',  function() {
-        console.log('test distance');
+        //console.log('test distance');
         $('.wp-admin .wab-cont').css('bottom', awbDistanceBottom.value + awbDistanceBottomMU.value);
     });
 
     awbDistanceBottomMU.addEventListener('change',  function() {
-        console.log('test measurement unit');
+        //console.log('test measurement unit');
         $('.wp-admin .wab-cont').css('bottom', awbDistanceBottom.value + awbDistanceBottomMU.value);
     });
 });
 
 var offset = new Date().getTimezoneOffset();
-console.log(offset/60);
+//console.log(offset/60);

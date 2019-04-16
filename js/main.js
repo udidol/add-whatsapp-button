@@ -1,4 +1,4 @@
-console.log('PHP variables: ' + php_vars.startHour);
+//console.log('PHP variables: ' + php_vars.startHour);
 
 // Make the New Whatsapp Button Draggable with jQuery UI
 jQuery(document).ready(function( $ ) {
