@@ -11,7 +11,7 @@ You must enter an international phone number (only numbers, **NO plus sign (+), 
 
 The plugin settings page has two tabs: "General Settings" and "Button Design".
 
-*The General Settings tab* includes options such as limiting the button to only display under a certain screen resolution (in pixels), attaching a default message that will be populated in the user's phone when they click the button, and more.
+*The General Settings tab* includes options such as limiting the button to only display under a certain screen resolution (in pixels), attaching a default message that will be populated in the user's phone when they click the button, adding a small "hide" button on the WhatsApp button in order to allow site visitors to hide the button, and more.
 
 *The Button Design tab* includes controls for the button color, label text color, button type (side-bearing rectangle, WhatsApp icon, fixed-bottom button), and more. The Button Design tab also includes a smartphone mockup with a **live** preview screen, enabling you to see a real-time (estimated) rendering of how your button would look, on the fly, as you are changing its design.
 

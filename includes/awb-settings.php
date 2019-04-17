@@ -149,6 +149,22 @@ function awb_options_content() {
                                 </td>
                             </tr>
                             <tr>
+                                <th scope="row"><label for="awb_settings[hide_button]"><?php _e('Add Hide Button', 'add-whatsapp-button') ?></label></th>
+                                <td>
+                                    <input name="awb_settings[enable_hide_button]" type="checkbox" id="awb_settings[enable_hide_button]" value="1" <?php isset($awb_options['enable_hide_button']) ? checked('1', $awb_options['enable_hide_button']) : ''; ?>>
+                                    <p class="description"><?php _e('Check this box in order to add a small "Hide" button at the far right corner of the WhatsApp button.', 'add-whatsapp-button'); ?></p>
+                                    <div id="awb_hide_button" class="hb-no-show">
+                                        <input type="radio" name="awb_settings[hide_button]" value="full" <?php isset($awb_options['hide_button']) ? checked('full', $awb_options['hide_button']) : ''; ?> /> <strong>Full Remove</strong>
+                                        <p class="description radio-description"><?php _e('Choose this option to make the WhatsApp button disappear completely on click.', 'add-whatsapp-button'); ?></p>
+                                        <input type="radio" name="awb_settings[hide_button]" value="hide" <?php isset($awb_options['hide_button']) ? checked('hide', $awb_options['hide_button']) : ''; ?> /> <strong>Hide with toggle button</strong>
+                                        <p class="description radio-description">
+                                            <?php _e('Choose this option to make the WhatsApp button slide almost entirely off screen, while keeping the toggle button visible.', 'add-whatsapp-button'); ?><br />
+                                            <?php _e('Clicking the toggle button again will slide the WhatsApp button back into view.', 'add-whatsapp-button'); ?>
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th scope="row"><label for="awb_settings[breakpoint]"><?php _e('Breakpoint', 'add-whatsapp-button') ?></label></th>
                                 <td>
                                     <input name="awb_settings[enable_breakpoint]" type="checkbox" id="awb_settings[enable_breakpoint]" value="1" <?php isset($awb_options['enable_breakpoint']) ? checked('1', $awb_options['enable_breakpoint']) : ''; ?>>
@@ -289,6 +305,7 @@ function awb_options_content() {
             </form>
         </div> <!-- /wrap -->
                              
+        <!-- DUMP ALL PLUGIN OPTIONS TO SEE WASSAP -->
         <!-- <div dir="ltr"><?php //var_dump($awb_options); ?></div> -->
 
     <?php

@@ -21,6 +21,19 @@ h2 {
   display: none;
 }
 
+#awb_hide_button {
+  margin-top: 16px;
+}
+
+.hb-no-show {
+  display: none;
+}
+
+#awb_hide_button .description.radio-description {
+  margin-bottom: 14px;
+  margin-right: 25px;
+}
+
 .lh-no-show {
   display: none;
 }

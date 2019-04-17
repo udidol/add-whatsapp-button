@@ -122,7 +122,17 @@ awbBreakpointCheckbox.addEventListener('change',  function() {
     awbBreakpointContainer.classList.toggle('bp-no-show');
 });
 
-// Display Display Times input boxes if the "Limit Display Time" checkbox is checked
+// Display 'Hide Button' radio buttons if 'Hide Button' checkbox is checked
+var awbHideButtonCheckbox = document.getElementById('awb_settings[enable_hide_button]');
+var awbHideButtonContainer = document.getElementById('awb_hide_button');
+
+if (awbHideButtonCheckbox.checked == true) awbHideButtonContainer.classList.remove('hb-no-show');
+
+awbHideButtonCheckbox.addEventListener('change',  function() {
+    awbHideButtonContainer.classList.toggle('hb-no-show');
+});
+
+// Display 'Display Times' input boxes if the "Limit Display Time" checkbox is checked
 var awbLimitHoursCheckbox = document.getElementById('awb_settings[limit_hours]');
 var awbLimitHoursContainer = document.getElementById('awb_limit_hours');
 

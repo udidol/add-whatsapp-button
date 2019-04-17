@@ -2,8 +2,8 @@
 Contributors: udidol
 Tags: whatsapp, button, whatsapp button
 Requires at least: 4.6
-Tested up to: 5.1
-Stable tag: 1.0.4
+Tested up to: 5.1.1
+Stable tag: 1.1.0
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -24,7 +24,6 @@ The plugin lets you choose between a simple WhatsApp icon and a rectangle with a
 4. An example of the plain WhatsApp icon that can be used as the floating button
 5. An example of a fixed button anchored in the bottom of the page
  
-
 == Usage == 
 
 To enable the WhatsApp button, check the first checkbox in the settings page. You will find the settings page in the admin dashboard menu, under Settings->Add WhatsApp Button.
@@ -52,7 +51,17 @@ The plugin detects whether the site visitor is using a desktop or mobile device 
 *Add WhatsApp Button* uses Javascript to check the time on the client's device. So it will be displayed/hidden according to the set time in each client's timezone.
 
 == Changelog ==
- 
+
+= 1.1.0 =
+* Updated compatibility with WordPress 5.1.1
+* Added a "Hide Button" option to the WhatsApp button. It adds a small button on the corner of the WhatsApp button that enables site visitors to hide the WhatsApp button if it bothers them. The "Hide Button" has two options: 
+  * Full Remove: Completely remove the button from the page
+  * Hide with Toggle Button: Slides the WhatsApp button to the side (outside page boundaries). This enables the site visitor to un-hide the WhatsApp button later, if they want.
+
+= 1.0.4 =
+* Updated compatibility with WordPress 5.1
+* Minor bug fixes
+
 = 1.0.3 =
 * Updated compatibility with WordPress 5.0
 * Minor bug fixes

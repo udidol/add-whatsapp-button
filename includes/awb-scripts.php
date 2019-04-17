@@ -12,12 +12,19 @@ function awb_add_scripts() {
     $startHour = !empty($awb_options['startHour']) ? $awb_options['startHour'] : '8';
     $endHour = !empty($awb_options['endHour']) ? $awb_options['endHour'] : '22';
     $awb_limitHours = !empty($awb_options['limit_hours']) ? $awb_options['limit_hours'] : 0;
+    $hideButtonType = (!empty($awb_options['hide_button']) && $awb_options['enable_hide_button'] == '1') ? $awb_options['hide_button'] : null;
+    $button_location = ( isset($awb_options['button_location']) ) ? $awb_options['button_location'] : 'left';
+	$buttonType = isset($awb_options['button_type']) ? $awb_options['button_type'] : 'wab-side-rectangle';
 
     // Create an array of the data we want to pass to the JS script
     $dataToBePassed = array(
-        'startHour'  => $startHour,
-        'endHour'    => $endHour,
-        'limitHours' => $awb_limitHours
+        'startHour'       => $startHour,
+        'endHour'         => $endHour,
+        'limitHours'      => $awb_limitHours,
+        'hideButtonType'  => $hideButtonType,
+        'button_location' => $button_location,
+		'button_type'	  => $buttonType,
+		'plugins_url'	  => plugins_url()
     );
 
     wp_localize_script('wab-main-script', 'php_vars', $dataToBePassed);

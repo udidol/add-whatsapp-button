@@ -5,7 +5,7 @@ Description: Adds a Floating Whatsapp button to your website
 Author: Udi Dollberg
 Text Domain: add-whatsapp-button
 Domain Path: /languages
-Version: 1.0.4
+Version: 1.1.0
 Author URI: http://udidollberg.com/
 */
 
@@ -67,13 +67,16 @@ function awb_html() {
     $button_style = !empty( $awb_options['button_type'] ) ? $awb_options['button_type'] : 'wab-side-rectangle';
     $button_location = isset( $awb_options['button_location'] ) ? 'wab-pull-'.$awb_options['button_location'] : 'wab-pull-left';
     $user_agent = $_SERVER['HTTP_USER_AGENT'];
-	$subdomain = ( wp_is_mobile() ) ? 'api' : 'web';
+    $subdomain = ( wp_is_mobile() ) ? 'api' : 'web';
 
 	ob_start(); 
 	?>
 
         <div id="wab_cont" class="wab-cont <?php echo $button_style; ?> <?php echo $button_location; ?>">
-			<a id="whatsAppButton" class="ui-draggable" href="https://<?php echo $subdomain; ?>.whatsapp.com/send?phone=<?php echo $awb_options['phone_number']; ?><?php echo ( !empty($awb_options['default_message']) && $awb_options['enable_message'] == '1' ) ? '&text='. rawurlencode($awb_options['default_message']) : ''; ?>" target="_blank"><span class="<?php echo $displayNoneIfIcon; ?>"><?php echo $button_text; ?></span></a>
+            <a id="whatsAppButton" class="ui-draggable" href="https://<?php echo $subdomain; ?>.whatsapp.com/send?phone=<?php echo $awb_options['phone_number']; ?><?php echo ( !empty($awb_options['default_message']) && $awb_options['enable_message'] == '1' ) ? '&text='. rawurlencode($awb_options['default_message']) : ''; ?>" target="_blank"><span class="<?php echo $displayNoneIfIcon; ?>"><?php echo $button_text; ?></span></a>
+            <?php if ( isset( $awb_options['enable_hide_button'] ) && ( isset( $awb_options['hide_button'] ) ) ) : ?>
+                <div id="wab_close">x</div>
+            <?php endif; ?>
 		</div>
 		
 	<?php 
@@ -99,6 +102,9 @@ function enqueue_awb_styles() {
     $button_text_color = !empty( $awb_options['button_text_color'] ) ? $awb_options['button_text_color'] : '#ffffff';
     $button_location = isset( $awb_options['button_location'] ) ? $awb_options['button_location'] : 'right';
     $wp_text_direction = is_rtl() ? 'rtl' : 'ltr';
+    $show_close_button = isset( $awb_options['enable_hide_button'] ) ? 'block' : 'none';;
+    $close_button_location = (isset( $awb_options['button_location'] ) && $awb_options['button_location'] == 'left') ? 'right' : 'left';;
+    $close_button_ilh = ( isset( $awb_options['enable_hide_button'] ) && $awb_options['hide_button'] == 'full' ) ? '1' : '1.2'; //inner line height
 
 	ob_start();
 	?>
@@ -114,14 +120,24 @@ function enqueue_awb_styles() {
 
         /* Side Rectangle */
 
-        .wab-side-rectangle .wab-pull-right {
+        .wab-side-rectangle.wab-pull-right {
             right: 0;
             left: initial !important;
+            -webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
         }
 
-        .wab-side-rectangle .wab-pull-left {
+        .wab-side-rectangle.wab-pull-left {
             left: 0;
             right: initial !important;
+            -webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
         }
 
         .wab-side-rectangle.wab-cont {
@@ -129,8 +145,21 @@ function enqueue_awb_styles() {
             /* <?php //echo $button_location; ?>: 0; */
             bottom: <?php echo $distance_from_bottom; echo $distance_from_bottom_mu; ?>;
             z-index: 99997;
+            -webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
         }
         
+        .wab-side-rectangle.wab-cont .wab-pull-right {
+            -webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
+        }
+
         .wab-side-rectangle #whatsAppButton {
             display: block;
             position: relative;
@@ -165,6 +194,33 @@ function enqueue_awb_styles() {
             fill: #fff;
         }
 
+        .wab-side-rectangle #wab_close {
+            display: <?php echo $show_close_button; ?>;
+            position: absolute;
+            top: -10px;
+            <?php echo $close_button_location; ?>: -9px;
+            z-index: 999999;
+            background-color: #fff;
+            font-weight: bold;
+            font-size: 14px;
+            border: 2px solid;
+            border-radius: 10px;
+            height: 20px;
+            width: 20px;
+            line-height: <?php echo $close_button_ilh ?>;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        #wab_cont.wab-side-rectangle.wab-hidden {
+            <?php echo $button_location ?>: -208px;
+            -webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
+        }
+
         /* Bottom Rectangle */
 
         .wab-bottom-rectangle.wab-cont {
@@ -172,11 +228,19 @@ function enqueue_awb_styles() {
             bottom: 0;
             z-index: 99999;
             width: 100%;
+			-webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
         }
-
+    
         .wab-bottom-rectangle #whatsAppButton {
             display: block;
-            position: relative;
+            /* position: relative; */
+            position: absolute;
+            bottom: 0;
+            width: 100%;
             direction: <?php echo $wp_text_direction; ?>;
             z-index: 9999;
             cursor: pointer;
@@ -186,6 +250,62 @@ function enqueue_awb_styles() {
             padding: 10px;
             margin: 0 auto 0 auto;
             background: <?php echo $button_bg_color; ?>;
+			-webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
+        }
+
+        .wab-bottom-rectangle #wab_close {
+            display: <?php echo $show_close_button; ?>;
+            position: absolute;
+            bottom: 38px;
+            <?php echo $close_button_location; ?>: 10px;
+            z-index: 999999;
+            background-color: #fff;
+            font-weight: bold;
+            font-size: 14px;
+            border: 2px solid;
+            border-radius: 10px;
+            height: 20px;
+            width: 20px;
+            line-height: <?php echo $close_button_ilh ?>;
+            text-align: center;
+            cursor: pointer;
+        }
+		
+		.wab-bottom-rectangle img.wab-chevron.wab-down {
+			max-width: 64%;
+			position: absolute;
+			top: 20%;
+			left: 18%;
+			-webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
+		}
+		
+		.wab-bottom-rectangle img.wab-chevron.wab-up {
+			max-width: 64%;
+			position: absolute;
+			top: 12%;
+			left: 18%;
+			-webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
+		}
+		
+        #wab_cont.wab-bottom-rectangle.wab-hidden {
+            bottom: -36px;
+            -webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
         }
         
         /* Icon */
@@ -197,6 +317,11 @@ function enqueue_awb_styles() {
             z-index: 99999;
             height: 80px;
             width: 80px;
+			-webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
         }
 
         .wab-icon-styled #whatsAppButton, .wab-icon-plain #whatsAppButton {
@@ -205,6 +330,12 @@ function enqueue_awb_styles() {
             height: 80px;
             background-position: center center;
             background-size: cover;
+			background-image: url(<?php echo plugins_url( '/', UDI_awb__FILE__ ) . 'img/wa-icon-original.png'; ?>);
+			-webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
         }
         .wab-icon-styled.wab-cont.wab-pull-left, .wab-icon-plain.wab-cont.wab-pull-left {
             left: 10px;
@@ -214,16 +345,31 @@ function enqueue_awb_styles() {
             right: 10px;
         }
 
-        /* .wab-icon-styled.wab-pull-left #whatsAppButton {
-            background-image: url(<?php //echo plugins_url( '/', UDI_awb__FILE__ ) . 'img/wa-icon-left.png'; ?>);
+        .wab-icon-styled #wab_close, .wab-icon-plain #wab_close {
+            display: <?php echo $show_close_button; ?>;
+            position: absolute;
+            top: -2px;
+            <?php echo $close_button_location; ?>: -5px;
+            z-index: 999999;
+            background-color: #fff;
+            font-weight: bold;
+            font-size: 14px;
+            border: 2px solid;
+            border-radius: 10px;
+            height: 20px;
+            width: 20px;
+            line-height: <?php echo $close_button_ilh ?>;
+            text-align: center;
+            cursor: pointer;
         }
-
-        .wab-icon-styled.wab-pull-right #whatsAppButton {
-            background-image: url(<?php //echo plugins_url( '/', UDI_awb__FILE__ ) . 'img/wa-icon-right.png'; ?>);
-        } */
-
-        .wab-icon-plain #whatsAppButton {
-            background-image: url(<?php echo plugins_url( '/', UDI_awb__FILE__ ) . 'img/wa-icon-original.png'; ?>);
+        
+        #wab_cont.wab-icon-styled.wab-hidden, #wab_cont.wab-icon-plain.wab-hidden {
+            <?php echo $button_location ?>: -64px;
+            -webkit-transition: All 0.5s ease;
+            -moz-transition: All 0.5s ease;
+            -o-transition: All 0.5s ease;
+            -ms-transition: All 0.5s ease;
+            transition: All 0.5s ease;
         }
 
         .awb-displaynone {
