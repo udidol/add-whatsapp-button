@@ -26,8 +26,12 @@ define( 'UDI_awb_PLUGIN_BASE', plugin_basename( 'UDI_awb__FILE__' ) );
 define( 'UDI_awb_PATH', plugin_dir_path( 'UDI_awb__FILE__' ) );
 define( 'UDI_awb_URL', plugins_url( '/', 'UDI_awb__FILE__' ) );
 
-// Load Scripts
+// Load Scripts 
 require_once(plugin_dir_path(__FILE__).'/includes/awb-scripts.php'); //enqueuing plugin scripts
+
+//Load admin notice dismissal management library
+require_once(plugin_dir_path(__FILE__).'/vendors/persist-admin-notices-dismissal/persist-admin-notices-dismissal.php');
+add_action( 'admin_init', array( 'PAnD', 'init' ) );
 
 // Load Plugin Textdomain
 function load_awb_textdomain() {
@@ -382,6 +386,12 @@ function enqueue_awb_styles() {
 	echo ob_get_clean();
 }
 add_action('wp_head', 'enqueue_awb_styles');
+
+// function awb_activate() {
+//     update_option( 'awb_just_activated', true );
+//     // Activation code here...
+// }
+// register_activation_hook( __FILE__, 'awb_activate' );
 
 // Delete options when uninstalling (deleting) the plugin
 function awb_delete_db_options() {

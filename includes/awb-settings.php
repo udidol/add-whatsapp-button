@@ -1,5 +1,8 @@
 <?php
 //Create menu link
+
+//add_action( 'admin_init', array( 'PAnD', 'init' ) );
+
 function awb_options_menu_link() {
     $awb_options_page = add_options_page(
         'Add WhatsApp Button Options', // title
@@ -101,7 +104,10 @@ function awb_options_content() {
             <?php //settings_errors(); ?>
 
             <h2><?php _e('Add WhatsApp Button Settings', 'add-whatsapp-button') ?></h2>
-            <p><?php _e('Settings page for the Add WhatsApp Button plugin. Check out the preview screen in the "Button Design" tab to see how your button would look on a smartphone before saving your settings to the database.', 'add-whatsapp-button') ?></p>
+            <p>
+                <?php _e('Settings page for the Add WhatsApp Button plugin. Check out the preview screen in the "Button Design" tab to see how your button would look on a smartphone before saving your settings to the database.', 'add-whatsapp-button') ?><br />
+                <a href="https://wordpress.org/support/plugin/add-whatsapp-button/reviews/" target="_blank"><?php _e('Rate "Add WhatsApp Button" at wordpress.org!', 'add-whatsapp-button') ?></a>
+            </p>
 
             <form method="POST" action="options.php">
                 <?php settings_fields('awb_settings_group'); ?>
@@ -319,6 +325,23 @@ function awb_register_settings() {
     register_setting('awb_settings_group', 'awb_settings', 'awb_validate_inputs');
 }
 add_action('admin_init', 'awb_register_settings');
+
+// Add admin notice to give 5-star review
+add_action( 'admin_notices', function() {
+    if ( ! PAnD::is_admin_notice_active( 'disable-done-notice-forever' ) ) {
+		return;
+    }
+    
+    ?>
+    <div data-dismissible="disable-done-notice-forever" class="notice notice-info is-dismissible">
+        <p>
+            <?php _e('Thanks for installing Add WhatsApp Button! Liked the plugin? We\'d really appreciate it if you could help us out with', 'add-whatsapp-button'); ?> 
+            <a href="https://wordpress.org/support/plugin/add-whatsapp-button/reviews/" target="_blank"><?php _e('a 5-star rating and review!', 'add-whatsapp-button'); ?></a>
+        </p>
+    </div>
+    <?php
+
+});
 
 /*
  *
