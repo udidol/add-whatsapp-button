@@ -182,10 +182,10 @@ var awbButtonLocationSelect = document.getElementById('awb_settings[button_locat
 
 awbButtonLocationSelect.addEventListener('change',  function() {
     if (awbButtonLocationSelect.value == 'right') {
-        document.getElementById('#admin_wab_cont').classList.add('wab-pull-right');
+        document.getElementById('admin_wab_cont').classList.add('wab-pull-right');
     } 
     else if (awbButtonLocationSelect.value == 'left') {
-        document.getElementById('#admin_wab_cont').classList.add('wab-pull-left');
+        document.getElementById('admin_wab_cont').classList.add('wab-pull-left');
     }
 });
 
