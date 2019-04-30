@@ -5,7 +5,7 @@ Description: Adds a Floating Whatsapp button to your website
 Author: Udi Dollberg
 Text Domain: add-whatsapp-button
 Domain Path: /languages
-Version: 1.1.0
+Version: 1.1.1
 Author URI: http://udidollberg.com/
 */
 

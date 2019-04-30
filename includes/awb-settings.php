@@ -1,8 +1,6 @@
 <?php
 //Create menu link
 
-//add_action( 'admin_init', array( 'PAnD', 'init' ) );
-
 function awb_options_menu_link() {
     $awb_options_page = add_options_page(
         'Add WhatsApp Button Options', // title
