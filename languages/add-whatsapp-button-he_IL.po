@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Add WhatsApp Button v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-27 22:06+0300\n"
+"POT-Creation-Date: 2019-04-30 10:25+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,18 +18,18 @@ msgstr ""
 "esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
 "_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: add-whatsapp-button.php:42
+#: add-whatsapp-button.php:46
 msgid "Settings"
 msgstr "הגדרות"
 
-#: add-whatsapp-button.php:65 includes/awb-settings.php:95
+#: add-whatsapp-button.php:69 includes/awb-settings.php:95
 msgid "Message Us on WhatsApp"
 msgstr "שלחו לנו וואטסאפ"
 
-#: includes/awb-settings.php:42
+#: includes/awb-settings.php:43
 msgid "Your settings have been successfully deleted and reset to defaults."
 msgstr "הגדרות התוסף נמחקו בהצלחה. יושמו הגדרות ברירת מחדל בחלק מן השדות."
 
@@ -45,7 +45,7 @@ msgstr ""
 msgid "Add WhatsApp Button Settings"
 msgstr "הגדרות הפלאגין Add WhatsApp Button"
 
-#: includes/awb-settings.php:105
+#: includes/awb-settings.php:106
 msgid ""
 "Settings page for the Add WhatsApp Button plugin. Check out the preview "
 "screen in the \"Button Design\" tab to see how your button would look on a "
@@ -55,34 +55,38 @@ msgstr ""
 "\"עיצוב הכפתור\" תוכלו לראות איך הכפתור שלכם ייראה בסמארטפון עם ההגדרות "
 "שבחרתם, עוד לפני שמירת השינויים למסד הנתונים."
 
-#: includes/awb-settings.php:111 includes/awb-settings.php:120
+#: includes/awb-settings.php:107
+msgid "Rate \"Add WhatsApp Button\" at wordpress.org!"
+msgstr "דרגו את הפלאגין Add WhatsApp Button באתר wordpress.org!"
+
+#: includes/awb-settings.php:114 includes/awb-settings.php:123
 msgid "General Settings"
 msgstr "הגדרות כלליות"
 
-#: includes/awb-settings.php:112 includes/awb-settings.php:195
+#: includes/awb-settings.php:115 includes/awb-settings.php:214
 msgid "Button Design"
 msgstr "עיצוב הכפתור"
 
-#: includes/awb-settings.php:124
+#: includes/awb-settings.php:127
 msgid "Enable WhatsApp Button"
 msgstr "הפעלת כפתור הוואטסאפ"
 
-#: includes/awb-settings.php:128
+#: includes/awb-settings.php:131
 msgid "Button Text"
 msgstr "טקסט הכפתור"
 
-#: includes/awb-settings.php:131
+#: includes/awb-settings.php:134
 msgid ""
 "Enter the text you want the button to show. Recommended: up to 18 characters."
 msgstr ""
 "הזינו את הטקסט שאתם רוצים שיוצג בכפתור. מומלץ להגביל את הטקסט למקסימום 18 "
 "תווים."
 
-#: includes/awb-settings.php:135
+#: includes/awb-settings.php:138
 msgid "Target Phone Number"
 msgstr "מספר טלפון היעד"
 
-#: includes/awb-settings.php:138
+#: includes/awb-settings.php:141
 msgid ""
 "Enter the phone number you want the WhatsApp message to be sent to, with "
 "your country code, WITHOUT a \"+\" (PLUS) SIGN. For example, if you wanted "
@@ -93,11 +97,11 @@ msgstr ""
 "הבינלאומית, וללא סימן \"+\" (פלוס). לדוגמא, על מנת לשלוח את ההודעות לטלפון "
 "050-1234567 (972-50-1234567+), הייתם מזינים: 972501234567 בתיבת הטקסט."
 
-#: includes/awb-settings.php:142
+#: includes/awb-settings.php:145
 msgid "Default Message"
 msgstr "תוכן הודעה"
 
-#: includes/awb-settings.php:145
+#: includes/awb-settings.php:148
 msgid ""
 "Check this box in order to set a default message to be pre-written when "
 "users click the button. For example: \"Hi, I'm interested in your product\"."
@@ -105,50 +109,81 @@ msgstr ""
 "סמנו תיבה זו על מנת לאפשר הזנת טקסט ברירת מחדל שייכתב בהודעה שתיפתח למשתמשים "
 "כשילחצו על כפתור הוואטסאפ. למשל: \"היי, אני מתעניין לגבי המוצר שלכם\"."
 
-#: includes/awb-settings.php:148
+#: includes/awb-settings.php:151
 msgid ""
 "Enter the message you want to pre-enter for the users when they click on "
 "your WhatsApp button."
 msgstr ""
 "הזינו את ההודעה שתרצו שתוזן מראש למשתמש כאשר הוא לוחץ על כפתור הוואטסאפ."
 
-#: includes/awb-settings.php:153
+#: includes/awb-settings.php:156
+msgid "Add Hide Button"
+msgstr "הוספת כפתור הסתרה קטן ליד כפתור הוואטסאפ"
+
+#: includes/awb-settings.php:159
+msgid ""
+"Check this box in order to add a small \"Hide\" button at the far right "
+"corner of the WhatsApp button."
+msgstr "סמנו את התיבה על מנת להציג כפתור \"הסתר\" קטן בפינה של כפתור הוואטסאפ"
+
+#: includes/awb-settings.php:162
+msgid ""
+"Choose this option to make the WhatsApp button disappear completely on click."
+msgstr ""
+"בחרו באופציה זו על מנת שכפתור הוואטסאפ ייעלם לגמרי בלחיצה על כפתור ההסתרה"
+
+#: includes/awb-settings.php:165
+msgid ""
+"Choose this option to make the WhatsApp button slide almost entirely off "
+"screen, while keeping the toggle button visible."
+msgstr ""
+"בחרו באופציה זו על מנת שבלחיצה על כפתור ההסתרה, כפתור הוואטסאפ יחליק החוצה "
+"מהמסך כמעט לגמרי, וכפתור ה\"הסתרה\" יהפוך לכפתור \"הצגה\"."
+
+#: includes/awb-settings.php:166
+msgid ""
+"Clicking the toggle button again will slide the WhatsApp button back into "
+"view."
+msgstr ""
+"לחיצה על כפתור ההסתרה/הצגה תחליק את כפתור הוואטסאפ חזרה למקומו המקורי באתר."
+
+#: includes/awb-settings.php:172
 msgid "Breakpoint"
 msgstr "התאמה לניידים"
 
-#: includes/awb-settings.php:156
+#: includes/awb-settings.php:175
 msgid ""
 "Check this box in order to only display the WhatsApp button up to a certain "
 "screen width."
 msgstr "סמנו את התיבה על מנת להציג את כפתור הוואטסאפ רק מתחת לרוחב מסך מסוים."
 
-#: includes/awb-settings.php:158
+#: includes/awb-settings.php:177
 msgid "px"
 msgstr "פיקסלים"
 
-#: includes/awb-settings.php:159
+#: includes/awb-settings.php:178
 msgid "Enter your desired screen width breakpoint here. Default is 600px."
 msgstr ""
 "הזינו את רוחב המסך שמתחתיו תרצו להציג את הכפתור. ברירת המחדל הינה 600 "
 "פיקסלים."
 
-#: includes/awb-settings.php:164
+#: includes/awb-settings.php:183
 msgid "Limit Display Time"
 msgstr ""
 "הגבלת זמן \n"
 "תצוגה"
 
-#: includes/awb-settings.php:167
+#: includes/awb-settings.php:186
 msgid ""
 "Check this box in order to only display the WhatsApp button in certain hours "
 "of the day."
 msgstr "סמנו את התיבה על מנת להציג את כפתור הוואטסאפ רק בשעות מסוימות ביום."
 
-#: includes/awb-settings.php:169
+#: includes/awb-settings.php:188
 msgid "Start Hour:"
 msgstr "שעת התחלה:"
 
-#: includes/awb-settings.php:175
+#: includes/awb-settings.php:194
 msgid ""
 "The WhatsApp button will be displayed starting this hour (24 hour clock). If "
 "no time is chosen, default is 8:00 (8AM). Make sure your starting hour is "
@@ -157,11 +192,11 @@ msgstr ""
 "כפתור הוואטסאפ יוצג החל מהשעה הנבחרת. אם לא נבחר זמן, ברירת המחדל היא 8:00. "
 "אנא וודאו ששעת ההתחלה שבחרתם היא לפני שעת הסיום שבחרתם."
 
-#: includes/awb-settings.php:177
+#: includes/awb-settings.php:196
 msgid "End Hour:"
 msgstr "שעת סיום:"
 
-#: includes/awb-settings.php:183
+#: includes/awb-settings.php:202
 msgid ""
 "The WhatsApp button will be displayed up until this hour (24 hour clock). If "
 "no time is chosen, default is 22 (10PM)."
@@ -169,27 +204,27 @@ msgstr ""
 "כפתור הוואטסאפ יוצג עד השעה הנבחרת. אם לא נבחר זמן, ברירת המחדל היא 22 "
 "(22:00)."
 
-#: includes/awb-settings.php:199
+#: includes/awb-settings.php:218
 msgid "Button Background Color"
 msgstr "צבע הרקע לכפתור"
 
-#: includes/awb-settings.php:202
+#: includes/awb-settings.php:221
 msgid "Choose a background color for your button. Default is green (#20B038)"
 msgstr "בחרו צבע רקע לכפתור שלכם. צבע ברירת המחדל הוא ירוק (#20B038)."
 
-#: includes/awb-settings.php:206
+#: includes/awb-settings.php:225
 msgid "Button Text Color"
 msgstr "צבע הטקסט בכפתור"
 
-#: includes/awb-settings.php:209
+#: includes/awb-settings.php:228
 msgid "Choose a text color for your button. Default is white (#ffffff)"
 msgstr "בחרו צבע לטקסט של הכפתור שלכם. צבע ברירת המחדל הוא לבן (#ffffff)."
 
-#: includes/awb-settings.php:213
+#: includes/awb-settings.php:232
 msgid "Button Distance from Bottom"
 msgstr "מרחק הכפתור מתחתית הדף"
 
-#: includes/awb-settings.php:222
+#: includes/awb-settings.php:241
 msgid ""
 "Choose your button's Distance from the bottom of the screen, in percentages "
 "or pixels. Default is 10%."
@@ -197,11 +232,11 @@ msgstr ""
 "בחרו את המרחק הרצוי של הכפתור מתחתית המסך, באחוזים או בפיקסלים. ברירת המחדל "
 "הינה 10%."
 
-#: includes/awb-settings.php:226
+#: includes/awb-settings.php:245
 msgid "Button Style"
 msgstr "בחירת סוג הכפתור"
 
-#: includes/awb-settings.php:235
+#: includes/awb-settings.php:254
 msgid ""
 "Choose your button's Style: Round WhatsApp icon, a floating rectangle with "
 "text, or a full-width fixed bottom button."
@@ -209,27 +244,39 @@ msgstr ""
 "בחרו את סוג הכפתור שברצונכם להציג: אייקון עגול של וואטסאפ, מלבן צמוד לצד עם "
 "טקסט, או כפתור דביק בתחתית הדף עם טקסט."
 
-#: includes/awb-settings.php:238
+#: includes/awb-settings.php:257
 msgid "Button Location on Screen"
 msgstr "מיקום הכפתור על המסך"
 
-#: includes/awb-settings.php:244
+#: includes/awb-settings.php:263
 msgid ""
 "Choose whether your button will appear on the left side or right side of the "
 "screen"
 msgstr "בחרו אם להציג את הכפתור בצד שמאל או ימין של המסך"
 
-#: includes/awb-settings.php:251
+#: includes/awb-settings.php:270
 msgid "Button Preview"
 msgstr "תצוגה מוקדמת"
 
-#: includes/awb-settings.php:282
+#: includes/awb-settings.php:303
 msgid "Save Changes"
 msgstr "שמירת השינויים"
 
-#: includes/awb-settings.php:283
+#: includes/awb-settings.php:305 includes/awb-settings.php:307
 msgid "Reset All Settings"
 msgstr "מחיקת כל ההגדרות - חזרה להגדרות ברירת מחדל"
+
+#: includes/awb-settings.php:336
+msgid ""
+"Thanks for installing Add WhatsApp Button! Liked the plugin? We'd really "
+"appreciate it if you could help us out with"
+msgstr ""
+"תודה שהתקנתם את התוסף שלנו Add WhatsApp Button! אהבתם את הפלאגין? מאוד נעריך "
+"את זה אם תוכלו לעזור לנו עם"
+
+#: includes/awb-settings.php:337
+msgid "a 5-star rating and review!"
+msgstr "דירוג של 5 כוכבים באתר wordpress.org!"
 
 #~ msgid "WhatsApp Us"
 #~ msgstr "שלחו לנו וואטסאפ"
