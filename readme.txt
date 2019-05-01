@@ -53,7 +53,7 @@ The plugin detects whether the site visitor is using a desktop or mobile device 
 == Changelog ==
 
 = 1.1.3 =
-* Bug fixes
+* Some bug fixes
 
 = 1.1.1 =
 * Updated support for WordPress 5.2
