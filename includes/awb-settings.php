@@ -1,6 +1,5 @@
 <?php
 //Create menu link
-
 function awb_options_menu_link() {
     $awb_options_page = add_options_page(
         'Add WhatsApp Button Options', // title
@@ -234,8 +233,8 @@ function awb_options_content() {
                                     <input name="awb_settings[distance_from_bottom]" type="number" id="awb_settings[distance_from_bottom]"  value="<?php echo sanitize_text_field( $awb_options['distance_from_bottom'] ); ?>" class="small-text" />
 
                                     <select class="awb-mu-select" id="awb_settings[distance_from_bottom_mu]" name="awb_settings[distance_from_bottom_mu]" style="vertical-align: baseline;">
-                                        <option value="%" <?php selected( $awb_options['button_location'], '%' ); ?>>%</option>
-                                        <option value="px" <?php selected( $awb_options['button_location'], 'px' ); ?>>px</option>
+                                        <option value="%" <?php selected( $awb_options['distance_from_bottom_mu'], '%' ); ?>>%</option>
+                                        <option value="px" <?php selected( $awb_options['distance_from_bottom_mu'], 'px' ); ?>>px</option>
                                     </select>
 
                                     <p class="description"><?php _e('Choose your button\'s Distance from the bottom of the screen, in percentages or pixels. Default is 10%.', 'add-whatsapp-button'); ?></p>

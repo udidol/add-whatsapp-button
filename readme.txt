@@ -1,19 +1,20 @@
-=== Add WhatsApp Button ===
+=== Add Chat App Button ===
 Contributors: udidol
 Tags: whatsapp, button, whatsapp button
 Requires at least: 4.6
-Tested up to: 5.2
-Stable tag: 1.1.3
+Tested up to: 5.2.3
+Stable tag: 1.1.4
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Add WhatsApp Button enables adding a customizeable click-to-chat WhatsApp button.
+Add Chat App Button enables adding a customizeable click-to-chat button that opens a chat on WhatsApp.
+This plugin is not affiliated with WhatsApp or Facebook in any way, it just provides an easy way to integrate a WhatsApp chat button into your website.
 The plugin lets you choose between a simple WhatsApp icon and a rectangle with a custom text label.
 
 == Description ==
 
-Add WhatsApp Button enables adding a customizable click-to-chat WhatsApp button.
+The *Add Chat App Button* plugin enables adding a customizable click-to-chat WhatsApp button.
 The plugin lets you choose between a simple WhatsApp icon and a rectangle with a custom text label (see screenshots).
 
 == Screenshots ==
@@ -26,7 +27,7 @@ The plugin lets you choose between a simple WhatsApp icon and a rectangle with a
  
 == Usage == 
 
-To enable the WhatsApp button, check the first checkbox in the settings page. You will find the settings page in the admin dashboard menu, under Settings->Add WhatsApp Button.
+To enable the WhatsApp button, check the first checkbox in the settings page. You will find the settings page in the admin dashboard menu, under Settings->Add Chat App Button.
 
 You must enter an international phone number (only numbers, **NO plus sign (+), NO dashes(-)**) in order to enable the WhatsApp button. Even if you manage to save settings into the database without entering a phone number, your button might not work properly.
 
@@ -42,15 +43,19 @@ The plugin detects whether the site visitor is using a desktop or mobile device 
 
 1. Upload the plugin files (the contents of add-whatsapp-button.zip) to the `/wp-content/plugins/add-whatsapp-button` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
-3. On the WordPress Admin menu, go to Settings->Add WhatsApp Button to configure the plugin
+3. On the WordPress Admin menu, go to Settings->Add Chat App Button to configure the plugin
 
 == Frequently Asked Questions ==
 
 = I see there is a setting for limiting the display hours for the WhatsApp button. What timezone does the plugin use for this setting? =
 
-*Add WhatsApp Button* uses Javascript to check the time on the client's device. So it will be displayed/hidden according to the set time in each client's timezone.
+*Add Chat App Button* uses Javascript to check the time on the client's device. So it will be displayed/hidden according to the set time in each client's timezone.
 
 == Changelog ==
+
+= 1.1.4 =
+* Changed plugin display name to comply with Facebook's trademark requirements
+* Updated support for Wordpress 5.2.3
 
 = 1.1.3 =
 * Some bug fixes

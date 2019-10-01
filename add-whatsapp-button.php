@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: Add Whatsapp Button
-Description: Adds a Floating Whatsapp button to your website
+Plugin Name: Add Chat App Button
+Description: Adds a Floating button to your website which opens a WhatsApp chat window
 Author: Udi Dollberg
 Text Domain: add-whatsapp-button
 Domain Path: /languages
-Version: 1.1.3
+Version: 1.1.4
 Author URI: http://udidollberg.com/
 */
 
@@ -26,7 +26,7 @@ define( 'UDI_awb_PLUGIN_BASE', plugin_basename( 'UDI_awb__FILE__' ) );
 define( 'UDI_awb_PATH', plugin_dir_path( 'UDI_awb__FILE__' ) );
 define( 'UDI_awb_URL', plugins_url( '/', 'UDI_awb__FILE__' ) );
 
-// Load Scripts 
+// Load Scripts
 require_once(plugin_dir_path(__FILE__).'/includes/awb-scripts.php'); //enqueuing plugin scripts
 
 //Load admin notice dismissal management library
@@ -69,9 +69,26 @@ function awb_html() {
 	$button_text = isset( $awb_options['button_text'] ) ? sanitize_text_field( $awb_options['button_text'] ) : _e('Message Us on WhatsApp', 'add-whatsapp-button');
     $displayNoneIfIcon = ( $awb_options['button_type'] == 'wab-icon-plain' || $awb_options['button_type'] == 'wab-icon-styled' ) ? 'awb-displaynone' : '';
     $button_style = !empty( $awb_options['button_type'] ) ? $awb_options['button_type'] : 'wab-side-rectangle';
-    $button_location = isset( $awb_options['button_location'] ) ? 'wab-pull-'.$awb_options['button_location'] : 'wab-pull-left';
     $user_agent = $_SERVER['HTTP_USER_AGENT'];
     $subdomain = ( wp_is_mobile() ) ? 'api' : 'web';
+    $close_button_icon = '';
+
+    if ( 'wab-bottom-rectangle' !== $awb_options['button_type'] ) {
+        $button_location = isset( $awb_options['button_location'] ) ? 'wab-pull-'.$awb_options['button_location'] : 'wab-pull-left';
+    }
+
+    if ( 'full' === $awb_options['hide_button'] ) {
+        $close_button_icon = 'x';
+    }
+    else if ( 'hide' === $awb_options['hide_button'] ) {
+        if ( 'right' === $awb_options['button_location'] && 'wab-bottom-rectangle' !== $awb_options['button_type'] ) {
+            $close_button_icon = '<img class="wab-chevron wab-right" src="' . plugins_url() . '/add-whatsapp-button/img/chevron-right.svg" />';
+        } else if ( 'left' === $awb_options['button_location'] && 'wab-bottom-rectangle' !== $awb_options['button_type'] ) {
+            $close_button_icon = '<img class="wab-chevron wab-left" src="' . plugins_url() . '/add-whatsapp-button/img/chevron-left.svg" />';
+        } else if ( 'wab-bottom-rectangle' === $awb_options['button_type'] ) {
+            $close_button_icon = '<img class="wab-chevron wab-down" src="' . plugins_url() . '/add-whatsapp-button/img/chevron-down.svg" />';
+        }
+    }
 
 	ob_start(); 
 	?>
@@ -79,7 +96,7 @@ function awb_html() {
         <div id="wab_cont" class="wab-cont <?php echo $button_style; ?> <?php echo $button_location; ?>">
             <a id="whatsAppButton" class="ui-draggable" href="https://<?php echo $subdomain; ?>.whatsapp.com/send?phone=<?php echo $awb_options['phone_number']; ?><?php echo ( !empty($awb_options['default_message']) && $awb_options['enable_message'] == '1' ) ? '&text='. rawurlencode($awb_options['default_message']) : ''; ?>" target="_blank"><span class="<?php echo $displayNoneIfIcon; ?>"><?php echo $button_text; ?></span></a>
             <?php if ( isset( $awb_options['enable_hide_button'] ) && ( isset( $awb_options['hide_button'] ) ) ) : ?>
-                <div id="wab_close">x</div>
+                <div id="wab_close"><?php echo $close_button_icon; ?></div>
             <?php endif; ?>
 		</div>
 		
@@ -122,6 +139,20 @@ function enqueue_awb_styles() {
 			}
         <?php } ?>
 
+        img.wab-chevron.wab-right {
+            position: absolute;
+            height: 10px;
+            top: 3px;
+            left: 5.5px;
+        }
+
+        img.wab-chevron.wab-left {
+            position: absolute;
+            height: 10px;
+            top: 3px;
+            left: 4.5px;
+        }
+
         /* Side Rectangle */
 
         .wab-side-rectangle.wab-pull-right {
@@ -146,7 +177,6 @@ function enqueue_awb_styles() {
 
         .wab-side-rectangle.wab-cont {
             position: fixed;
-            /* <?php //echo $button_location; ?>: 0; */
             bottom: <?php echo $distance_from_bottom; echo $distance_from_bottom_mu; ?>;
             z-index: 99997;
             -webkit-transition: All 0.5s ease;
@@ -217,7 +247,6 @@ function enqueue_awb_styles() {
         }
         
         #wab_cont.wab-side-rectangle.wab-hidden {
-            <?php echo $button_location ?>: -208px;
             -webkit-transition: All 0.5s ease;
             -moz-transition: All 0.5s ease;
             -o-transition: All 0.5s ease;
@@ -304,7 +333,7 @@ function enqueue_awb_styles() {
 		}
 		
         #wab_cont.wab-bottom-rectangle.wab-hidden {
-            bottom: -36px;
+            /* bottom: -36px; */
             -webkit-transition: All 0.5s ease;
             -moz-transition: All 0.5s ease;
             -o-transition: All 0.5s ease;
@@ -386,12 +415,6 @@ function enqueue_awb_styles() {
 	echo ob_get_clean();
 }
 add_action('wp_head', 'enqueue_awb_styles');
-
-// function awb_activate() {
-//     update_option( 'awb_just_activated', true );
-//     // Activation code here...
-// }
-// register_activation_hook( __FILE__, 'awb_activate' );
 
 // Delete options when uninstalling (deleting) the plugin
 function awb_delete_db_options() {
