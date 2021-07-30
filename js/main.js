@@ -1,83 +1,77 @@
 jQuery(document).ready(function( $ ) {
-    console.log( $( '#whatsAppButton' ).outerHeight() );
-
     // Make the New Whatsapp Button Draggable with jQuery UI
-    const buttonContainer = $( '#wab_cont' ),
+    const $buttonContainer = $( '#wab_cont' ),
         buttonToggleHeightInPx = $( '#whatsAppButton' ).outerHeight() - 12 + 'px', // String
         chevron = $( '#wab_close img.wab-chevron' );
 
     let buttonToggleWidthInPx = '';
 
     if ( 'wab-side-rectangle' === php_vars.button_type ) {
-        buttonToggleWidthInPx = buttonContainer.outerWidth() - 12 + 'px';
+        buttonToggleWidthInPx = $buttonContainer.outerWidth() - 12 + 'px';
     }
 
     if ( 'wab-icon-plain' === php_vars.button_type ) {
-        buttonToggleWidthInPx = buttonContainer.outerWidth() - 14 + 'px';
+        buttonToggleWidthInPx = $buttonContainer.outerWidth() - 14 + 'px';
     }
 
-    $( function() {
-      $( '#newWhatsAppButton' ).draggable({ 
-        axis: 'y', 
-        scroll: false, 
-      });
-    });
+	$buttonContainer.draggable({ 
+		axis: 'y', 
+		scroll: false, 
+	});
 
     // Attach hide action to wab_close button
-    $( function() {
-        $( '#wab_close' ).click( function() {
-            if ( php_vars.hideButtonType === 'full' )
-                buttonContainer.hide();
+	$( '#wab_close' ).click( function() {
+		if ( php_vars.hideButtonType === 'full' )
+			$buttonContainer.hide();
 
-            if ( php_vars.hideButtonType === 'hide' ) {
-                buttonContainer.toggleClass( 'wab-hidden' );
+		if ( php_vars.hideButtonType === 'hide' ) {
+			$buttonContainer.toggleClass( 'wab-hidden' );
 
-                // Change chevrons when hiding/showing button when the button is a bottom rectangle
-				if ( php_vars.button_type === 'wab-bottom-rectangle' ) {
-                    chevron.toggleClass( 'wab-down wab-up' );
+			// Change chevrons when hiding/showing button when the button is a bottom rectangle
+			if ( php_vars.button_type === 'wab-bottom-rectangle' ) {
+				chevron.toggleClass( 'wab-down wab-up' );
 
-					if ( chevron.hasClass( 'wab-down' ) ) {
-                        chevron.attr( 'src', php_vars.plugins_url+'/add-whatsapp-button/img/chevron-down.svg' );
-                        buttonContainer.css( 'bottom', 0 );
-					}
-					else if ( chevron.hasClass( 'wab-up' ) ) {
-                        console.log( 'clicked to hide, ' + buttonToggleHeightInPx );
-                        chevron.attr( 'src', php_vars.plugins_url+'/add-whatsapp-button/img/chevron-up.svg' );
-                        buttonContainer.css( 'bottom', '-' + buttonToggleHeightInPx );
-                    }
+				if ( chevron.hasClass( 'wab-down' ) ) {
+					chevron.attr( 'src', php_vars.plugins_url+'/add-whatsapp-button/img/chevron-down.svg' );
+					$buttonContainer.css( 'bottom', 0 );
 				}
-                
-                // Change chevrons when hiding/showing button when the button is an icon or side button
-                if ( php_vars.button_type === 'wab-side-rectangle' || php_vars.button_type === 'wab-icon-plain' ) {
-                    chevron.toggleClass( 'wab-left wab-right' );
+				else if ( chevron.hasClass( 'wab-up' ) ) {
+					console.log( 'clicked to hide, ' + buttonToggleHeightInPx );
+					chevron.attr( 'src', php_vars.plugins_url+'/add-whatsapp-button/img/chevron-up.svg' );
+					$buttonContainer.css( 'bottom', '-' + buttonToggleHeightInPx );
+				}
+			}
+			
+			// Change chevrons when hiding/showing button when the button is an icon or side button
+			if ( php_vars.button_type === 'wab-side-rectangle' || php_vars.button_type === 'wab-icon-plain' ) {
+				chevron.toggleClass( 'wab-left wab-right' );
 
-                    if ( buttonContainer.hasClass( 'wab-hidden' ) ) {
-                        if ( php_vars.button_location === 'left' ) {
-                            chevron.attr( 'src', php_vars.plugins_url + '/add-whatsapp-button/img/chevron-right.svg' );
-                        }
+				if ( $buttonContainer.hasClass( 'wab-hidden' ) ) {
+					if ( php_vars.button_location === 'left' ) {
+						chevron.attr( 'src', php_vars.plugins_url + '/add-whatsapp-button/img/chevron-right.svg' );
+					}
 
-                        if ( php_vars.button_location === 'right' ) {
-                            chevron.attr( 'src', php_vars.plugins_url + '/add-whatsapp-button/img/chevron-left.svg' );
-                        }
+					if ( php_vars.button_location === 'right' ) {
+						chevron.attr( 'src', php_vars.plugins_url + '/add-whatsapp-button/img/chevron-left.svg' );
+					}
 
-                        buttonContainer.css( php_vars.button_location, '-' + buttonToggleWidthInPx );
-                    }
+					$buttonContainer.css( php_vars.button_location, '-' + buttonToggleWidthInPx );
+				}
 
-                    if ( ! buttonContainer.hasClass( 'wab-hidden' ) ) {
-                        if ( php_vars.button_location === 'left' ) {
-                            chevron.attr( 'src', php_vars.plugins_url + '/add-whatsapp-button/img/chevron-left.svg' );
-                        }
+				if ( ! $buttonContainer.hasClass( 'wab-hidden' ) ) {
+					if ( php_vars.button_location === 'left' ) {
+						chevron.attr( 'src', php_vars.plugins_url + '/add-whatsapp-button/img/chevron-left.svg' );
+					}
 
-                        if ( php_vars.button_location === 'right' ) {
-                            chevron.attr( 'src', php_vars.plugins_url + '/add-whatsapp-button/img/chevron-right.svg' );
-                        }
+					if ( php_vars.button_location === 'right' ) {
+						chevron.attr( 'src', php_vars.plugins_url + '/add-whatsapp-button/img/chevron-right.svg' );
+					}
 
-                        buttonContainer.css( php_vars.button_location, 0 );
-                    }
-                }
-            }
-        });
-    });
+					$buttonContainer.css( php_vars.button_location, 0 );
+				}
+			}
+		}
+	});
 });
 
 // Limit Button Display to certain hours
