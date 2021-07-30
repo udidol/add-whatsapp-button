@@ -61,8 +61,6 @@ class Plugin {
 		// Load Plugin Textdomain
 		add_action( 'plugins_loaded', [ $this, 'load_awb_textdomain' ] );
 
-		register_uninstall_hook(__FILE__, [ $this, 'delete_db_options' ] );
-
 		// Load Plugin Settings in the Admin Settings Page 
 		if ( is_admin() ) {
 			$this->admin_actions();
@@ -222,11 +220,6 @@ class Plugin {
 
 		return $this->plugin_options;
 	}
-
-	// Delete options when uninstalling (deleting) the plugin
-	public function delete_db_options() {
-		delete_option( 'awb_settings' );
-	}
-}
+}	
 
 Plugin::instance();
