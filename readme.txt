@@ -2,8 +2,8 @@
 Contributors: udidol
 Tags: whatsapp, button, whatsapp button
 Requires at least: 4.6
-Tested up to: 5.2.3
-Stable tag: 1.1.4
+Tested up to: 5.8.0
+Stable tag: 2.0.0
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -53,7 +53,15 @@ The plugin detects whether the site visitor is using a desktop or mobile device 
 
 == Changelog ==
 
-= 1.1.4 =
+= 2.0.0 =
+* Complete PHP rewrite to use OOP and scoped methods instead of global functions.
+* Bug fixes
+* Updated compatibility with WordPress 5.8.0
+
+= 1.2.1 =
+* Bug fixes
+
+= 1.2 =
 * Changed plugin display name to comply with Facebook's trademark requirements
 * Updated support for Wordpress 5.2.3
 

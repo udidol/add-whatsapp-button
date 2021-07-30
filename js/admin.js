@@ -36,10 +36,7 @@ jQuery(document).ready(function( $ ) {
 
         // Listen to a change in the color picker in order to update the button background in the preview screen with the picked color
         change: function (event, ui) {
-            var element = event.target;
-            var color = ui.color.toString();
-    
-            $('#whatsAppButton').css('background-color', color);
+            $('#whatsAppButton').css( 'background-color', ui.color.toString() );
         },
     
         /**
@@ -50,7 +47,6 @@ jQuery(document).ready(function( $ ) {
         // Listen in case the color picker is cleared, in order to update the button preview screen with the default color.
         clear: function (event) {
             var element = jQuery(event.target).siblings('.wp-color-picker')[0];
-            var color = '';
     
             if (element) {
                 $('#whatsAppButton').css('background-color', '#20B038');
@@ -62,7 +58,6 @@ jQuery(document).ready(function( $ ) {
     $('.udi-text-color-picker').wpColorPicker({
 
         change: function (event, ui) {
-            var element = event.target;
             var color = ui.color.toString();
     
             $('#whatsAppButton').css('color', color);
@@ -70,7 +65,6 @@ jQuery(document).ready(function( $ ) {
     
         clear: function (event) {
             var element = jQuery(event.target).siblings('.wp-color-picker')[0];
-            var color = '';
     
             if (element) {
                 $('#whatsAppButton').css('color', '#ffffff');
@@ -86,11 +80,11 @@ jQuery(document).ready(function( $ ) {
 */
 
 // Get Button container ID
-var wabcont = document.getElementById('admin_wab_cont');
-var wabButtonText = document.getElementById('wab-text');
+const wabcont = document.getElementById('admin_wab_cont'),
+	wabButtonText = document.getElementById('wab-text'),
+	awbButtonTypeSelect = document.getElementById('awb_settings[button_type]');
 
 // Change button type (side rectangle, bottom rectangle, icon) according to select value
-var awbButtonTypeSelect = document.getElementById('awb_settings[button_type]');
 awbButtonTypeSelect.addEventListener('change',  function() {
     wabcont.classList.remove('wab-side-rectangle', 'wab-bottom-rectangle', 'wab-icon-styled', 'wab-icon-plain');
     wabcont.classList.add(awbButtonTypeSelect.value);
@@ -102,6 +96,26 @@ awbButtonTypeSelect.addEventListener('change',  function() {
         wabButtonText.classList.remove('awb-displaynone');
     }
 });
+
+// Change button size in real time according to number and select values
+const awbChangeIconSize = () => {
+	if ( 'wab-icon-plain' !== awbButtonTypeSelect.value ) {
+		return;
+	}
+
+	const iconWhatsAppButton = document.querySelector('.wab-cont.wab-icon-plain #whatsAppButton'),
+		size = awbButtonIconSizeInput.value + awbButtonIconSizeMeasurementUnit.value;
+
+	iconWhatsAppButton.style.width = size;
+	iconWhatsAppButton.style.height = size;
+};
+
+const awbButtonIconSizeInput = document.getElementById('awb_settings[icon_size]'),
+	awbButtonIconSizeMeasurementUnit = document.getElementById('awb_settings[icon_size_mu]');
+
+awbButtonIconSizeInput.addEventListener( 'input', () => awbChangeIconSize() );
+
+awbButtonIconSizeMeasurementUnit.addEventListener( 'change', () => awbChangeIconSize() );
 
 // Change button text in real time according to input value
 var awbButtonTextInput, whatsAppButton;
@@ -229,6 +243,3 @@ jQuery(document).ready(function( $ ) {
         $('.wp-admin .wab-cont').css('bottom', awbDistanceBottom.value + awbDistanceBottomMU.value);
     });
 });
-
-var offset = new Date().getTimezoneOffset();
-//console.log(offset/60);
