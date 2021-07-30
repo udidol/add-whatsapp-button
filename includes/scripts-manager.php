@@ -10,11 +10,7 @@ if ( ! defined('ABSPATH') ) {
 
 class Scripts_Manager {
 
-	private $plugin_options;
-
 	public function __construct() {
-		$this->plugin_options = Plugin::$instance->get_plugin_options();
-		
 		add_action('wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 	}
 
@@ -41,7 +37,7 @@ class Scripts_Manager {
 	 * @since 2.0.0
 	 */
 	private function localize_and_enqueue_main_script() {
-		$options = $this->plugin_options;
+		$options = Plugin::$instance->get_plugin_options();
 
 		wp_enqueue_script( 'wab-main-script', plugins_url( '../js/main.js', __FILE__ ), array( 'jquery' ) );
 
