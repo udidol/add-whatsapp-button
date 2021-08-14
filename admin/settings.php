@@ -35,12 +35,13 @@ class Admin_Settings {
 		);
 	
 		// Load the JS only in the pages where it is used.
-		add_action( 'load-' . $options_page, [ $this, 'load_admin_color_picker' ] );
+		add_action( 'load-' . $options_page, [ $this, 'load_admin_js' ] );
 		add_action( 'load-' . $options_page, [ $this, 'load_admin_styles' ] );
 	}
 
-	public function load_admin_color_picker() {
-        add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_color_picker' ] );
+	public function load_admin_js() {
+        add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_js' ] );
+		add_filter('script_loader_tag', [ $this, 'add_type_module_to_script_tag' ], 10, 3);
     }
 
 	/**
@@ -57,17 +58,29 @@ class Admin_Settings {
 	 *
 	 * @since 2.0.0
 	 */
-	public function enqueue_admin_color_picker() {
-        wp_enqueue_style( 'wp-color-picker');
+	public function enqueue_admin_js() {
+        wp_enqueue_style( 'wp-color-picker' );
 
         wp_enqueue_script(
-			'awb_admin_script',
+			'awb-admin-script',
 			plugins_url( '../js/admin.js', __FILE__ ),
 			array( 'jquery', 'wp-color-picker' ),
 			'',
 			true
 		);
     }
+
+	public function add_type_module_to_script_tag( $tag, $handle, $src ) {
+		// if not our plugin admin script, we do nothing and return the original $tag.
+		if ( 'awb-admin-script' !== $handle ) {
+			return $tag;
+		}
+
+		// change the script tag by adding type="module" and return it.
+		$tag = '<script type="module" src="' . esc_url( $src ) . '"></script>';
+
+		return $tag;
+	}
 
 	/**
 	 * Register Settings
@@ -161,6 +174,33 @@ class Admin_Settings {
 		$displayNoneIfIcon = ( $settings['button_type'] == 'wab-icon-plain' || $settings['button_type'] == 'wab-icon-styled' ) ? 'class="awb-displaynone"' : '';
 		// Set default icon size if the button type is WhatsApp icon
 		$icon_size = ! empty( $settings['icon_size'] ) ? sanitize_text_field( $settings['icon_size'] ) : '80';
+		// If the breakpoint setting is inactive (the "enable breakpoint" checkbox is checked), hide the breakpoint settings.
+		$bp_no_show_class = empty( $settings['enable_breakpoint'] ) ? ' class="awb-hide"' : '';
+		// If the 'limit hours' setting is inactive, hide the hour controls.
+		$lh_no_show_class = empty( $settings['limit_hours'] ) ? ' class="awb-hide"' : '';
+		// If the 'Hide Button' setting is inactive, hide the radio buttons with the hiding settings.
+		$hb_no_show_class = empty( $settings['enable_hide_button'] ) ? ' class="awb-hide"' : '';
+		// If the 'Enable Message' setting is inactive, hide the textarea.
+		$em_no_show_class = empty( $settings['enable_message'] ) ? ' class="awb-hide"' : '';
+		// If the saved button type is not a plain WhatsApp icon, hide the icon size control.
+		$is_no_show_class = ! empty( $settings['button_type'] ) && 'wab-icon-plain' !== $settings['button_type'] ? ' class="awb-hide"' : '';
+
+		// Inline Style
+		if ( $settings['button_bg_color'] || $settings['button_text_color'] ) {
+			$button_inline_styles = ' style="';
+
+			// If there is a saved background color, add it to the button with a style tag.
+			if ( ! empty( $settings['button_bg_color'] ) ) {
+				$button_inline_styles .= 'background-color: ' . $settings['button_bg_color'] . ';';
+			}
+
+			// If there is a saved text color, add it to the button with a style tag.
+			if ( ! empty( $settings['button_text_color'] ) ) {
+				$button_inline_styles .= ' color: ' . $settings['button_text_color'] . ';';
+			}
+
+			$button_inline_styles .= '"';
+		}
 
 		ob_start(); ?>
 
@@ -212,7 +252,7 @@ class Admin_Settings {
 								<td>
 									<input name="awb_settings[enable_message]" type="checkbox" id="awb_settings[enable_message]" value="1" <?php isset($settings['enable_message'] ) ? checked('1', $settings['enable_message'] ) : ''; ?>>
 									<p class="description"><?php echo esc_html__( 'Check this box in order to set a default message to be pre-written when users click the button. For example: "Hi, I\'m interested in your product".', 'add-whatsapp-button'); ?></p>
-									<div id="awb_enable_message" class="em-no-show">
+									<div id="awb_enable_message"<?php echo $em_no_show_class; ?>>
 										<textarea name="awb_settings[default_message]" type="number" id="awb_settings[default_message]" class="small-text"><?php echo isset($settings['default_message'] ) ? sanitize_textarea_field( $settings['default_message'] ) : ''; ?></textarea>
 										<p class="description"><?php echo esc_html__( 'Enter the message you want to pre-enter for the users when they click on your WhatsApp button.', 'add-whatsapp-button'); ?></p>
 									</div>
@@ -223,7 +263,7 @@ class Admin_Settings {
 								<td>
 									<input name="awb_settings[enable_hide_button]" type="checkbox" id="awb_settings[enable_hide_button]" value="1" <?php isset($settings['enable_hide_button'] ) ? checked('1', $settings['enable_hide_button'] ) : ''; ?>>
 									<p class="description"><?php echo esc_html__( 'Check this box in order to add a small "Hide" button at the far right corner of the WhatsApp button.', 'add-whatsapp-button'); ?></p>
-									<div id="awb_hide_button" class="hb-no-show">
+									<div id="awb_hide_button"<?php echo $hb_no_show_class; ?>>
 										<input type="radio" name="awb_settings[hide_button]" value="full" <?php isset($settings['hide_button'] ) ? checked('full', $settings['hide_button'] ) : ''; ?> /> <strong>Full Remove</strong>
 										<p class="description radio-description"><?php echo esc_html__( 'Choose this option to make the WhatsApp button disappear completely on click.', 'add-whatsapp-button'); ?></p>
 										<input type="radio" name="awb_settings[hide_button]" value="hide" <?php isset($settings['hide_button'] ) ? checked('hide', $settings['hide_button'] ) : ''; ?> /> <strong>Hide with toggle button</strong>
@@ -239,7 +279,7 @@ class Admin_Settings {
 								<td>
 									<input name="awb_settings[enable_breakpoint]" type="checkbox" id="awb_settings[enable_breakpoint]" value="1" <?php isset( $settings['enable_breakpoint'] ) ? checked('1', $settings['enable_breakpoint'] ) : ''; ?>>
 									<p class="description"><?php echo esc_html__( 'Check this box in order to only display the WhatsApp button up to a certain screen width.', 'add-whatsapp-button'); ?></p>
-									<div id="awb_breakpoint" class="bp-no-show">
+									<div id="awb_breakpoint"<?php echo $bp_no_show_class; ?>>
 										<input name="awb_settings[breakpoint]" type="number" id="awb_settings[breakpoint]" value="<?php echo sanitize_text_field( $settings['breakpoint'] ); ?>" class="small-text"><?php echo esc_html__( 'px', 'add-whatsapp-button'); ?>
 										<p class="description"><?php echo esc_html__( 'Enter your desired screen width breakpoint here. Default is 600px.', 'add-whatsapp-button'); ?></p>
 									</div>
@@ -250,7 +290,7 @@ class Admin_Settings {
 								<td>
 									<input name="awb_settings[limit_hours]" type="checkbox" id="awb_settings[limit_hours]" value="1" <?php isset( $settings['limit_hours'] ) ? checked('1', $settings['limit_hours'] ) : ''; ?>>
 									<p class="description"><?php echo esc_html__( 'Check this box in order to only display the WhatsApp button in certain hours of the day.', 'add-whatsapp-button'); ?></p>
-									<div id="awb_limit_hours" class="lh-no-show">
+									<div id="awb_limit_hours"<?php echo $lh_no_show_class; ?>>
 										<span class="awb-hours"><?php echo esc_html__( 'Start Hour:', 'add-whatsapp-button'); ?> </span>
 										<select name="awb_settings[startHour]" id="awb_settings[startHour]">
 											<?php for ($i = 0; $i<=24; $i++) { ?>
@@ -312,7 +352,6 @@ class Admin_Settings {
 								<td>
 									<select class="awb-bt-select" id="awb_settings[button_type]" name="awb_settings[button_type]" style="vertical-align: baseline;">
 										<option disabled selected value> -- Select Button Type -- </option>
-										<!-- <option value="wab-icon-styled" <?php //selected( $settings['button_type'], 'wab-icon-styled' ); ?>>Styled WhatsApp Icon</option> -->
 										<option value="wab-icon-plain" <?php selected( $settings['button_type'], 'wab-icon-plain' ); ?>>Plain WhatsApp Icon</option>
 										<option value="wab-side-rectangle" <?php selected( $settings['button_type'], 'wab-side-rectangle' ); ?>>Side-Floating Rectangle with Text</option>
 										<option value="wab-bottom-rectangle" <?php selected( $settings['button_type'], 'wab-bottom-rectangle' ); ?>>Fixed-Bottom Rectangle with Text</option>
@@ -320,7 +359,7 @@ class Admin_Settings {
 									<p class="description"><?php echo esc_html__( 'Choose your button\'s Style: Round WhatsApp icon, a floating rectangle with text, or a full-width fixed bottom button.', 'add-whatsapp-button'); ?></p>
 								</td>
 							</tr>
-							<tr>
+							<tr id="iconSizeSettingRow"<?php echo $is_no_show_class; ?>>
 								<th scope="row"><label for="awb_settings[icon_size]"><?php echo esc_html__( 'Icon Button Size', 'add-whatsapp-button' ); ?></label></th>
 								<td>
 									<input name="awb_settings[icon_size]" type="number" id="awb_settings[icon_size]"  value="<?php echo $icon_size; ?>" class="small-text" />
@@ -369,7 +408,7 @@ class Admin_Settings {
 
 								<div class="gray-row gray-row-box"></div>
 								<div id="admin_wab_cont" class="wab-cont <?php echo $button_style; ?> <?php echo ( $button_style !== 'wab-bottom-rectangle' ) ? 'wab-pull-' . $settings['button_location'] : ''; ?>"> <!-- Button Preview HTML -->
-									<a id="whatsAppButton" href="https://wa.me/<?php echo $settings['phone_number']; ?><?php echo ( ! empty( $settings['default_message'] ) && $settings['enable_message'] == '1' ) ? '/?text='. rawurlencode( $settings['default_message'] ) : ''; ?>" target="_blank">
+									<a id="whatsAppButton"<?php echo $button_inline_styles; ?> href="https://wa.me/<?php echo $settings['phone_number'] . ( ! empty( $settings['default_message'] ) && $settings['enable_message'] == '1' ) ? '/?text='. rawurlencode( $settings['default_message'] ) : ''; ?>" target="_blank">
 										<span id="wab-text" <?php echo $displayNoneIfIcon; ?>><?php echo $button_text; ?></span>
 									</a>
 								</div>

@@ -17,7 +17,7 @@ h2 {
   width: 80px;
 }
 
-.bp-no-show {
+.awb-hide {
   display: none;
 }
 
@@ -25,21 +25,10 @@ h2 {
   margin-top: 16px;
 }
 
-.hb-no-show {
-  display: none;
-}
 
 #awb_hide_button .description.radio-description {
   margin-bottom: 14px;
   margin-right: 25px;
-}
-
-.lh-no-show {
-  display: none;
-}
-
-.em-no-show {
-  display: none;
 }
 
 .wp-admin.rtl .awb-mu-select {

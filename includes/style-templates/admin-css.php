@@ -95,7 +95,8 @@ class Admin {
 
 			.wp-admin .wab-bottom-rectangle.wab-cont {
 				position: absolute;
-				bottom: 0;
+				/* !important is necessary because JS overwrites inline styles in the admin preview */
+				bottom: 0 !important;
 				z-index: 99999;
 				width: 100%;
 			}
