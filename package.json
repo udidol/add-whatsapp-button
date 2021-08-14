@@ -1,0 +1,24 @@
+{
+  "name": "add-whatsapp-button",
+  "version": "1.0.0",
+  "description": "Add Chat App Button enables adding a customizeable click-to-chat WhatsApp button.\r The plugin lets you choose between a simple WhatsApp icon and a rectangle with a custom text label.",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/udidol/add-whatsapp-button.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/udidol/add-whatsapp-button/issues"
+  },
+  "homepage": "https://github.com/udidol/add-whatsapp-button#readme",
+  "devDependencies": {
+    "webpack": "^5.50.0",
+    "webpack-cli": "^4.7.2"
+  }
+}
