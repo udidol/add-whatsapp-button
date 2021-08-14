@@ -41,7 +41,6 @@ class Admin_Settings {
 
 	public function load_admin_js() {
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_js' ] );
-		add_filter('script_loader_tag', [ $this, 'add_type_module_to_script_tag' ], 10, 3);
     }
 
 	/**
@@ -69,18 +68,6 @@ class Admin_Settings {
 			true
 		);
     }
-
-	public function add_type_module_to_script_tag( $tag, $handle, $src ) {
-		// if not our plugin admin script, we do nothing and return the original $tag.
-		if ( 'awb-admin-script' !== $handle ) {
-			return $tag;
-		}
-
-		// change the script tag by adding type="module" and return it.
-		$tag = '<script type="module" src="' . esc_url( $src ) . '"></script>';
-
-		return $tag;
-	}
 
 	/**
 	 * Register Settings
