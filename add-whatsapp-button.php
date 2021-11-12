@@ -5,7 +5,7 @@ Description: Adds a Floating button to your website which opens a WhatsApp chat 
 Author: Udi Dollberg
 Text Domain: add-whatsapp-button
 Domain Path: /languages
-Version: 2.0.1
+Version: 2.0.2
 Author URI: http://udidollberg.com/
 */
 
