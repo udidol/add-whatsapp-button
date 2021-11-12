@@ -1,6 +1,6 @@
 # Add Chat App Button
 
-Add Chat App Button enables adding a customizeable click-to-chat WhatsApp button.
+Add Chat App Button enables adding a customizeable click-to-chat WhatsApp button to your WordPress Website.
 The plugin lets you choose between a simple WhatsApp icon and a rectangle with a custom text label.
 
 ## Description

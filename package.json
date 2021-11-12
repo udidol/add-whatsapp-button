@@ -1,6 +1,6 @@
 {
   "name": "add-whatsapp-button",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "description": "Add Chat App Button enables adding a customizeable click-to-chat WhatsApp button.\r The plugin lets you choose between a simple WhatsApp icon and a rectangle with a custom text label.",
   "private": true,
   "scripts": {
