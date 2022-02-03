@@ -172,6 +172,7 @@ class Admin_Settings {
 		// If the saved button type is not a plain WhatsApp icon, hide the icon size control.
 		$is_no_show_class = ! empty( $settings['button_type'] ) && 'wab-icon-plain' !== $settings['button_type'] ? ' class="awb-hide"' : '';
 
+		$button_inline_styles = '';
 		// Inline Style
 		if ( $settings['button_bg_color'] || $settings['button_text_color'] ) {
 			$button_inline_styles = ' style="';
