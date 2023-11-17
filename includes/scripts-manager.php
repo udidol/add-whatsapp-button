@@ -39,7 +39,7 @@ class Scripts_Manager {
 	private function localize_and_enqueue_main_script() {
 		$options = Plugin::$instance->get_plugin_options();
 
-		wp_enqueue_script( 'wab-main-script', plugins_url( '../js/main.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( 'wab-main-script', plugins_url( '../js/wab.js', __FILE__ ), array( 'jquery' ) );
 
 		// Give the startHour and endHour variables default values
 		$startHour = ! empty( $options['startHour'] ) ? $options['startHour'] : '8';
@@ -60,7 +60,7 @@ class Scripts_Manager {
 			'plugins_url'	  => plugins_url()
 		);
 
-		wp_localize_script( 'wab-main-script', 'php_vars', $dataToBePassed );
+		wp_localize_script( 'wab-main-script', 'wabSettings', $dataToBePassed );
 	}
 
 	/**
@@ -71,7 +71,7 @@ class Scripts_Manager {
 	 * @since 2.0.0
 	 */
 	private function enqueue_jquery_ui_draggable() {
-		wp_enqueue_script( 'jquery_draggable', plugins_url( '../js/jquery-ui.drag.min.js', __FILE__ ), array( 'jquery' ) );
-		wp_enqueue_script( 'jquery_touch_punch', plugins_url( '../js/jquery.ui.touch-punch.min.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( 'jquery_draggable', plugins_url( '../js/lib/jquery-ui.drag.min.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( 'jquery_touch_punch', plugins_url( '../js/lib/jquery.ui.touch-punch.min.js', __FILE__ ), array( 'jquery' ) );
 	}
 }
