@@ -48,6 +48,7 @@ class Scripts_Manager {
 		$hideButtonType = ( ! empty( $options['hide_button'] ) && $options['enable_hide_button'] == '1' ) ? $options['hide_button'] : null;
 		$button_location = ( isset( $options['button_location'] ) ) ? $options['button_location'] : 'left';
 		$buttonType = isset( $options['button_type'] ) ? $options['button_type'] : 'wab-side-rectangle';
+		$dragEnabled = ! empty ( $options['enable_dragging'] ) ? $options['enable_dragging'] : 0;
 
 		// Create an array of the data we want to pass to the JS script
 		$dataToBePassed = array(
@@ -57,6 +58,7 @@ class Scripts_Manager {
 			'hideButtonType'  => $hideButtonType,
 			'button_location' => $button_location,
 			'button_type'	  => $buttonType,
+			'dragEnabled'	  => $dragEnabled,
 			'plugins_url'	  => plugins_url()
 		);
 
@@ -71,6 +73,12 @@ class Scripts_Manager {
 	 * @since 2.0.0
 	 */
 	private function enqueue_jquery_ui_draggable() {
+		$options = Plugin::$instance->get_plugin_options();
+
+		if ( ! empty ( $options['enable_dragging'] ) ? $options['enable_dragging'] : 0 ) {
+			return;
+		}
+
 		wp_enqueue_script( 'jquery_draggable', plugins_url( '../js/lib/jquery-ui.drag.min.js', __FILE__ ), array( 'jquery' ) );
 		wp_enqueue_script( 'jquery_touch_punch', plugins_url( '../js/lib/jquery.ui.touch-punch.min.js', __FILE__ ), array( 'jquery' ) );
 	}

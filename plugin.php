@@ -185,7 +185,10 @@ class Plugin {
 	
 			<div id="wab_cont"  class="wab-cont ui-draggable <?php echo $button_style; ?> <?php echo $button_location; ?>">
 				<a id="whatsAppButton" href="https://wa.me/<?php echo esc_html( $settings['phone_number'] ); ?><?php echo ( !empty($settings['default_message']) && $settings['enable_message'] == '1' ) ? '/?text='. rawurlencode($settings['default_message']) : ''; ?>" target="_blank"><span class="<?php echo $displayNoneIfIcon; ?>"><?php echo $button_text; ?></span></a>
-				<?php if ( isset( $settings['enable_hide_button'] ) && ( isset( $settings['hide_button'] ) ) ) : ?>
+				<?php if ( isset( $settings['enable_dragging'] ) ) : ?>
+					<div id="wab_drag"><img src="<?php echo plugins_url( '/img/drag-horizontal.svg', __FILE__ ) ?>"></div>
+				<?php endif; ?>
+				<?php if ( isset( $settings['enable_hide_button'] ) && isset( $settings['hide_button'] ) ) : ?>
 					<div id="wab_close"><?php echo $close_button_icon; ?></div>
 				<?php endif; ?>
 			</div>

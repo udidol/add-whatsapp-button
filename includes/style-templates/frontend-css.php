@@ -324,6 +324,38 @@ class Frontend {
 			.awb-displaynone {
 				display: none;
 			}
+
+			/* Draggable */
+			#wab_drag {
+				position: absolute;
+				z-index: 99998;
+				background-color: #20B038;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				cursor: grab;
+			}
+
+			.wab-side-rectangle #wab_drag {
+				top: 38px;
+				padding: 5px;
+			}
+
+			.wab-icon-plain #wab_drag {
+				top: 68px;
+				right: -7px;
+				padding: 9px 5px;
+				border: 3px solid white;
+				border-radius: 50%;
+			}
+
+			.wab-side-rectangle #wab_drag img {
+				height: 6px;
+			}
+
+			.wab-icon-plain #wab_drag img {
+				height: 4px;
+			}
 		</style>
 
 		<?php

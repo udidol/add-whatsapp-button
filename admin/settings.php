@@ -263,6 +263,13 @@ class Admin_Settings {
 								</td>
 							</tr>
 							<tr>
+								<th scope="row"><label for="awb_settings[enable_dragging]"><?php echo esc_html__( 'Allow dragging button on Y axis', 'add-whatsapp-button' ); ?></label></th>
+								<td>
+									<input name="awb_settings[enable_dragging]" type="checkbox" id="awb_settings[enable_dragging]" value="1" <?php isset($settings['enable_dragging'] ) ? checked('1', $settings['enable_dragging'] ) : ''; ?>>
+									<p class="description"><?php echo esc_html__( 'Check this box in order to add a small "dragging" handle on the top of the WhatsApp button, which will allow users to drag the button up and down. This won\'t work for the bottom-fixed button type.', 'add-whatsapp-button'); ?></p>
+								</td>
+							</tr>
+							<tr>
 								<th scope="row"><label for="awb_settings[breakpoint]"><?php echo esc_html__( 'Breakpoint', 'add-whatsapp-button' ); ?></label></th>
 								<td>
 									<input name="awb_settings[enable_breakpoint]" type="checkbox" id="awb_settings[enable_breakpoint]" value="1" <?php isset( $settings['enable_breakpoint'] ) ? checked('1', $settings['enable_breakpoint'] ) : ''; ?>>
