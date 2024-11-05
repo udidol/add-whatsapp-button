@@ -224,14 +224,14 @@ class Admin_Settings {
 							<tr>
 								<th scope="row"><label for="awb_settings[button_text]"><?php echo esc_html__( 'Button Text', 'add-whatsapp-button'); ?></label></th>
 								<td>
-									<input name="awb_settings[button_text]" type="text" id="awb_settings[button_text]" value="<?php echo $button_text; ?>" class="regular-text">
+									<input name="awb_settings[button_text]" type="text" id="awb_settings[button_text]" value="<?php echo  esc_html( $button_text ); ?>" class="regular-text">
 									<p class="description"><?php echo esc_html__( 'Enter the text you want the button to show. Recommended: up to 18 characters.', 'add-whatsapp-button'); ?></p>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row"><label for="awb_settings[phone_number]"><?php echo esc_html__( 'Target Phone Number', 'add-whatsapp-button' ); ?></label></th>
 								<td>
-									<input required name="awb_settings[phone_number]" type="text" id="awb_settings[phone_number]" value="<?php echo sanitize_text_field( $settings['phone_number'] ); ?>" placeholder="12345678910" class="regular-text">
+									<input required name="awb_settings[phone_number]" type="text" id="awb_settings[phone_number]" value="<?php echo esc_html( $settings['phone_number'] ); ?>" placeholder="12345678910" class="regular-text">
 									<p class="description"><?php echo esc_html__( 'Enter the phone number you want the WhatsApp message to be sent to, with your country code, WITHOUT a "+" (PLUS) SIGN. For example, if you wanted to send WhatsApp messages to the number +1-770-123-4567, you would enter: 17701234567 in the input box.', 'add-whatsapp-button'); ?></p>
 								</td>
 							</tr>

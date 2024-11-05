@@ -111,7 +111,25 @@ class Plugin {
 		// Add a link to the plugin's Settings page from the Plugins Page
 		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), [ $this, 'add_plugin_action_link' ], 10, 5 );
 
+		add_filter( 'plugin_action_links_add-whatsapp-button/add-whatsapp-button.php', [ $this, 'add_settings_link_to_plugins_page' ] );
+
 		new Admin_Settings();
+	}
+
+	public function add_settings_link_to_plugins_page( $links ) {
+		$url = esc_url( add_query_arg(
+			'page',
+			'awb-options',
+			get_admin_url() . '/options-general.php'
+		) );
+
+		$settings_link = "<a href='$url'>" . __( 'Settings' ) . '</a>';
+
+		array_push(
+			$links,
+			$settings_link
+		);
+		return $links;
 	}
 
 	// Load Plugin Textdomain
