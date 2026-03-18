@@ -55,6 +55,7 @@ The plugin detects whether the site visitor is using a desktop or mobile device 
 
 = 2.1.8 =
 * Updated compatibility with WordPress 6.9.4
+* Fixed some UI bugs in the button preview in admin settings.
 
 = 2.1.7 =
 * Security update.
