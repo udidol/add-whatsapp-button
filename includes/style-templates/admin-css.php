@@ -141,11 +141,8 @@ class Admin {
 			}
 
 			.wp-admin .wab-icon-plain.wab-pull-left #whatsAppButton, .wp-admin .wab-icon-plain.wab-pull-right #whatsAppButton {
+				background-color: none;
 				background-image: url(<?php echo plugins_url( '../../img/wa-icon-original.png', __FILE__ ); ?>);
-			}
-			
-			.awb-displaynone {
-				display: none;
 			}
 		</style>
 

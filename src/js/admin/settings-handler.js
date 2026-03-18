@@ -74,7 +74,13 @@ export default class SettingsHandler extends ModuleBase {
 		// Display Default Message Textarea if the "Default Message" checkbox is checked, hide otherwise.
 		this.elements.$defaultMessageCheckbox.on( 'change', () => this.elements.$defaultMessageContainer.toggleClass( 'awb-hide' ) );
 		// Update the whatsApp button's background color according to the color picker value.
-		this.elements.$buttonBackground.on( 'change', () => this.elements.$whatsAppButton.css( 'background-color', this.elements.$buttonBackground.val() ) );
+		this.elements.$buttonBackground.on( 'change', () => {
+			if ( this.elements.$buttonTypeSelect.val() === 'wab-icon-plain' ) {
+				return;
+			}
+
+			this.elements.$whatsAppButton.css( 'background-color', this.elements.$buttonBackground.val() );
+		});
 		// Update the button's text color in the preview when the color picker value changes.
 		this.elements.$buttonTextColor.on( 'change',  () => this.updateButtonTextColor() );
 		// Control the button location on the preview mockup.
@@ -106,11 +112,21 @@ export default class SettingsHandler extends ModuleBase {
 			this.elements.$buttonText.addClass( this.selectors.displayNone );
 			// Show the icon size control if the button is an icon.
 			this.elements.$iconSizeSettingRow.removeClass( this.selectors.displayNone );
+			// Make the button background color none if the button is an icon, and disable the background color picker.
+			this.elements.$whatsAppButton.css( 'background-color', '' );
+			this.elements.$buttonBackground.prop( 'disabled', true );
 		} else {
-			// Show the button text if the nutton is not an icon.
+			// Show the button text if the button is not an icon.
 			this.elements.$buttonText.removeClass( this.selectors.displayNone );
 			// Hide the icon size setting if the button is not an icon.
 			this.elements.$iconSizeSettingRow.addClass( this.selectors.displayNone );
+			// Make the button background color customizable if the button is not an icon, and enable the background color picker.
+			this.elements.$buttonBackground.prop( 'disabled', false );
+			if (this.elements.$buttonBackground.val()) {
+				this.elements.$whatsAppButton.css( 'background-color', this.elements.$buttonBackground.val() );
+			} else {
+				this.elements.$whatsAppButton.css( 'background-color', '#20B038' );
+			}
 		}
 
 		if ( 'wab-bottom-rectangle' === selectedValue ) {

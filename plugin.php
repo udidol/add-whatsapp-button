@@ -176,9 +176,8 @@ class Plugin {
 		$settings = $this->get_plugin_options();
 
 		$button_text = isset( $settings['button_text'] ) ? sanitize_text_field( $settings['button_text'] ) : _e('Message Us on WhatsApp', 'add-whatsapp-button');
-		$displayNoneIfIcon = ( $settings['button_type'] == 'wab-icon-plain' || $settings['button_type'] == 'wab-icon-styled' ) ? 'awb-displaynone' : '';
+		$displayNoneIfIcon = ( $settings['button_type'] == 'wab-icon-plain' || $settings['button_type'] == 'wab-icon-styled' ) ? 'awb-hide' : '';
 		$button_style = !empty( $settings['button_type'] ) ? $settings['button_type'] : 'wab-side-rectangle';
-		$user_agent = $_SERVER['HTTP_USER_AGENT'];
 		$close_button_icon = '';
 	
 		if ( 'wab-bottom-rectangle' !== $settings['button_type'] ) {

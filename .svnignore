@@ -1,0 +1,13 @@
+.git
+.gitignore
+.github
+.claude
+bin
+node_modules
+src
+webpack.config.js
+package.json
+package-lock.json
+PLAN.md
+RELEASE_CHECKLIST.md
+README.md

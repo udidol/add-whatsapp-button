@@ -276,6 +276,7 @@ class Frontend {
 				height: <?php echo $icon_size . $icon_size_mu; ?>;
 				background-position: center center;
 				background-size: cover;
+				background-color: none;
 				background-image: url(<?php echo plugins_url( '../../img/wa-icon-original.png', __FILE__ ); ?>);
 				-webkit-transition: All 0.5s ease;
 				-moz-transition: All 0.5s ease;
@@ -321,7 +322,7 @@ class Frontend {
 				transition: All 0.5s ease;
 			}
 
-			.awb-displaynone {
+			.awb-hide {
 				display: none;
 			}
 

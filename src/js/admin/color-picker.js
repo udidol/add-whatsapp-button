@@ -30,6 +30,7 @@ export default class ColorPicker extends ModuleBase {
 		const selectors = this.selectors;
 
 		this.elements.$backgroundColorPicker.wpColorPicker( {
+			defaultColor: '#20B038',
 			/**
 			 * Listen to a change in the color picker in order to update the button background in the preview screen with the picked color
 			 *
@@ -59,6 +60,7 @@ export default class ColorPicker extends ModuleBase {
 
 		// Change text color in preview according to input
 		this.elements.$textColorPicker.wpColorPicker( {
+			defaultColor: '#ffffff',
 			change: ( event, ui ) => {
 				var color = ui.color.toString();
 		

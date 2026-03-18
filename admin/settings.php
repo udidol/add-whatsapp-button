@@ -158,7 +158,7 @@ class Admin_Settings {
 		// Create default button text
 		$button_text = ! empty( $settings['button_text'] ) ? sanitize_text_field( $settings['button_text'] ) : __('Message Us on WhatsApp', 'add-whatsapp-button');
 		// Hide Text if selected button style is "Icon"
-		$displayNoneIfIcon = ( $settings['button_type'] == 'wab-icon-plain' || $settings['button_type'] == 'wab-icon-styled' ) ? 'class="awb-displaynone"' : '';
+		$displayNoneIfIcon = ( ! empty( $settings['button_type'] ) && ( $settings['button_type'] == 'wab-icon-plain' || $settings['button_type'] == 'wab-icon-styled' ) ) ? 'class="awb-hide"' : '';
 		// Set default icon size if the button type is WhatsApp icon
 		$icon_size = ! empty( $settings['icon_size'] ) ? sanitize_text_field( $settings['icon_size'] ) : '80';
 		// If the breakpoint setting is inactive (the "enable breakpoint" checkbox is checked), hide the breakpoint settings.
@@ -174,11 +174,12 @@ class Admin_Settings {
 
 		$button_inline_styles = '';
 		// Inline Style
-		if ( $settings['button_bg_color'] || $settings['button_text_color'] ) {
+		if ( ! empty( $settings['button_bg_color'] ) || ! empty( $settings['button_text_color'] ) ) {
 			$button_inline_styles = ' style="';
 
 			// If there is a saved background color, add it to the button with a style tag.
-			if ( ! empty( $settings['button_bg_color'] ) ) {
+			$button_is_not_plain_icon = empty( $settings['button_type'] ) || ( ! empty( $settings['button_type'] ) && 'wab-icon-plain' === $settings['button_type'] );
+			if ( ! empty( $settings['button_bg_color'] ) && $button_is_not_plain_icon ) {
 				$button_inline_styles .= 'background-color: ' . $settings['button_bg_color'] . ';';
 			}
 
@@ -318,14 +319,14 @@ class Admin_Settings {
 							<tr>
 								<th scope="row"><label for="awb_settings[button_bg_color]"><?php echo esc_html__( 'Button Background Color', 'add-whatsapp-button' ); ?></label></th>
 								<td>
-									<input name="awb_settings[button_bg_color]" type="text" id="awb_settings[button_bg_color]"  value="<?php echo sanitize_text_field( $settings['button_bg_color'] ); ?>" class="udi-bg-color-picker" />
+									<input name="awb_settings[button_bg_color]" type="text" id="awb_settings[button_bg_color]"  value="<?php echo sanitize_text_field( ! empty( $settings['button_bg_color'] ) ? $settings['button_bg_color'] : '#20B038' ); ?>" class="udi-bg-color-picker" />
 									<p class="description"><?php echo esc_html__( 'Choose a background color for your button. Default is green (#20B038)', 'add-whatsapp-button'); ?></p>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row"><label for="awb_settings[button_text_color]"><?php echo esc_html__( 'Button Text Color', 'add-whatsapp-button' ); ?></label></th>
 								<td>
-									<input name="awb_settings[button_text_color]" type="text" id="awb_settings[button_text_color]"  value="<?php echo sanitize_text_field( $settings['button_text_color'] ); ?>" class="udi-text-color-picker" />
+									<input name="awb_settings[button_text_color]" type="text" id="awb_settings[button_text_color]"  value="<?php echo sanitize_text_field( ! empty( $settings['button_text_color'] ) ? $settings['button_text_color'] : '#ffffff' ); ?>" class="udi-text-color-picker" />
 									<p class="description"><?php echo esc_html__( 'Choose a text color for your button. Default is white (#ffffff)', 'add-whatsapp-button'); ?></p>
 								</td>
 							</tr>
@@ -335,8 +336,8 @@ class Admin_Settings {
 									<input name="awb_settings[distance_from_bottom]" type="number" id="awb_settings[distance_from_bottom]"  value="<?php echo sanitize_text_field( $settings['distance_from_bottom'] ); ?>" class="small-text" />
 
 									<select class="awb-mu-select" id="awb_settings[distance_from_bottom_mu]" name="awb_settings[distance_from_bottom_mu]" style="vertical-align: baseline;">
-										<option value="%" <?php selected( $settings['distance_from_bottom_mu'], '%' ); ?>>%</option>
-										<option value="px" <?php selected( $settings['distance_from_bottom_mu'], 'px' ); ?>>px</option>
+										<option value="%" <?php selected( $settings['distance_from_bottom_mu'] ?? '', '%' ); ?>>%</option>
+										<option value="px" <?php selected( $settings['distance_from_bottom_mu'] ?? '', 'px' ); ?>>px</option>
 									</select>
 
 									<p class="description"><?php echo esc_html__( 'Choose your button\'s Distance from the bottom of the screen, in percentages or pixels. Default is 10%.', 'add-whatsapp-button'); ?></p>
@@ -347,9 +348,9 @@ class Admin_Settings {
 								<td>
 									<select class="awb-bt-select" id="awb_settings[button_type]" name="awb_settings[button_type]" style="vertical-align: baseline;">
 										<option disabled selected value> -- Select Button Type -- </option>
-										<option value="wab-icon-plain" <?php selected( $settings['button_type'], 'wab-icon-plain' ); ?>>Plain WhatsApp Icon</option>
-										<option value="wab-side-rectangle" <?php selected( $settings['button_type'], 'wab-side-rectangle' ); ?>>Side-Floating Rectangle with Text</option>
-										<option value="wab-bottom-rectangle" <?php selected( $settings['button_type'], 'wab-bottom-rectangle' ); ?>>Fixed-Bottom Rectangle with Text</option>
+										<option value="wab-icon-plain" <?php selected( $settings['button_type'] ?? '', 'wab-icon-plain' ); ?>>Plain WhatsApp Icon</option>
+										<option value="wab-side-rectangle" <?php selected( $settings['button_type'] ?? '', 'wab-side-rectangle' ); ?>>Side-Floating Rectangle with Text</option>
+										<option value="wab-bottom-rectangle" <?php selected( $settings['button_type'] ?? '', 'wab-bottom-rectangle' ); ?>>Fixed-Bottom Rectangle with Text</option>
 									</select>
 									<p class="description"><?php echo esc_html__( 'Choose your button\'s Style: Round WhatsApp icon, a floating rectangle with text, or a full-width fixed bottom button.', 'add-whatsapp-button'); ?></p>
 								</td>
@@ -360,9 +361,9 @@ class Admin_Settings {
 									<input name="awb_settings[icon_size]" type="number" id="awb_settings[icon_size]"  value="<?php echo $icon_size; ?>" class="small-text" />
 
 									<select class="awb-mu-select" id="awb_settings[icon_size_mu]" name="awb_settings[icon_size_mu]" style="vertical-align: baseline;">
-										<option value="px" <?php selected( $settings['icon_size_mu'], 'px' ); ?>>px</option>
-										<option value="em" <?php selected( $settings['icon_size_mu'], 'em' ); ?>>em</option>
-										<option value="rem" <?php selected( $settings['icon_size_mu'], 'rem' ); ?>>rem</option>
+										<option value="px" <?php selected( $settings['icon_size_mu'] ?? '', 'px' ); ?>>px</option>
+										<option value="em" <?php selected( $settings['icon_size_mu'] ?? '', 'em' ); ?>>em</option>
+										<option value="rem" <?php selected( $settings['icon_size_mu'] ?? '', 'rem' ); ?>>rem</option>
 									</select>
 
 									<p class="description"><?php echo esc_html__( 'Choose your button\'s Distance from the bottom of the screen, in percentages or pixels. Default is 10%.', 'add-whatsapp-button'); ?></p>
@@ -371,8 +372,8 @@ class Admin_Settings {
 							<th scope="row"><label for="awb_settings[button_location]"><?php echo esc_html__( 'Button Location on Screen', 'add-whatsapp-button' ); ?></label></th>
 								<td>
 									<select id="awb_settings[button_location]" name="awb_settings[button_location]" style="vertical-align: baseline;">
-										<option value="right" <?php selected( $settings['button_location'], 'right' ); ?>>right</option>
-										<option value="left" <?php selected( $settings['button_location'], 'left' ); ?>>left</option>
+										<option value="right" <?php selected( $settings['button_location'] ?? '', 'right' ); ?>>right</option>
+										<option value="left" <?php selected( $settings['button_location'] ?? '', 'left' ); ?>>left</option>
 									</select>
 									<p class="description"><?php echo esc_html__( 'Choose whether your button will appear on the left side or right side of the screen', 'add-whatsapp-button'); ?></p>
 								</td>
