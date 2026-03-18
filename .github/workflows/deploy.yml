@@ -20,10 +20,11 @@ jobs:
           node-version: "20"
           cache: "npm"
 
-      - name: Install dependencies and build assets
+      - name: Install dependencies and build dist
         run: |
           npm ci
           npm run build
+          bash bin/build-dist.sh
 
       - name: Deploy to WordPress.org Plugin SVN
         uses: 10up/action-wordpress-plugin-deploy@stable
@@ -31,3 +32,4 @@ jobs:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SLUG: add-whatsapp-button
+          BUILD_DIR: dist
