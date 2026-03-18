@@ -366,7 +366,7 @@ class Admin_Settings {
 										<option value="rem" <?php selected( $settings['icon_size_mu'] ?? '', 'rem' ); ?>>rem</option>
 									</select>
 
-									<p class="description"><?php echo esc_html__( 'Choose your button\'s Distance from the bottom of the screen, in percentages or pixels. Default is 10%.', 'add-whatsapp-button'); ?></p>
+									<p class="description"><?php echo esc_html__( 'Choose your button\'s size, in pixels. Default is 80.', 'add-whatsapp-button'); ?></p>
 								</td>
 							</tr>
 							<th scope="row"><label for="awb_settings[button_location]"><?php echo esc_html__( 'Button Location on Screen', 'add-whatsapp-button' ); ?></label></th>
