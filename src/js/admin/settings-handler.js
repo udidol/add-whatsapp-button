@@ -114,14 +114,12 @@ export default class SettingsHandler extends ModuleBase {
 			this.elements.$iconSizeSettingRow.removeClass( this.selectors.displayNone );
 			// Make the button background color none if the button is an icon, and disable the background color picker.
 			this.elements.$whatsAppButton.css( 'background-color', '' );
-			this.elements.$buttonBackground.prop( 'disabled', true );
 		} else {
 			// Show the button text if the button is not an icon.
 			this.elements.$buttonText.removeClass( this.selectors.displayNone );
 			// Hide the icon size setting if the button is not an icon.
 			this.elements.$iconSizeSettingRow.addClass( this.selectors.displayNone );
 			// Make the button background color customizable if the button is not an icon, and enable the background color picker.
-			this.elements.$buttonBackground.prop( 'disabled', false );
 			if (this.elements.$buttonBackground.val()) {
 				this.elements.$whatsAppButton.css( 'background-color', this.elements.$buttonBackground.val() );
 			} else {

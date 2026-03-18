@@ -184,10 +184,10 @@ class Plugin {
 			$button_location = isset( $settings['button_location'] ) ? 'wab-pull-'.$settings['button_location'] : 'wab-pull-left';
 		}
 	
-		if ( 'full' === $settings['hide_button'] ) {
+		if ( isset( $settings['hide_button'] ) && 'full' === $settings['hide_button'] ) {
 			$close_button_icon = '<span class="wab-x">x</span>';
 		}
-		else if ( 'hide' === $settings['hide_button'] ) {
+		else if ( isset( $settings['hide_button'] ) && 'hide' === $settings['hide_button'] ) {
 			if ( 'right' === $settings['button_location'] && 'wab-bottom-rectangle' !== $settings['button_type'] ) {
 				$close_button_icon = '<img class="wab-chevron wab-right" src="' . plugins_url( '/img/chevron-right.svg', __FILE__ ) . '" />';
 			} else if ( 'left' === $settings['button_location'] && 'wab-bottom-rectangle' !== $settings['button_type'] ) {

@@ -4,6 +4,7 @@ export default class ColorPicker extends ModuleBase {
 	getSelectors() {
 		return {
 			backgroundColorPicker: '.udi-bg-color-picker',
+			whatsAppButtonContainer: '#admin_wab_cont',
 			whatsAppButton: '#whatsAppButton',
 			textColorPicker: '.udi-text-color-picker',
 			wpColorPicker: '.wp-color-picker',
@@ -15,6 +16,7 @@ export default class ColorPicker extends ModuleBase {
 
 		this.elements = {
 			$backgroundColorPicker: jQuery( selectors.backgroundColorPicker ),
+			$whatsAppButtonContainer: jQuery( selectors.whatsAppButtonContainer ),
 			$whatsAppButton: jQuery( selectors.whatsAppButton ),
 			$textColorPicker: jQuery( selectors.textColorPicker ),
 		};
@@ -24,6 +26,14 @@ export default class ColorPicker extends ModuleBase {
 		super.init();
 
 		this.initColorPickers();
+	}
+
+	changeButtonBackgroundColor( color ) {
+		if ( this.elements.$whatsAppButtonContainer.hasClass( 'wab-icon-plain')) {
+			this.elements.$whatsAppButton.css( 'background-color', '' );
+			return;
+		}
+		this.elements.$whatsAppButton.css( 'background-color', color );
 	}
 
 	initColorPickers() {
@@ -40,7 +50,7 @@ export default class ColorPicker extends ModuleBase {
 			 * containing a Color.js object.
 			 */
 			change: ( event, ui ) => {
-				this.elements.$whatsAppButton.css( 'background-color', ui.color.toString() );
+				this.changeButtonBackgroundColor( ui.color.toString() );
 			},
 		
 			/**
@@ -53,7 +63,7 @@ export default class ColorPicker extends ModuleBase {
 				const element = jQuery( event.target ).siblings( selectors.wpColorPicker )[0];
 		
 				if ( element ) {
-					this.elements.$whatsAppButton.css( 'background-color', '#20B038' );
+					this.changeButtonBackgroundColor( '#20B038' );
 				}
 			}
 		} );
