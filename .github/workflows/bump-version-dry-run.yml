@@ -1,0 +1,24 @@
+name: Bump Bugfix Version (Dry Run)
+
+on:
+  workflow_dispatch:
+    inputs:
+      wordpress_version:
+        description: 'WordPress version to mark compatibility with (e.g. 7.0.2)'
+        required: true
+        type: string
+      new_plugin_version:
+        description: 'New plugin version (leave blank to auto-increment patch)'
+        required: false
+        type: string
+
+jobs:
+  dry-run:
+    uses: ./.github/workflows/bump-version.yml
+    with:
+      wordpress_version: ${{ inputs.wordpress_version }}
+      new_plugin_version: ${{ inputs.new_plugin_version }}
+      dry_run: true
+    permissions:
+      contents: write
+      pull-requests: write

@@ -1,0 +1,118 @@
+name: Bump Bugfix Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      wordpress_version:
+        description: 'WordPress version to mark compatibility with (e.g. 7.0.2)'
+        required: true
+        type: string
+      new_plugin_version:
+        description: 'New plugin version (leave blank to auto-increment patch)'
+        required: false
+        type: string
+      dry_run:
+        description: 'Open a PR instead of committing to master and tagging'
+        required: false
+        type: boolean
+        default: false
+  workflow_call:
+    inputs:
+      wordpress_version:
+        required: true
+        type: string
+      new_plugin_version:
+        required: false
+        type: string
+      dry_run:
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  bump:
+    name: Bump plugin version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Compute new version
+        id: version
+        run: |
+          CURRENT=$(grep -m1 'Version:' add-whatsapp-button.php | sed 's/.*Version: *//')
+          if [ -n "${{ inputs.new_plugin_version }}" ]; then
+            NEW="${{ inputs.new_plugin_version }}"
+          else
+            MAJOR=$(echo "$CURRENT" | cut -d. -f1)
+            MINOR=$(echo "$CURRENT" | cut -d. -f2)
+            PATCH=$(echo "$CURRENT" | cut -d. -f3)
+            NEW="${MAJOR}.${MINOR}.$((PATCH + 1))"
+          fi
+          echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
+          echo "new=$NEW" >> "$GITHUB_OUTPUT"
+          echo "Bumping $CURRENT -> $NEW"
+
+      - name: Update readme.txt
+        env:
+          NEW_VERSION: ${{ steps.version.outputs.new }}
+          WP_VERSION: ${{ inputs.wordpress_version }}
+        run: |
+          python3 -c "
+          import os, re
+          new = os.environ['NEW_VERSION']
+          wp = os.environ['WP_VERSION']
+          with open('readme.txt', 'r') as f:
+              content = f.read()
+          content = re.sub(r'^Tested up to:.*$', f'Tested up to: {wp}', content, flags=re.MULTILINE)
+          content = re.sub(r'^Stable tag:.*$', f'Stable tag: {new}', content, flags=re.MULTILINE)
+          entry = f'= {new} =\n* Updated compatibility with WordPress {wp}\n\n'
+          content = content.replace('== Changelog ==\n\n', '== Changelog ==\n\n' + entry, 1)
+          with open('readme.txt', 'w') as f:
+              f.write(content)
+          "
+
+      - name: Update add-whatsapp-button.php
+        run: |
+          sed -i "s/^Version: .*/Version: ${{ steps.version.outputs.new }}/" add-whatsapp-button.php
+
+      - name: Update package.json
+        run: |
+          sed -i 's/"version": "[^"]*"/"version": "${{ steps.version.outputs.new }}"/' package.json
+
+      - name: Commit, tag, and push
+        if: ${{ !inputs.dry_run }}
+        run: |
+          NEW="${{ steps.version.outputs.new }}"
+          WP="${{ inputs.wordpress_version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add readme.txt add-whatsapp-button.php package.json
+          git commit -m "Update to $NEW, Updated support for WordPress $WP"
+          git tag "v$NEW"
+          git push origin HEAD:master
+          git push origin "v$NEW"
+
+      - name: Open pull request
+        if: ${{ inputs.dry_run }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          NEW="${{ steps.version.outputs.new }}"
+          WP="${{ inputs.wordpress_version }}"
+          BRANCH="bump-version-${NEW}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add readme.txt add-whatsapp-button.php package.json
+          git commit -m "Update to $NEW, Updated support for WordPress $WP"
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "Update to $NEW, Updated support for WordPress $WP" \
+            --body "Bumps plugin version from ${{ steps.version.outputs.current }} to $NEW and marks compatibility with WordPress $WP." \
+            --base master \
+            --head "$BRANCH"
