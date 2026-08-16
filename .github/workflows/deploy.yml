@@ -27,6 +27,12 @@ jobs:
           npm run build
           bash bin/build-dist.sh
 
+      - name: Get plugin version
+        id: plugin_version
+        run: |
+          VERSION=$(grep -m1 'Version:' add-whatsapp-button.php | sed 's/.*Version: *//')
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
       - name: Deploy to WordPress.org Plugin SVN
         uses: 10up/action-wordpress-plugin-deploy@stable
         env:
@@ -34,3 +40,4 @@ jobs:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SLUG: add-whatsapp-button
           BUILD_DIR: dist
+          VERSION: ${{ steps.plugin_version.outputs.version }}
