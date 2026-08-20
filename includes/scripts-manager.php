@@ -75,11 +75,13 @@ class Scripts_Manager {
 	private function enqueue_jquery_ui_draggable() {
 		$options = Plugin::$instance->get_plugin_options();
 
-		if ( ! empty ( $options['enable_dragging'] ) ? $options['enable_dragging'] : 0 ) {
+		$is_dragging_enabled = ! empty( $options['enable_dragging'] ) ? $options['enable_dragging'] : 0;
+
+		if ( ! $is_dragging_enabled ) {
 			return;
 		}
 
-		wp_enqueue_script( 'jquery_draggable', plugins_url( '../js/lib/jquery-ui.drag.min.js', __FILE__ ), array( 'jquery' ) );
-		wp_enqueue_script( 'jquery_touch_punch', plugins_url( '../js/lib/jquery.ui.touch-punch.min.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( 'jquery_draggable', plugins_url( '../vendors/jquery-ui/jquery-ui.drag.min.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( 'jquery_touch_punch', plugins_url( '../vendors/jquery-ui/jquery.ui.touch-punch.min.js', __FILE__ ), array( 'jquery' ) );
 	}
 }

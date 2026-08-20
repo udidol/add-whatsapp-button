@@ -1,4 +1,4 @@
-import ModuleBase from './module-base.js';
+import ModuleBase from '../shared/module-base.js';
 
 export default class ColorPicker extends ModuleBase {
 	getSelectors() {

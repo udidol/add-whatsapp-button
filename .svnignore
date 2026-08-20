@@ -11,3 +11,7 @@ package-lock.json
 PLAN.md
 RELEASE_CHECKLIST.md
 README.md
+TASKS.md
+.env
+.env.example
+TASKS.md

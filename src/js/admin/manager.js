@@ -1,4 +1,4 @@
-import ModuleBase from './module-base.js';
+import ModuleBase from '../shared/module-base.js';
 import ColorPicker from './color-picker.js';
 import SettingsHandler from './settings-handler.js';
 

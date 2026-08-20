@@ -2,9 +2,12 @@ const path = require( 'path' );
 
 module.exports = {
   mode: 'production',
-  entry: './src/js/admin/manager.js',
+  entry: {
+    admin: './src/js/admin/manager.js',
+    wab: './src/js/frontend/manager.js'
+  },
   output: {
-    filename: 'admin.js',
+    filename: '[name].js',
     path: path.resolve( __dirname, 'js' )
   },
 };
