@@ -187,7 +187,7 @@ class Admin_Settings {
 		$hb_no_show_class = empty( $settings['enable_hide_button'] ) ? ' class="awb-hide"' : '';
 		// If the 'Enable Message' setting is inactive, hide the textarea.
 		$em_no_show_class = empty( $settings['enable_message'] ) ? ' class="awb-hide"' : '';
-		// If the saved button type is not a plain WhatsApp icon, hide the icon size control.
+		// If the saved button type is not a WhatsApp icon, hide the icon size control.
 		$is_no_show_class = ! empty( $settings['button_type'] ) && 'wab-icon-plain' !== $settings['button_type'] ? ' class="awb-hide"' : '';
 		// Hide rectangle size rows when button type is icon or unset.
 		$rect_no_show_class = (
@@ -406,7 +406,7 @@ class Admin_Settings {
 								<td>
 									<select class="awb-bt-select" id="awb_settings[button_type]" name="awb_settings[button_type]" style="vertical-align: baseline;">
 										<option disabled selected value> -- Select Button Type -- </option>
-										<option value="wab-icon-plain" <?php selected( $settings['button_type'] ?? '', 'wab-icon-plain' ); ?>>Plain WhatsApp Icon</option>
+										<option value="wab-icon-plain" <?php selected( $settings['button_type'] ?? '', 'wab-icon-plain' ); ?>>WhatsApp Icon</option>
 										<option value="wab-side-rectangle" <?php selected( $settings['button_type'] ?? '', 'wab-side-rectangle' ); ?>>Side-Floating Rectangle with Text</option>
 										<option value="wab-bottom-rectangle" <?php selected( $settings['button_type'] ?? '', 'wab-bottom-rectangle' ); ?>>Fixed-Bottom Rectangle with Text</option>
 									</select>
@@ -460,7 +460,7 @@ class Admin_Settings {
 							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
 								<th scope="row"><?php echo esc_html__( 'Label Font Size', 'add-whatsapp-button' ); ?></th>
 								<td>
-									<input name="awb_settings[icon_label_font_size]" type="number" value="<?php echo esc_attr( $settings['icon_label_font_size'] ?? '14' ); ?>" class="small-text" />
+									<input name="awb_settings[icon_label_font_size]" id="awb_settings[icon_label_font_size]" type="number" value="<?php echo esc_attr( $settings['icon_label_font_size'] ?? '14' ); ?>" class="small-text" />
 									<select class="awb-mu-select" name="awb_settings[icon_label_font_size_mu]">
 										<option value="px" <?php selected( $settings['icon_label_font_size_mu'] ?? 'px', 'px' ); ?>>px</option>
 										<option value="em" <?php selected( $settings['icon_label_font_size_mu'] ?? 'px', 'em' ); ?>>em</option>
@@ -478,7 +478,7 @@ class Admin_Settings {
 							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
 								<th scope="row"><?php echo esc_html__( 'Label Padding', 'add-whatsapp-button' ); ?></th>
 								<td>
-									<input name="awb_settings[icon_label_padding]" type="number" value="<?php echo esc_attr( $settings['icon_label_padding'] ?? '8' ); ?>" class="small-text" />
+									<input name="awb_settings[icon_label_padding]" id="awb_settings[icon_label_padding]" type="number" value="<?php echo esc_attr( $settings['icon_label_padding'] ?? '8' ); ?>" class="small-text" />
 									<select class="awb-mu-select" name="awb_settings[icon_label_padding_mu]">
 										<option value="px" <?php selected( $settings['icon_label_padding_mu'] ?? 'px', 'px' ); ?>>px</option>
 										<option value="em" <?php selected( $settings['icon_label_padding_mu'] ?? 'px', 'em' ); ?>>em</option>
@@ -489,7 +489,7 @@ class Admin_Settings {
 							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
 								<th scope="row"><?php echo esc_html__( 'Label Border Radius', 'add-whatsapp-button' ); ?></th>
 								<td>
-									<input name="awb_settings[icon_label_radius]" type="number" value="<?php echo esc_attr( $settings['icon_label_radius'] ?? '4' ); ?>" class="small-text" />
+									<input name="awb_settings[icon_label_radius]" id="awb_settings[icon_label_radius]" type="number" value="<?php echo esc_attr( $settings['icon_label_radius'] ?? '4' ); ?>" class="small-text" />
 									<select class="awb-mu-select" name="awb_settings[icon_label_radius_mu]">
 										<option value="px" <?php selected( $settings['icon_label_radius_mu'] ?? 'px', 'px' ); ?>>px</option>
 										<option value="em" <?php selected( $settings['icon_label_radius_mu'] ?? 'px', 'em' ); ?>>em</option>
@@ -513,7 +513,7 @@ class Admin_Settings {
 							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
 								<th scope="row"><?php echo esc_html__( 'Outer Box Padding', 'add-whatsapp-button' ); ?></th>
 								<td>
-									<input name="awb_settings[icon_wrapper_padding]" type="number" value="<?php echo esc_attr( $settings['icon_wrapper_padding'] ?? '0' ); ?>" class="small-text" />
+									<input name="awb_settings[icon_wrapper_padding]" id="awb_settings[icon_wrapper_padding]" type="number" value="<?php echo esc_attr( $settings['icon_wrapper_padding'] ?? '0' ); ?>" class="small-text" />
 									<select class="awb-mu-select" name="awb_settings[icon_wrapper_padding_mu]">
 										<option value="px" <?php selected( $settings['icon_wrapper_padding_mu'] ?? 'px', 'px' ); ?>>px</option>
 										<option value="em" <?php selected( $settings['icon_wrapper_padding_mu'] ?? 'px', 'em' ); ?>>em</option>
@@ -524,7 +524,7 @@ class Admin_Settings {
 							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
 								<th scope="row"><?php echo esc_html__( 'Outer Box Border Radius', 'add-whatsapp-button' ); ?></th>
 								<td>
-									<input name="awb_settings[icon_wrapper_radius]" type="number" value="<?php echo esc_attr( $settings['icon_wrapper_radius'] ?? '0' ); ?>" class="small-text" />
+									<input name="awb_settings[icon_wrapper_radius]" id="awb_settings[icon_wrapper_radius]" type="number" value="<?php echo esc_attr( $settings['icon_wrapper_radius'] ?? '0' ); ?>" class="small-text" />
 									<select class="awb-mu-select" name="awb_settings[icon_wrapper_radius_mu]">
 										<option value="px" <?php selected( $settings['icon_wrapper_radius_mu'] ?? 'px', 'px' ); ?>>px</option>
 										<option value="em" <?php selected( $settings['icon_wrapper_radius_mu'] ?? 'px', 'em' ); ?>>em</option>

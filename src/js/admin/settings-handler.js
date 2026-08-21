@@ -31,18 +31,18 @@ export default class SettingsHandler extends ModuleBase {
 			iconLabelEnableCheckbox: '#awb_settings\\[icon_label_enable\\]',
 			iconLabelRows: '.icon-label-setting-row',
 			iconLabelPositionSelect: '#awb_settings\\[icon_label_position\\]',
-			iconLabelGapInput: 'input[name="awb_settings[icon_label_gap]"]',
+			iconLabelGapInput: '#awb_settings\\[icon_label_gap\\]',
 			iconLabelGapMuInput: 'select[name="awb_settings[icon_label_gap_mu]"]',
-			iconLabelFontSizeInput: 'input[name="awb_settings[icon_label_font_size]"]',
+			iconLabelFontSizeInput: '#awb_settings\\[icon_label_font_size\\]',
 			iconLabelFontSizeMuInput: 'select[name="awb_settings[icon_label_font_size_mu]"]',
-			iconLabelPaddingInput: 'input[name="awb_settings[icon_label_padding]"]',
+			iconLabelPaddingInput: '#awb_settings\\[icon_label_padding\\]',
 			iconLabelPaddingMuInput: 'select[name="awb_settings[icon_label_padding_mu]"]',
-			iconLabelRadiusInput: 'input[name="awb_settings[icon_label_radius]"]',
+			iconLabelRadiusInput: '#awb_settings\\[icon_label_radius\\]',
 			iconLabelRadiusMuInput: 'select[name="awb_settings[icon_label_radius_mu]"]',
 			iconLabelShadowCheckbox: '#awb_settings\\[icon_label_shadow\\]',
-			iconWrapperPaddingInput: 'input[name="awb_settings[icon_wrapper_padding]"]',
+			iconWrapperPaddingInput: '#awb_settings\\[icon_wrapper_padding\\]',
 			iconWrapperPaddingMuInput: 'select[name="awb_settings[icon_wrapper_padding_mu]"]',
-			iconWrapperRadiusInput: 'input[name="awb_settings[icon_wrapper_radius]"]',
+			iconWrapperRadiusInput: '#awb_settings\\[icon_wrapper_radius\\]',
 			iconWrapperRadiusMuInput: 'select[name="awb_settings[icon_wrapper_radius_mu]"]',
 			iconWrapperShadowCheckbox: '#awb_settings\\[icon_wrapper_shadow\\]',
 			iconWrapperAlignSelect: '#awb_settings\\[icon_wrapper_align\\]',
@@ -165,6 +165,15 @@ export default class SettingsHandler extends ModuleBase {
 		this.elements.$rectFontSizeMuInput.on( 'change', () => this.updateRectSize() );
 	}
 
+	init() {
+		super.init();
+		if ( this.isIconLabelEnabled() ) {
+			this.updatePreviewLabelPosition();
+			this.updateIconLabelStyle();
+			this.updateIconWrapperStyle();
+		}
+	}
+
 	isIconType() {
 		return this.elements.$buttonTypeSelect.val() === 'wab-icon-plain';
 	}
@@ -189,6 +198,8 @@ export default class SettingsHandler extends ModuleBase {
 		this.elements.$buttonContainer.toggleClass( 'icon-label-active', labelEnabled );
 		if ( labelEnabled ) {
 			this.updatePreviewLabelPosition();
+			this.updateIconLabelStyle();
+			this.updateIconWrapperStyle();
 		} else {
 			this.elements.$buttonContainer.css( { display: '', 'flex-direction': '', 'align-items': '', gap: '' } );
 		}
