@@ -7,6 +7,9 @@ export default class ColorPicker extends ModuleBase {
 			whatsAppButtonContainer: '#admin_wab_cont',
 			whatsAppButton: '#whatsAppButton',
 			textColorPicker: '.udi-text-color-picker',
+			labelBgColorPicker: '.awb-label-bg-color-picker',
+			wrapperBgColorPicker: '.awb-wrapper-bg-color-picker',
+			iconLabelText: '#wab-icon-label',
 			wpColorPicker: '.wp-color-picker',
 		};
 	}
@@ -19,6 +22,9 @@ export default class ColorPicker extends ModuleBase {
 			$whatsAppButtonContainer: jQuery( selectors.whatsAppButtonContainer ),
 			$whatsAppButton: jQuery( selectors.whatsAppButton ),
 			$textColorPicker: jQuery( selectors.textColorPicker ),
+			$labelBgColorPicker: jQuery( selectors.labelBgColorPicker ),
+			$wrapperBgColorPicker: jQuery( selectors.wrapperBgColorPicker ),
+			$iconLabelText: jQuery( selectors.iconLabelText ),
 		};
 	}
 
@@ -65,6 +71,26 @@ export default class ColorPicker extends ModuleBase {
 				if ( element ) {
 					this.changeButtonBackgroundColor( '#20B038' );
 				}
+			}
+		} );
+
+		this.elements.$labelBgColorPicker.wpColorPicker( {
+			defaultColor: '',
+			change: ( event, ui ) => {
+				this.elements.$iconLabelText.css( 'background-color', ui.color.toString() );
+			},
+			clear: () => {
+				this.elements.$iconLabelText.css( 'background-color', '' );
+			}
+		} );
+
+		this.elements.$wrapperBgColorPicker.wpColorPicker( {
+			defaultColor: '',
+			change: ( event, ui ) => {
+				this.elements.$whatsAppButtonContainer.css( 'background-color', ui.color.toString() );
+			},
+			clear: () => {
+				this.elements.$whatsAppButtonContainer.css( 'background-color', '' );
 			}
 		} );
 

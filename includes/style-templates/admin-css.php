@@ -29,6 +29,16 @@ class Admin {
 		$icon_size = ! empty( $settings['icon_size'] ) ? sanitize_text_field( $settings['icon_size'] ) : '80';
 		$icon_size_mu = ! empty( $settings['icon_size_mu'] ) ? $settings['icon_size_mu'] : 'px';
 
+		$icon_label_enable      = ! empty( $settings['icon_label_enable'] );
+		$icon_label_font_size   = ! empty( $settings['icon_label_font_size'] ) ? intval( $settings['icon_label_font_size'] ) : 14;
+		$icon_label_font_size_mu = ! empty( $settings['icon_label_font_size_mu'] ) ? $settings['icon_label_font_size_mu'] : 'px';
+		$icon_label_bg_color    = ! empty( $settings['icon_label_bg_color'] ) ? $settings['icon_label_bg_color'] : '';
+		$icon_label_padding     = ! empty( $settings['icon_label_padding'] ) ? intval( $settings['icon_label_padding'] ) : 8;
+		$icon_label_padding_mu  = ! empty( $settings['icon_label_padding_mu'] ) ? $settings['icon_label_padding_mu'] : 'px';
+		$icon_label_radius      = ! empty( $settings['icon_label_radius'] ) ? intval( $settings['icon_label_radius'] ) : 4;
+		$icon_label_radius_mu   = ! empty( $settings['icon_label_radius_mu'] ) ? $settings['icon_label_radius_mu'] : 'px';
+		$icon_wrapper_bg_color  = ! empty( $settings['icon_wrapper_bg_color'] ) ? $settings['icon_wrapper_bg_color'] : '';
+
 		?>
 		<style type="text/css">
 			.device-wrapper {
@@ -41,12 +51,12 @@ class Admin {
 				fill: #fff;
 			} */
 			
-			.wab-side-rectangle.wab-pull-right, .wab-icon-styled.wab-pull-right, .wab-icon-plain.wab-pull-right {
+			.wab-side-rectangle.wab-pull-right, .wab-icon-plain.wab-pull-right {
 				right: 0;
 				left: initial !important;
 			}
 
-			.wab-side-rectangle.wab-pull-left, .wab-icon-styled.wab-pull-left, .wab-icon-plain.wab-pull-left {
+			.wab-side-rectangle.wab-pull-left, .wab-icon-plain.wab-pull-left {
 				left: 0;
 				right: initial !important;
 			}
@@ -117,14 +127,14 @@ class Admin {
 
 			/* Icon */
 			
-			.wp-admin .wab-icon-styled.wab-cont, .wp-admin .wab-icon-plain.wab-cont {
+			.wp-admin .wab-icon-plain.wab-cont {
 				position: absolute;
 				<?php echo $button_location; ?>: 10px;
 				bottom: <?php echo $distance_from_bottom; echo $distance_from_bottom_mu; ?>;
 				z-index: 99999;
 			}
 
-			.wp-admin .wab-icon-styled #whatsAppButton, .wp-admin .wab-icon-plain #whatsAppButton {
+			.wp-admin .wab-icon-plain #whatsAppButton {
 				display: block;
 				width: <?php echo $icon_size . $icon_size_mu; ?>;
 				height: <?php echo $icon_size . $icon_size_mu; ?>;
@@ -132,11 +142,11 @@ class Admin {
 				background-size: cover;
 			}
 
-			.wp-admin .wab-icon-styled.wab-cont.wab-pull-left, .wp-admin .wab-icon-plain.wab-cont.wab-pull-left {
+			.wp-admin .wab-icon-plain.wab-cont.wab-pull-left {
 				left: 10px;
 			}
 
-			.wp-admin .wab-icon-styled.wab-cont.wab-pull-right, .wp-admin .wab-icon-plain.wab-cont.wab-pull-right {
+			.wp-admin .wab-icon-plain.wab-cont.wab-pull-right {
 				right: 10px;
 			}
 
@@ -144,6 +154,26 @@ class Admin {
 				background-color: none;
 				background-image: url(<?php echo plugins_url( '../../img/wa-icon-original.png', __FILE__ ); ?>);
 			}
+
+			<?php if ( $icon_label_enable ) : ?>
+
+			.wp-admin .wab-icon-plain #wab-icon-label {
+				font-size: <?php echo esc_attr( $icon_label_font_size . $icon_label_font_size_mu ); ?>;
+				color: <?php echo esc_attr( $button_text_color ); ?>;
+				white-space: nowrap;
+				<?php if ( $icon_label_bg_color ) : ?>background-color: <?php echo esc_attr( $icon_label_bg_color ); ?>;<?php endif; ?>
+				<?php if ( $icon_label_padding > 0 ) : ?>padding: <?php echo esc_attr( $icon_label_padding . $icon_label_padding_mu ); ?>;<?php endif; ?>
+				<?php if ( $icon_label_radius > 0 ) : ?>border-radius: <?php echo esc_attr( $icon_label_radius . $icon_label_radius_mu ); ?>;<?php endif; ?>
+				<?php if ( ! empty( $settings['icon_label_shadow'] ) ) : ?>box-shadow: 0 2px 8px rgba(0,0,0,0.3);<?php endif; ?>
+			}
+
+			<?php if ( $icon_wrapper_bg_color ) : ?>
+			.wp-admin #admin_wab_cont.wab-icon-plain.icon-label-active {
+				background-color: <?php echo esc_attr( $icon_wrapper_bg_color ); ?>;
+			}
+			<?php endif; ?>
+
+			<?php endif; ?>
 		</style>
 
 		<?php
