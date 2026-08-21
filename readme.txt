@@ -2,7 +2,7 @@
 Contributors: udidol
 Tags: whatsapp, button, whatsapp button
 Tested up to: 7.1
-Stable tag: 2.1.13
+Stable tag: 2.2
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -63,6 +63,18 @@ Both use the visitor's device clock, so they follow the visitor's local timezone
 No. The persistent dismiss option stores a small flag in the visitor's browser `localStorage`, not in a cookie. The flag contains no personal data — only a marker indicating the visitor previously dismissed the button. If your site requires a cookie/privacy policy, you may want to mention this localStorage use.
 
 == Changelog ==
+
+= 2.2 =
+* Added optional text label for the WhatsApp icon button style — supports above, below, left, and right positions relative to the icon, with controls for font size, padding, border radius, gap, background color, and drop shadow (Feature requests: [#1](https://wordpress.org/support/topic/feature-request-show-text-icon/), [#2](https://wordpress.org/support/topic/appreciate-if-you-could-add-button-text-for-default-whatsapp-icon-style-2/), [#3](https://wordpress.org/support/topic/insert-icon-in-button/))
+* Added label wrapper styling — background color, padding, border radius, and drop shadow for the container that holds the icon and label together
+* Added dismiss persistence — site owners can choose whether a visitor's button dismissal lasts for the current browser session or persists until the visitor clears site data ([feature request](https://wordpress.org/support/topic/feature-request-remember-hide-status/))
+* Added day-of-week scheduling — restrict the button to specific days of the week, independently of the existing display-hours limit ([feature request](https://wordpress.org/support/topic/days-of-the-week-function/))
+* Added breakpoint direction control — choose whether the breakpoint hides the button on screens narrower or wider than the set value, making it possible to show the button only on mobile ([feature request](https://wordpress.org/support/topic/how-can-i-hide-it-on-mobile/))
+* Added width, height, padding, and font size controls for the rectangle button styles ([feature request](https://wordpress.org/support/topic/button-size-22/))
+* Fixed the Button Design preview panel — now stays visible (sticky) while scrolling through settings on desktop
+* Fixed icon label preview not updating live when changing font size, gap, padding, border radius, or drop shadow settings
+* Fixed the Button Design tab content appearing below the General Settings tab content when General Settings was active
+* Fixed dismissed button state not restoring correctly on page refresh when using the "Hide with toggle button" option
 
 = 2.1.13 =
 * Updated compatibility with WordPress 7.1
