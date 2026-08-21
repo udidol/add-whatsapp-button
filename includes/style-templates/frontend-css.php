@@ -44,7 +44,7 @@ class Frontend {
 		$rect_font_size_mu = ! empty( $settings['rect_font_size_mu'] ) ? $settings['rect_font_size_mu'] : 'px';
 
 		$icon_label_enable     = ! empty( $settings['icon_label_enable'] );
-		$icon_label_position   = ! empty( $settings['icon_label_position'] ) ? $settings['icon_label_position'] : 'start';
+		$icon_label_position   = ! empty( $settings['icon_label_position'] ) ? $settings['icon_label_position'] : 'left';
 		$icon_label_gap        = ! empty( $settings['icon_label_gap'] ) ? intval( $settings['icon_label_gap'] ) : 8;
 		$icon_label_gap_mu     = ! empty( $settings['icon_label_gap_mu'] ) ? $settings['icon_label_gap_mu'] : 'px';
 		$icon_label_font_size  = ! empty( $settings['icon_label_font_size'] ) ? intval( $settings['icon_label_font_size'] ) : 14;
@@ -65,10 +65,11 @@ class Frontend {
 			$label_flex_direction = 'column-reverse';
 		} elseif ( 'below' === $icon_label_position ) {
 			$label_flex_direction = 'column';
-		} elseif ( 'start' === $icon_label_position ) {
-			$label_flex_direction = ( 'right' === $button_location ) ? 'row-reverse' : 'row';
+		} elseif ( 'right' === $icon_label_position ) {
+			$label_flex_direction = is_rtl() ? 'row-reverse' : 'row';
 		} else {
-			$label_flex_direction = ( 'right' === $button_location ) ? 'row' : 'row-reverse';
+			// 'left' (default) — also catches any legacy 'start'/'end' values
+			$label_flex_direction = is_rtl() ? 'row' : 'row-reverse';
 		}
 
 		ob_start();

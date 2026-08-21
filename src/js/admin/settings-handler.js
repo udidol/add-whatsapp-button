@@ -213,21 +213,15 @@ export default class SettingsHandler extends ModuleBase {
 		const location = this.elements.$buttonLocationSelect.val();
 		const alignItems = this.elements.$iconWrapperAlignSelect.val() || 'center';
 		const gap = this.elements.$iconLabelGapInput.val() + this.elements.$iconLabelGapMuInput.val();
-		const isRtl = window.awbAdminData && !! window.awbAdminData.isRtl;
-
 		let flexDirection;
 		if ( position === 'above' ) {
 			flexDirection = 'column-reverse';
 		} else if ( position === 'below' ) {
 			flexDirection = 'column';
+		} else if ( position === 'right' ) {
+			flexDirection = 'row';
 		} else {
-			// XOR: RTL swaps start/end because the admin preview renders in LTR
-			// context while the frontend renders in RTL, making row vs row-reverse
-			// produce opposite visuals for the same flex-direction value.
-			const useStartLogic = ( position === 'start' ) !== isRtl;
-			flexDirection = useStartLogic
-				? ( ( location === 'right' ) ? 'row-reverse' : 'row' )
-				: ( ( location === 'right' ) ? 'row' : 'row-reverse' );
+			flexDirection = 'row-reverse';
 		}
 
 		this.elements.$buttonContainer.css( { display: 'flex', 'flex-direction': flexDirection, 'align-items': alignItems, gap: gap } );

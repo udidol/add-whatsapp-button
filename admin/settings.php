@@ -68,9 +68,6 @@ class Admin_Settings {
 			true
 		);
 
-		wp_localize_script( 'awb-admin-script', 'awbAdminData', [
-			'isRtl' => is_rtl(),
-		] );
     }
 
 	/**
@@ -442,12 +439,12 @@ class Admin_Settings {
 								<th scope="row"><label for="awb_settings[icon_label_position]"><?php echo esc_html__( 'Label Position', 'add-whatsapp-button' ); ?></label></th>
 								<td>
 									<select id="awb_settings[icon_label_position]" name="awb_settings[icon_label_position]">
-										<option value="start" <?php selected( $settings['icon_label_position'] ?? 'start', 'start' ); ?>><?php echo esc_html__( 'Start', 'add-whatsapp-button' ); ?></option>
-										<option value="end" <?php selected( $settings['icon_label_position'] ?? 'start', 'end' ); ?>><?php echo esc_html__( 'End', 'add-whatsapp-button' ); ?></option>
-										<option value="above" <?php selected( $settings['icon_label_position'] ?? 'start', 'above' ); ?>><?php echo esc_html__( 'Above', 'add-whatsapp-button' ); ?></option>
-										<option value="below" <?php selected( $settings['icon_label_position'] ?? 'start', 'below' ); ?>><?php echo esc_html__( 'Below', 'add-whatsapp-button' ); ?></option>
+										<option value="left" <?php selected( $settings['icon_label_position'] ?? 'left', 'left' ); ?>><?php echo esc_html__( 'Left', 'add-whatsapp-button' ); ?></option>
+										<option value="right" <?php selected( $settings['icon_label_position'] ?? 'left', 'right' ); ?>><?php echo esc_html__( 'Right', 'add-whatsapp-button' ); ?></option>
+										<option value="above" <?php selected( $settings['icon_label_position'] ?? 'left', 'above' ); ?>><?php echo esc_html__( 'Above', 'add-whatsapp-button' ); ?></option>
+										<option value="below" <?php selected( $settings['icon_label_position'] ?? 'left', 'below' ); ?>><?php echo esc_html__( 'Below', 'add-whatsapp-button' ); ?></option>
 									</select>
-									<p class="description"><?php echo esc_html__( 'Where the label appears relative to the icon, following the page text direction. In LTR layouts "Start" is toward the page center; in RTL layouts the directions are reversed.', 'add-whatsapp-button' ); ?></p>
+									<p class="description"><?php echo esc_html__( 'Where the label appears relative to the icon.', 'add-whatsapp-button' ); ?></p>
 								</td>
 							</tr>
 							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
