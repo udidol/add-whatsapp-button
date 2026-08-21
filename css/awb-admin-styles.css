@@ -58,7 +58,7 @@ form p.submit {
 }
 
 @media screen and (min-width: 783px) {
-  #bdtab {
+  #bdtab.awb-tab-active {
     display: flex;
     align-items: flex-start;
     gap: 20px;
