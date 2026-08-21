@@ -81,7 +81,11 @@ export default class WhatsAppButtonHandler extends ModuleBase {
 		super.init();
 
 		if ( this.isButtonPreviouslyDismissed() ) {
-			this.elements.$buttonContainer.hide();
+			if ( HIDE_BUTTON_TYPE.HIDE === this.settings.hideButtonType ) {
+				this.toggleButton();
+			} else {
+				this.elements.$buttonContainer.hide();
+			}
 			return;
 		}
 
