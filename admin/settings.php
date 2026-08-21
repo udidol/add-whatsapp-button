@@ -272,6 +272,13 @@ class Admin_Settings {
 											<?php echo esc_html__( 'Choose this option to make the WhatsApp button slide almost entirely off screen, while keeping the toggle button visible.', 'add-whatsapp-button'); ?><br />
 											<?php echo esc_html__( 'Clicking the toggle button again will slide the WhatsApp button back into view.', 'add-whatsapp-button'); ?>
 										</p>
+										<p style="margin-top: 12px;"><strong><?php echo esc_html__( 'Remember dismissed state', 'add-whatsapp-button' ); ?></strong></p>
+										<select name="awb_settings[hide_button_persistence]" id="awb_settings[hide_button_persistence]">
+											<option value="none" <?php selected( $settings['hide_button_persistence'] ?? 'none', 'none' ); ?>><?php echo esc_html__( 'No — reset on every page load', 'add-whatsapp-button' ); ?></option>
+											<option value="session" <?php selected( $settings['hide_button_persistence'] ?? 'none', 'session' ); ?>><?php echo esc_html__( 'Within session — remembered while the browser tab stays open', 'add-whatsapp-button' ); ?></option>
+											<option value="persistent" <?php selected( $settings['hide_button_persistence'] ?? 'none', 'persistent' ); ?>><?php echo esc_html__( 'Persistent — remembered until the visitor clears site data', 'add-whatsapp-button' ); ?></option>
+										</select>
+										<p class="description"><?php echo esc_html__( 'Controls how long a visitor\'s dismissal is remembered across page navigation. Persistent mode stores a value in the browser\'s localStorage — mention this in your site\'s privacy policy if applicable.', 'add-whatsapp-button' ); ?></p>
 									</div>
 								</td>
 							</tr>

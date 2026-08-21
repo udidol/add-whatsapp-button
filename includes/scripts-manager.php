@@ -49,17 +49,19 @@ class Scripts_Manager {
 		$button_location = ( isset( $options['button_location'] ) ) ? $options['button_location'] : 'left';
 		$buttonType = isset( $options['button_type'] ) ? $options['button_type'] : 'wab-side-rectangle';
 		$dragEnabled = ! empty ( $options['enable_dragging'] ) ? $options['enable_dragging'] : 0;
+		$hideButtonPersistence = ! empty( $options['hide_button_persistence'] ) ? $options['hide_button_persistence'] : 'none';
 
 		// Create an array of the data we want to pass to the JS script
 		$dataToBePassed = array(
-			'startHour'       => $startHour,
-			'endHour'         => $endHour,
-			'limitHours'      => $awb_limitHours,
-			'hideButtonType'  => $hideButtonType,
-			'button_location' => $button_location,
-			'button_type'	  => $buttonType,
-			'dragEnabled'	  => $dragEnabled,
-			'plugins_url'	  => plugins_url()
+			'startHour'            => $startHour,
+			'endHour'              => $endHour,
+			'limitHours'           => $awb_limitHours,
+			'hideButtonType'       => $hideButtonType,
+			'hideButtonPersistence' => $hideButtonPersistence,
+			'button_location'      => $button_location,
+			'button_type'          => $buttonType,
+			'dragEnabled'          => $dragEnabled,
+			'plugins_url'          => plugins_url()
 		);
 
 		wp_localize_script( 'wab-main-script', 'wabSettings', $dataToBePassed );

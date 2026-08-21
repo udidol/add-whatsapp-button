@@ -50,6 +50,10 @@ The plugin detects whether the site visitor is using a desktop or mobile device 
 
 *Add Chat App Button* uses Javascript to check the time on the client's device. So it will be displayed/hidden according to the set time in each client's timezone.
 
+= The "Add Hide Button" feature has a "Persistent" dismiss option. Does this use cookies? =
+
+No. The persistent dismiss option stores a small flag in the visitor's browser `localStorage`, not in a cookie. The flag contains no personal data — only a marker indicating the visitor previously dismissed the button. If your site requires a cookie/privacy policy, you may want to mention this localStorage use.
+
 == Changelog ==
 
 = 2.1.13 =
