@@ -340,7 +340,7 @@ class Admin_Settings {
 											<input name="awb_settings[limit_days]" type="checkbox" id="awb_settings[limit_days]" value="1" <?php isset( $settings['limit_days'] ) ? checked( '1', $settings['limit_days'] ) : ''; ?>>
 											<label for="awb_settings[limit_days]"><strong><?php echo esc_html__( 'Limit to specific days of the week', 'add-whatsapp-button' ); ?></strong></label>
 										</p>
-										<div id="awb_limit_days"<?php echo $ld_no_show_class; ?>>
+										<div id="awb_limit_days"<?php echo $ld_no_show_class; ?> style="margin-top: 8px;">
 											<?php
 											$day_labels = [
 												0 => __( 'Sun', 'add-whatsapp-button' ),
