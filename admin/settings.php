@@ -181,7 +181,7 @@ class Admin_Settings {
 		// If the 'limit hours' setting is inactive, hide the hour controls.
 		$lh_no_show_class = empty( $settings['limit_hours'] ) ? ' class="awb-hide"' : '';
 		// Default active days Mon–Fri (1–5) when the setting has not been saved yet.
-		$active_days = isset( $settings['active_days'] ) ? (array) $settings['active_days'] : [ 1, 2, 3, 4, 5 ];
+		$active_days = isset( $settings['active_days'] ) ? (array) $settings['active_days'] : [ 0, 1, 2, 3, 4, 5, 6 ];
 		$ld_no_show_class = empty( $settings['limit_days'] ) ? ' class="awb-hide"' : '';
 		// If the 'Hide Button' setting is inactive, hide the radio buttons with the hiding settings.
 		$hb_no_show_class = empty( $settings['enable_hide_button'] ) ? ' class="awb-hide"' : '';
@@ -343,11 +343,13 @@ class Admin_Settings {
 										<div id="awb_limit_days"<?php echo $ld_no_show_class; ?>>
 											<?php
 											$day_labels = [
+												0 => __( 'Sun', 'add-whatsapp-button' ),
 												1 => __( 'Mon', 'add-whatsapp-button' ),
 												2 => __( 'Tue', 'add-whatsapp-button' ),
 												3 => __( 'Wed', 'add-whatsapp-button' ),
 												4 => __( 'Thu', 'add-whatsapp-button' ),
 												5 => __( 'Fri', 'add-whatsapp-button' ),
+												6 => __( 'Sat', 'add-whatsapp-button' ),
 											];
 											foreach ( $day_labels as $day_num => $day_label ) :
 											?>
