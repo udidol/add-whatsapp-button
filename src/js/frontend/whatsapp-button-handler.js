@@ -2,6 +2,7 @@ import ModuleBase from '../shared/module-base.js';
 
 const PLUGIN_SLUG = 'add-whatsapp-button';
 const SETTING_ENABLED = '1';
+const DISMISSED_STORAGE_KEY = 'awb_button_dismissed';
 const HIDDEN_CLASS = 'wab-hidden';
 
 // Amount of the button, in pixels, that stays on screen once it is toggled off.
@@ -79,10 +80,34 @@ export default class WhatsAppButtonHandler extends ModuleBase {
 
 		super.init();
 
+		if ( this.isButtonPreviouslyDismissed() ) {
+			this.elements.$buttonContainer.hide();
+			return;
+		}
+
 		this.initDragging();
 
 		if ( this.settings.limitHours === SETTING_ENABLED ) {
 			this.hideOutsideDisplayHours();
+		}
+	}
+
+	getStorage() {
+		return this.settings.hideButtonPersistence === 'persistent' ? localStorage : sessionStorage;
+	}
+
+	isButtonPreviouslyDismissed() {
+		const persistence = this.settings.hideButtonPersistence;
+		if ( persistence !== 'session' && persistence !== 'persistent' ) {
+			return false;
+		}
+		return !! this.getStorage().getItem( DISMISSED_STORAGE_KEY );
+	}
+
+	storeDismissedState() {
+		const persistence = this.settings.hideButtonPersistence;
+		if ( persistence === 'session' || persistence === 'persistent' ) {
+			this.getStorage().setItem( DISMISSED_STORAGE_KEY, '1' );
 		}
 	}
 
@@ -161,6 +186,8 @@ export default class WhatsAppButtonHandler extends ModuleBase {
 	}
 
 	onCloseButtonClick() {
+		this.storeDismissedState();
+
 		if ( HIDE_BUTTON_TYPE.FULL === this.settings.hideButtonType ) {
 			this.elements.$buttonContainer.hide();
 			return;
