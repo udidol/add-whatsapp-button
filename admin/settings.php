@@ -189,6 +189,11 @@ class Admin_Settings {
 		$em_no_show_class = empty( $settings['enable_message'] ) ? ' class="awb-hide"' : '';
 		// If the saved button type is not a plain WhatsApp icon, hide the icon size control.
 		$is_no_show_class = ! empty( $settings['button_type'] ) && 'wab-icon-plain' !== $settings['button_type'] ? ' class="awb-hide"' : '';
+		// Hide rectangle size rows when button type is icon or unset.
+		$rect_no_show_class = (
+			empty( $settings['button_type'] ) ||
+			'wab-side-rectangle' !== $settings['button_type'] && 'wab-bottom-rectangle' !== $settings['button_type']
+		) ? ' class="awb-hide"' : '';
 
 		$button_inline_styles = '';
 		// Inline Style
@@ -540,6 +545,52 @@ class Admin_Settings {
 										<option value="flex-end" <?php selected( $settings['icon_wrapper_align'] ?? 'center', 'flex-end' ); ?>><?php echo esc_html__( 'End', 'add-whatsapp-button' ); ?></option>
 									</select>
 									<p class="description"><?php echo esc_html__( 'Cross-axis alignment between the icon and label.', 'add-whatsapp-button' ); ?></p>
+								</td>
+							</tr>
+							<tr class="rect-size-setting-row"<?php echo $rect_no_show_class; ?>>
+								<th scope="row"><?php echo esc_html__( 'Button Width', 'add-whatsapp-button' ); ?></th>
+								<td>
+									<input name="awb_settings[rect_width]" type="number" id="awb_settings[rect_width]" value="<?php echo esc_attr( $settings['rect_width'] ?? '' ); ?>" class="small-text" placeholder="<?php echo esc_attr__( 'auto', 'add-whatsapp-button' ); ?>" />
+									<select class="awb-mu-select" name="awb_settings[rect_width_mu]">
+										<option value="px" <?php selected( $settings['rect_width_mu'] ?? 'px', 'px' ); ?>>px</option>
+										<option value="%" <?php selected( $settings['rect_width_mu'] ?? 'px', '%' ); ?>>%</option>
+										<option value="em" <?php selected( $settings['rect_width_mu'] ?? 'px', 'em' ); ?>>em</option>
+									</select>
+									<p class="description"><?php echo esc_html__( 'Leave empty to keep the default auto width.', 'add-whatsapp-button' ); ?></p>
+								</td>
+							</tr>
+							<tr class="rect-size-setting-row"<?php echo $rect_no_show_class; ?>>
+								<th scope="row"><?php echo esc_html__( 'Button Height', 'add-whatsapp-button' ); ?></th>
+								<td>
+									<input name="awb_settings[rect_height]" type="number" id="awb_settings[rect_height]" value="<?php echo esc_attr( $settings['rect_height'] ?? '' ); ?>" class="small-text" placeholder="<?php echo esc_attr__( 'auto', 'add-whatsapp-button' ); ?>" />
+									<select class="awb-mu-select" name="awb_settings[rect_height_mu]">
+										<option value="px" <?php selected( $settings['rect_height_mu'] ?? 'px', 'px' ); ?>>px</option>
+										<option value="em" <?php selected( $settings['rect_height_mu'] ?? 'px', 'em' ); ?>>em</option>
+									</select>
+									<p class="description"><?php echo esc_html__( 'Leave empty to keep the default auto height.', 'add-whatsapp-button' ); ?></p>
+								</td>
+							</tr>
+							<tr class="rect-size-setting-row"<?php echo $rect_no_show_class; ?>>
+								<th scope="row"><?php echo esc_html__( 'Button Padding', 'add-whatsapp-button' ); ?></th>
+								<td>
+									<input name="awb_settings[rect_padding]" type="number" id="awb_settings[rect_padding]" value="<?php echo esc_attr( $settings['rect_padding'] ?? '' ); ?>" class="small-text" placeholder="10" />
+									<select class="awb-mu-select" name="awb_settings[rect_padding_mu]">
+										<option value="px" <?php selected( $settings['rect_padding_mu'] ?? 'px', 'px' ); ?>>px</option>
+										<option value="em" <?php selected( $settings['rect_padding_mu'] ?? 'px', 'em' ); ?>>em</option>
+									</select>
+									<p class="description"><?php echo esc_html__( 'Leave empty to keep the default padding.', 'add-whatsapp-button' ); ?></p>
+								</td>
+							</tr>
+							<tr class="rect-size-setting-row"<?php echo $rect_no_show_class; ?>>
+								<th scope="row"><?php echo esc_html__( 'Button Font Size', 'add-whatsapp-button' ); ?></th>
+								<td>
+									<input name="awb_settings[rect_font_size]" type="number" id="awb_settings[rect_font_size]" value="<?php echo esc_attr( $settings['rect_font_size'] ?? '' ); ?>" class="small-text" placeholder="<?php echo esc_attr__( 'inherit', 'add-whatsapp-button' ); ?>" />
+									<select class="awb-mu-select" name="awb_settings[rect_font_size_mu]">
+										<option value="px" <?php selected( $settings['rect_font_size_mu'] ?? 'px', 'px' ); ?>>px</option>
+										<option value="em" <?php selected( $settings['rect_font_size_mu'] ?? 'px', 'em' ); ?>>em</option>
+										<option value="rem" <?php selected( $settings['rect_font_size_mu'] ?? 'px', 'rem' ); ?>>rem</option>
+									</select>
+									<p class="description"><?php echo esc_html__( 'Leave empty to inherit the page font size.', 'add-whatsapp-button' ); ?></p>
 								</td>
 							</tr>
 							<th scope="row"><label for="awb_settings[button_location]"><?php echo esc_html__( 'Button Location on Screen', 'add-whatsapp-button' ); ?></label></th>
