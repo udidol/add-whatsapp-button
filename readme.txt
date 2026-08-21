@@ -21,7 +21,7 @@ The plugin lets you choose between a simple WhatsApp icon and a rectangle with a
 1. The "General Settings" tab in the plugin settings page
 2. The "Button Design" tab in the plugin settings page
 3. An example of the side-floating rectangle button design. You can customize the text on the button, as well as the button's background and text colors, in the "Button Design" tab.
-4. An example of the plain WhatsApp icon that can be used as the floating button
+4. An example of the WhatsApp icon that can be used as the floating button
 5. An example of a fixed button anchored in the bottom of the page
  
 == Usage == 
