@@ -303,6 +303,10 @@ class Admin_Settings {
 									<div id="awb_breakpoint"<?php echo $bp_no_show_class; ?>>
 										<input name="awb_settings[breakpoint]" type="number" id="awb_settings[breakpoint]" value="<?php echo sanitize_text_field( $settings['breakpoint'] ); ?>" class="small-text"><?php echo esc_html__( 'px', 'add-whatsapp-button'); ?>
 										<p class="description"><?php echo esc_html__( 'Enter your desired screen width breakpoint here. Default is 600px.', 'add-whatsapp-button'); ?></p>
+										<select name="awb_settings[breakpoint_direction]" id="awb_settings[breakpoint_direction]" style="margin-top: 6px;">
+											<option value="hide_above" <?php selected( $settings['breakpoint_direction'] ?? 'hide_above', 'hide_above' ); ?>><?php echo esc_html__( 'Hide on screens wider than the breakpoint (default — hides on desktop)', 'add-whatsapp-button' ); ?></option>
+											<option value="hide_below" <?php selected( $settings['breakpoint_direction'] ?? 'hide_above', 'hide_below' ); ?>><?php echo esc_html__( 'Hide on screens narrower than the breakpoint (hides on mobile)', 'add-whatsapp-button' ); ?></option>
+										</select>
 									</div>
 								</td>
 							</tr>

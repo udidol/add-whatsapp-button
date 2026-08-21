@@ -21,6 +21,7 @@ class Frontend {
 		$settings = Plugin::$instance->get_plugin_options();
 
 		$breakpoint = !empty( $settings['breakpoint'] ) && is_numeric( $settings['breakpoint'] ) ? $settings['breakpoint'] : '600';
+		$breakpoint_direction = ! empty( $settings['breakpoint_direction'] ) ? $settings['breakpoint_direction'] : 'hide_above';
 		$distance_from_bottom = isset( $settings['distance_from_bottom'] ) && is_numeric( $settings['distance_from_bottom'] ) ? $settings['distance_from_bottom'] : '10';
 		$distance_from_bottom_mu = isset( $settings['distance_from_bottom_mu'] ) ? $settings['distance_from_bottom_mu'] : '%'; 
 		$button_bg_color = !empty( $settings['button_bg_color'] ) ? $settings['button_bg_color'] : '#20B038';
@@ -65,7 +66,8 @@ class Frontend {
 		?>
 		<style type="text/css">
 			<?php if ( isset( $settings['enable_breakpoint'] ) ) { ?>
-				@media only screen and (min-width: <?php echo $breakpoint.'px'; ?>) {
+				<?php $media_condition = ( 'hide_below' === $breakpoint_direction ) ? 'max-width' : 'min-width'; ?>
+				@media only screen and (<?php echo $media_condition; ?>: <?php echo $breakpoint . 'px'; ?>) {
 					.wab-cont {
 						display: none;
 					}
