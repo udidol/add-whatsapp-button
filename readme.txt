@@ -50,6 +50,10 @@ The plugin detects whether the site visitor is using a desktop or mobile device 
 
 *Add Chat App Button* uses Javascript to check the time on the client's device. So it will be displayed/hidden according to the set time in each client's timezone.
 
+= Can I change the size of the rectangle-style button? =
+
+Yes. When a rectangle style is selected in the Button Design tab, you will see width, height, padding, and font size controls. Leave any field empty to keep the default value. No custom CSS is required.
+
 = The display-hours limit and the day-of-week limit — which timezone do they use? =
 
 Both use the visitor's device clock, so they follow the visitor's local timezone. If your business hours are in a specific timezone, factor in the offset when setting the start and end hours.

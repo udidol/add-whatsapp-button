@@ -34,6 +34,15 @@ class Frontend {
 		$icon_size = ! empty( $settings['icon_size'] ) ? sanitize_text_field( $settings['icon_size'] ) : '80';
 		$icon_size_mu = ! empty( $settings['icon_size_mu'] ) ? $settings['icon_size_mu'] : 'px';
 
+		$rect_width      = ! empty( $settings['rect_width'] ) && is_numeric( $settings['rect_width'] ) ? intval( $settings['rect_width'] ) : '';
+		$rect_width_mu   = ! empty( $settings['rect_width_mu'] ) ? $settings['rect_width_mu'] : 'px';
+		$rect_height     = ! empty( $settings['rect_height'] ) && is_numeric( $settings['rect_height'] ) ? intval( $settings['rect_height'] ) : '';
+		$rect_height_mu  = ! empty( $settings['rect_height_mu'] ) ? $settings['rect_height_mu'] : 'px';
+		$rect_padding    = ! empty( $settings['rect_padding'] ) && is_numeric( $settings['rect_padding'] ) ? intval( $settings['rect_padding'] ) : '';
+		$rect_padding_mu = ! empty( $settings['rect_padding_mu'] ) ? $settings['rect_padding_mu'] : 'px';
+		$rect_font_size  = ! empty( $settings['rect_font_size'] ) && is_numeric( $settings['rect_font_size'] ) ? intval( $settings['rect_font_size'] ) : '';
+		$rect_font_size_mu = ! empty( $settings['rect_font_size_mu'] ) ? $settings['rect_font_size_mu'] : 'px';
+
 		$icon_label_enable     = ! empty( $settings['icon_label_enable'] );
 		$icon_label_position   = ! empty( $settings['icon_label_position'] ) ? $settings['icon_label_position'] : 'start';
 		$icon_label_gap        = ! empty( $settings['icon_label_gap'] ) ? intval( $settings['icon_label_gap'] ) : 8;
@@ -387,6 +396,18 @@ class Frontend {
 			.wab-icon-plain #wab_drag img {
 				height: 4px;
 			}
+
+			<?php if ( $rect_width !== '' || $rect_height !== '' || $rect_padding !== '' || $rect_font_size !== '' ) : ?>
+
+			.wab-side-rectangle #whatsAppButton,
+			.wab-bottom-rectangle #whatsAppButton {
+				<?php if ( $rect_width !== '' ) : ?>width: <?php echo esc_attr( $rect_width . $rect_width_mu ); ?>;<?php endif; ?>
+				<?php if ( $rect_height !== '' ) : ?>height: <?php echo esc_attr( $rect_height . $rect_height_mu ); ?>;<?php endif; ?>
+				<?php if ( $rect_padding !== '' ) : ?>padding: <?php echo esc_attr( $rect_padding . $rect_padding_mu ); ?>;<?php endif; ?>
+				<?php if ( $rect_font_size !== '' ) : ?>font-size: <?php echo esc_attr( $rect_font_size . $rect_font_size_mu ); ?>;<?php endif; ?>
+			}
+
+			<?php endif; ?>
 
 			<?php if ( $icon_label_enable ) : ?>
 

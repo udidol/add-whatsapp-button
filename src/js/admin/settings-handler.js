@@ -31,6 +31,15 @@ export default class SettingsHandler extends ModuleBase {
 			iconLabelEnableCheckbox: '#awb_settings\\[icon_label_enable\\]',
 			iconLabelRows: '.icon-label-setting-row',
 			iconLabelPositionSelect: '#awb_settings\\[icon_label_position\\]',
+			rectSizeRows: '.rect-size-setting-row',
+			rectWidthInput: '#awb_settings\\[rect_width\\]',
+			rectWidthMuInput: 'select[name="awb_settings[rect_width_mu]"]',
+			rectHeightInput: '#awb_settings\\[rect_height\\]',
+			rectHeightMuInput: 'select[name="awb_settings[rect_height_mu]"]',
+			rectPaddingInput: '#awb_settings\\[rect_padding\\]',
+			rectPaddingMuInput: 'select[name="awb_settings[rect_padding_mu]"]',
+			rectFontSizeInput: '#awb_settings\\[rect_font_size\\]',
+			rectFontSizeMuInput: 'select[name="awb_settings[rect_font_size_mu]"]',
 			displayNone: 'awb-hide'
 		};
 	}
@@ -66,6 +75,15 @@ export default class SettingsHandler extends ModuleBase {
 			$iconLabelEnableCheckbox: jQuery( selectors.iconLabelEnableCheckbox ),
 			$iconLabelRows: jQuery( selectors.iconLabelRows ),
 			$iconLabelPositionSelect: jQuery( selectors.iconLabelPositionSelect ),
+			$rectSizeRows: jQuery( selectors.rectSizeRows ),
+			$rectWidthInput: jQuery( selectors.rectWidthInput ),
+			$rectWidthMuInput: jQuery( selectors.rectWidthMuInput ),
+			$rectHeightInput: jQuery( selectors.rectHeightInput ),
+			$rectHeightMuInput: jQuery( selectors.rectHeightMuInput ),
+			$rectPaddingInput: jQuery( selectors.rectPaddingInput ),
+			$rectPaddingMuInput: jQuery( selectors.rectPaddingMuInput ),
+			$rectFontSizeInput: jQuery( selectors.rectFontSizeInput ),
+			$rectFontSizeMuInput: jQuery( selectors.rectFontSizeMuInput ),
 			$whatsAppButton: jQuery( selectors.whatsAppButton )
 		};
 	}
@@ -92,6 +110,14 @@ export default class SettingsHandler extends ModuleBase {
 		this.elements.$distanceFromBottomMeasurementUnitInput.on( 'change', () => this.updateDistanceFromBottom() );
 		this.elements.$iconLabelEnableCheckbox.on( 'change', () => this.toggleIconLabelRows() );
 		this.elements.$iconLabelPositionSelect.on( 'change', () => this.updatePreviewLabelPosition() );
+		this.elements.$rectWidthInput.on( 'input', () => this.updateRectSize() );
+		this.elements.$rectWidthMuInput.on( 'change', () => this.updateRectSize() );
+		this.elements.$rectHeightInput.on( 'input', () => this.updateRectSize() );
+		this.elements.$rectHeightMuInput.on( 'change', () => this.updateRectSize() );
+		this.elements.$rectPaddingInput.on( 'input', () => this.updateRectSize() );
+		this.elements.$rectPaddingMuInput.on( 'change', () => this.updateRectSize() );
+		this.elements.$rectFontSizeInput.on( 'input', () => this.updateRectSize() );
+		this.elements.$rectFontSizeMuInput.on( 'change', () => this.updateRectSize() );
 	}
 
 	isIconType() {
@@ -161,10 +187,14 @@ export default class SettingsHandler extends ModuleBase {
 		this.elements.$buttonContainer.removeClass( 'wab-side-rectangle wab-bottom-rectangle wab-icon-plain' );
 		this.elements.$buttonContainer.addClass( selectedValue );
 
-		if ( 'wab-icon-plain' === selectedValue ) {
+		const isIcon = ( 'wab-icon-plain' === selectedValue );
+		const isRect = ( 'wab-side-rectangle' === selectedValue || 'wab-bottom-rectangle' === selectedValue );
+
+		if ( isIcon ) {
 			this.elements.$buttonText.addClass( this.selectors.displayNone );
 			this.elements.$iconSizeSettingRow.removeClass( this.selectors.displayNone );
 			this.elements.$iconLabelEnableRow.removeClass( this.selectors.displayNone );
+			this.elements.$rectSizeRows.addClass( this.selectors.displayNone );
 			this.elements.$whatsAppButton.css( 'background-color', '' );
 		} else {
 			this.elements.$buttonText.removeClass( this.selectors.displayNone );
@@ -173,6 +203,7 @@ export default class SettingsHandler extends ModuleBase {
 			this.elements.$iconLabelRows.addClass( this.selectors.displayNone );
 			this.elements.$iconLabelText.addClass( this.selectors.displayNone );
 			this.elements.$buttonContainer.css( { display: '', 'flex-direction': '', 'align-items': '' } );
+			this.elements.$rectSizeRows.toggleClass( this.selectors.displayNone, ! isRect );
 			if ( this.elements.$buttonBackground.val() ) {
 				this.elements.$whatsAppButton.css( 'background-color', this.elements.$buttonBackground.val() );
 			} else {
@@ -183,6 +214,18 @@ export default class SettingsHandler extends ModuleBase {
 		if ( 'wab-bottom-rectangle' === selectedValue ) {
 			this.elements.$buttonContainer.css( 'bottom', '' );
 		}
+	}
+
+	updateRectSize() {
+		const width = this.elements.$rectWidthInput.val();
+		const height = this.elements.$rectHeightInput.val();
+		const padding = this.elements.$rectPaddingInput.val();
+		const fontSize = this.elements.$rectFontSizeInput.val();
+
+		this.elements.$whatsAppButton.css( 'width', width ? width + this.elements.$rectWidthMuInput.val() : '' );
+		this.elements.$whatsAppButton.css( 'height', height ? height + this.elements.$rectHeightMuInput.val() : '' );
+		this.elements.$whatsAppButton.css( 'padding', padding ? padding + this.elements.$rectPaddingMuInput.val() : '' );
+		this.elements.$whatsAppButton.css( 'font-size', fontSize ? fontSize + this.elements.$rectFontSizeMuInput.val() : '' );
 	}
 
 	updateButtonText() {
