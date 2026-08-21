@@ -31,6 +31,21 @@ export default class SettingsHandler extends ModuleBase {
 			iconLabelEnableCheckbox: '#awb_settings\\[icon_label_enable\\]',
 			iconLabelRows: '.icon-label-setting-row',
 			iconLabelPositionSelect: '#awb_settings\\[icon_label_position\\]',
+			iconLabelGapInput: 'input[name="awb_settings[icon_label_gap]"]',
+			iconLabelGapMuInput: 'select[name="awb_settings[icon_label_gap_mu]"]',
+			iconLabelFontSizeInput: 'input[name="awb_settings[icon_label_font_size]"]',
+			iconLabelFontSizeMuInput: 'select[name="awb_settings[icon_label_font_size_mu]"]',
+			iconLabelPaddingInput: 'input[name="awb_settings[icon_label_padding]"]',
+			iconLabelPaddingMuInput: 'select[name="awb_settings[icon_label_padding_mu]"]',
+			iconLabelRadiusInput: 'input[name="awb_settings[icon_label_radius]"]',
+			iconLabelRadiusMuInput: 'select[name="awb_settings[icon_label_radius_mu]"]',
+			iconLabelShadowCheckbox: '#awb_settings\\[icon_label_shadow\\]',
+			iconWrapperPaddingInput: 'input[name="awb_settings[icon_wrapper_padding]"]',
+			iconWrapperPaddingMuInput: 'select[name="awb_settings[icon_wrapper_padding_mu]"]',
+			iconWrapperRadiusInput: 'input[name="awb_settings[icon_wrapper_radius]"]',
+			iconWrapperRadiusMuInput: 'select[name="awb_settings[icon_wrapper_radius_mu]"]',
+			iconWrapperShadowCheckbox: '#awb_settings\\[icon_wrapper_shadow\\]',
+			iconWrapperAlignSelect: '#awb_settings\\[icon_wrapper_align\\]',
 			rectSizeRows: '.rect-size-setting-row',
 			rectWidthInput: '#awb_settings\\[rect_width\\]',
 			rectWidthMuInput: 'select[name="awb_settings[rect_width_mu]"]',
@@ -75,6 +90,21 @@ export default class SettingsHandler extends ModuleBase {
 			$iconLabelEnableCheckbox: jQuery( selectors.iconLabelEnableCheckbox ),
 			$iconLabelRows: jQuery( selectors.iconLabelRows ),
 			$iconLabelPositionSelect: jQuery( selectors.iconLabelPositionSelect ),
+			$iconLabelGapInput: jQuery( selectors.iconLabelGapInput ),
+			$iconLabelGapMuInput: jQuery( selectors.iconLabelGapMuInput ),
+			$iconLabelFontSizeInput: jQuery( selectors.iconLabelFontSizeInput ),
+			$iconLabelFontSizeMuInput: jQuery( selectors.iconLabelFontSizeMuInput ),
+			$iconLabelPaddingInput: jQuery( selectors.iconLabelPaddingInput ),
+			$iconLabelPaddingMuInput: jQuery( selectors.iconLabelPaddingMuInput ),
+			$iconLabelRadiusInput: jQuery( selectors.iconLabelRadiusInput ),
+			$iconLabelRadiusMuInput: jQuery( selectors.iconLabelRadiusMuInput ),
+			$iconLabelShadowCheckbox: jQuery( selectors.iconLabelShadowCheckbox ),
+			$iconWrapperPaddingInput: jQuery( selectors.iconWrapperPaddingInput ),
+			$iconWrapperPaddingMuInput: jQuery( selectors.iconWrapperPaddingMuInput ),
+			$iconWrapperRadiusInput: jQuery( selectors.iconWrapperRadiusInput ),
+			$iconWrapperRadiusMuInput: jQuery( selectors.iconWrapperRadiusMuInput ),
+			$iconWrapperShadowCheckbox: jQuery( selectors.iconWrapperShadowCheckbox ),
+			$iconWrapperAlignSelect: jQuery( selectors.iconWrapperAlignSelect ),
 			$rectSizeRows: jQuery( selectors.rectSizeRows ),
 			$rectWidthInput: jQuery( selectors.rectWidthInput ),
 			$rectWidthMuInput: jQuery( selectors.rectWidthMuInput ),
@@ -110,6 +140,21 @@ export default class SettingsHandler extends ModuleBase {
 		this.elements.$distanceFromBottomMeasurementUnitInput.on( 'change', () => this.updateDistanceFromBottom() );
 		this.elements.$iconLabelEnableCheckbox.on( 'change', () => this.toggleIconLabelRows() );
 		this.elements.$iconLabelPositionSelect.on( 'change', () => this.updatePreviewLabelPosition() );
+		this.elements.$iconLabelGapInput.on( 'input', () => this.updateIconWrapperStyle() );
+		this.elements.$iconLabelGapMuInput.on( 'change', () => this.updateIconWrapperStyle() );
+		this.elements.$iconLabelFontSizeInput.on( 'input', () => this.updateIconLabelStyle() );
+		this.elements.$iconLabelFontSizeMuInput.on( 'change', () => this.updateIconLabelStyle() );
+		this.elements.$iconLabelPaddingInput.on( 'input', () => this.updateIconLabelStyle() );
+		this.elements.$iconLabelPaddingMuInput.on( 'change', () => this.updateIconLabelStyle() );
+		this.elements.$iconLabelRadiusInput.on( 'input', () => this.updateIconLabelStyle() );
+		this.elements.$iconLabelRadiusMuInput.on( 'change', () => this.updateIconLabelStyle() );
+		this.elements.$iconLabelShadowCheckbox.on( 'change', () => this.updateIconLabelStyle() );
+		this.elements.$iconWrapperPaddingInput.on( 'input', () => this.updateIconWrapperStyle() );
+		this.elements.$iconWrapperPaddingMuInput.on( 'change', () => this.updateIconWrapperStyle() );
+		this.elements.$iconWrapperRadiusInput.on( 'input', () => this.updateIconWrapperStyle() );
+		this.elements.$iconWrapperRadiusMuInput.on( 'change', () => this.updateIconWrapperStyle() );
+		this.elements.$iconWrapperShadowCheckbox.on( 'change', () => this.updateIconWrapperStyle() );
+		this.elements.$iconWrapperAlignSelect.on( 'change', () => this.updatePreviewLabelPosition() );
 		this.elements.$rectWidthInput.on( 'input', () => this.updateRectSize() );
 		this.elements.$rectWidthMuInput.on( 'change', () => this.updateRectSize() );
 		this.elements.$rectHeightInput.on( 'input', () => this.updateRectSize() );
@@ -155,6 +200,8 @@ export default class SettingsHandler extends ModuleBase {
 		}
 		const position = this.elements.$iconLabelPositionSelect.val();
 		const location = this.elements.$buttonLocationSelect.val();
+		const alignItems = this.elements.$iconWrapperAlignSelect.val() || 'center';
+		const gap = this.elements.$iconLabelGapInput.val() + this.elements.$iconLabelGapMuInput.val();
 
 		let flexDirection;
 		if ( position === 'above' ) {
@@ -167,7 +214,41 @@ export default class SettingsHandler extends ModuleBase {
 			flexDirection = ( location === 'right' ) ? 'row' : 'row-reverse';
 		}
 
-		this.elements.$buttonContainer.css( { display: 'flex', 'flex-direction': flexDirection, 'align-items': 'center' } );
+		this.elements.$buttonContainer.css( { display: 'flex', 'flex-direction': flexDirection, 'align-items': alignItems, gap: gap } );
+	}
+
+	updateIconLabelStyle() {
+		const fontSize = this.elements.$iconLabelFontSizeInput.val();
+		const fontSizeMu = this.elements.$iconLabelFontSizeMuInput.val();
+		const padding = this.elements.$iconLabelPaddingInput.val();
+		const paddingMu = this.elements.$iconLabelPaddingMuInput.val();
+		const radius = this.elements.$iconLabelRadiusInput.val();
+		const radiusMu = this.elements.$iconLabelRadiusMuInput.val();
+		const shadowEnabled = this.elements.$iconLabelShadowCheckbox.is( ':checked' );
+
+		this.elements.$iconLabelText.css( {
+			'font-size': fontSize ? fontSize + fontSizeMu : '',
+			'padding': padding > 0 ? padding + paddingMu : '',
+			'border-radius': radius > 0 ? radius + radiusMu : '',
+			'box-shadow': shadowEnabled ? '0 2px 8px rgba(0,0,0,0.3)' : 'none'
+		} );
+	}
+
+	updateIconWrapperStyle() {
+		const padding = this.elements.$iconWrapperPaddingInput.val();
+		const paddingMu = this.elements.$iconWrapperPaddingMuInput.val();
+		const radius = this.elements.$iconWrapperRadiusInput.val();
+		const radiusMu = this.elements.$iconWrapperRadiusMuInput.val();
+		const shadowEnabled = this.elements.$iconWrapperShadowCheckbox.is( ':checked' );
+		const gap = this.elements.$iconLabelGapInput.val();
+		const gapMu = this.elements.$iconLabelGapMuInput.val();
+
+		this.elements.$buttonContainer.css( {
+			'padding': padding > 0 ? padding + paddingMu : '',
+			'border-radius': radius > 0 ? radius + radiusMu : '',
+			'box-shadow': shadowEnabled ? '0 2px 8px rgba(0,0,0,0.3)' : 'none',
+			'gap': gap ? gap + gapMu : ''
+		} );
 	}
 
 	updateIconSize() {
