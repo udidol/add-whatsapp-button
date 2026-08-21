@@ -175,8 +175,9 @@ class Plugin {
 	public function print_button() {
 		$settings = $this->get_plugin_options();
 
-		$button_text = isset( $settings['button_text'] ) ? sanitize_text_field( $settings['button_text'] ) : _e('Message Us on WhatsApp', 'add-whatsapp-button');
-		$displayNoneIfIcon = ( $settings['button_type'] == 'wab-icon-plain' || $settings['button_type'] == 'wab-icon-styled' ) ? 'awb-hide' : '';
+		$allowed_label_html = [ 'strong' => [], 'em' => [], 'br' => [] ];
+		$button_text = isset( $settings['button_text'] ) ? wp_kses( $settings['button_text'], $allowed_label_html ) : __( 'Message Us on WhatsApp', 'add-whatsapp-button' );
+		$displayNoneIfIcon = ( $settings['button_type'] == 'wab-icon-plain' ) ? 'awb-hide' : '';
 		$button_style = !empty( $settings['button_type'] ) ? $settings['button_type'] : 'wab-side-rectangle';
 		$close_button_icon = '';
 	
@@ -201,7 +202,17 @@ class Plugin {
 		?>
 	
 			<div id="wab_cont"  class="wab-cont ui-draggable <?php echo $button_style; ?> <?php echo $button_location; ?>">
-				<a id="whatsAppButton" href="https://wa.me/<?php echo esc_html( $settings['phone_number'] ); ?><?php echo ( !empty($settings['default_message']) && $settings['enable_message'] == '1' ) ? '/?text='. rawurlencode($settings['default_message']) : ''; ?>" target="_blank"><span class="<?php echo $displayNoneIfIcon; ?>"><?php echo $button_text; ?></span></a>
+				<?php
+				$wa_href = 'https://wa.me/' . esc_attr( $settings['phone_number'] ) . ( ( ! empty( $settings['default_message'] ) && $settings['enable_message'] == '1' ) ? '/?text=' . rawurlencode( $settings['default_message'] ) : '' );
+				if ( 'wab-icon-plain' === $button_style && ! empty( $settings['icon_label_enable'] ) ) :
+				?>
+				<div class="wab-icon-label-wrapper">
+					<a id="whatsAppButton" href="<?php echo $wa_href; ?>" target="_blank"></a>
+					<span class="wab-icon-label"><?php echo $button_text; ?></span>
+				</div>
+				<?php else : ?>
+				<a id="whatsAppButton" href="<?php echo $wa_href; ?>" target="_blank"><span class="<?php echo $displayNoneIfIcon; ?>"><?php echo $button_text; ?></span></a>
+				<?php endif; ?>
 				<?php if ( isset( $settings['enable_dragging'] ) ) : ?>
 					<div id="wab_drag"><img src="<?php echo plugins_url( '/img/drag-horizontal.svg', __FILE__ ) ?>"></div>
 				<?php endif; ?>

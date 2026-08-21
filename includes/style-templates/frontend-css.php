@@ -33,6 +33,34 @@ class Frontend {
 		$icon_size = ! empty( $settings['icon_size'] ) ? sanitize_text_field( $settings['icon_size'] ) : '80';
 		$icon_size_mu = ! empty( $settings['icon_size_mu'] ) ? $settings['icon_size_mu'] : 'px';
 
+		$icon_label_enable     = ! empty( $settings['icon_label_enable'] );
+		$icon_label_position   = ! empty( $settings['icon_label_position'] ) ? $settings['icon_label_position'] : 'start';
+		$icon_label_gap        = ! empty( $settings['icon_label_gap'] ) ? intval( $settings['icon_label_gap'] ) : 8;
+		$icon_label_gap_mu     = ! empty( $settings['icon_label_gap_mu'] ) ? $settings['icon_label_gap_mu'] : 'px';
+		$icon_label_font_size  = ! empty( $settings['icon_label_font_size'] ) ? intval( $settings['icon_label_font_size'] ) : 14;
+		$icon_label_font_size_mu = ! empty( $settings['icon_label_font_size_mu'] ) ? $settings['icon_label_font_size_mu'] : 'px';
+		$icon_label_bg_color   = ! empty( $settings['icon_label_bg_color'] ) ? $settings['icon_label_bg_color'] : '';
+		$icon_label_padding    = ! empty( $settings['icon_label_padding'] ) ? intval( $settings['icon_label_padding'] ) : 8;
+		$icon_label_padding_mu = ! empty( $settings['icon_label_padding_mu'] ) ? $settings['icon_label_padding_mu'] : 'px';
+		$icon_label_radius     = ! empty( $settings['icon_label_radius'] ) ? intval( $settings['icon_label_radius'] ) : 4;
+		$icon_label_radius_mu  = ! empty( $settings['icon_label_radius_mu'] ) ? $settings['icon_label_radius_mu'] : 'px';
+		$icon_wrapper_bg_color  = ! empty( $settings['icon_wrapper_bg_color'] ) ? $settings['icon_wrapper_bg_color'] : '';
+		$icon_wrapper_padding   = ! empty( $settings['icon_wrapper_padding'] ) ? intval( $settings['icon_wrapper_padding'] ) : 0;
+		$icon_wrapper_padding_mu = ! empty( $settings['icon_wrapper_padding_mu'] ) ? $settings['icon_wrapper_padding_mu'] : 'px';
+		$icon_wrapper_radius    = ! empty( $settings['icon_wrapper_radius'] ) ? intval( $settings['icon_wrapper_radius'] ) : 0;
+		$icon_wrapper_radius_mu = ! empty( $settings['icon_wrapper_radius_mu'] ) ? $settings['icon_wrapper_radius_mu'] : 'px';
+		$icon_wrapper_align     = ! empty( $settings['icon_wrapper_align'] ) ? $settings['icon_wrapper_align'] : 'center';
+
+		if ( 'above' === $icon_label_position ) {
+			$label_flex_direction = 'column-reverse';
+		} elseif ( 'below' === $icon_label_position ) {
+			$label_flex_direction = 'column';
+		} elseif ( 'start' === $icon_label_position ) {
+			$label_flex_direction = ( 'right' === $button_location ) ? 'row-reverse' : 'row';
+		} else {
+			$label_flex_direction = ( 'right' === $button_location ) ? 'row' : 'row-reverse';
+		}
+
 		ob_start();
 		?>
 		<style type="text/css">
@@ -258,7 +286,7 @@ class Frontend {
 			
 			/* Icon */
 			
-			.wab-icon-styled.wab-cont, .wab-icon-plain.wab-cont {
+			.wab-icon-plain.wab-cont {
 				position: fixed;
 				<?php echo $button_location; ?>: 10px;
 				bottom: <?php echo $distance_from_bottom; echo $distance_from_bottom_mu; ?>;
@@ -270,7 +298,7 @@ class Frontend {
 				transition: All 0.5s ease;
 			}
 
-			.wab-icon-styled #whatsAppButton, .wab-icon-plain #whatsAppButton {
+			.wab-icon-plain #whatsAppButton {
 				display: block;
 				width: <?php echo $icon_size . $icon_size_mu; ?>;
 				height: <?php echo $icon_size . $icon_size_mu; ?>;
@@ -285,15 +313,15 @@ class Frontend {
 				transition: All 0.5s ease;
 			}
 
-			.wab-icon-styled.wab-cont.wab-pull-left, .wab-icon-plain.wab-cont.wab-pull-left {
+			.wab-icon-plain.wab-cont.wab-pull-left {
 				left: 10px;
 			}
 
-			.wab-icon-styled.wab-cont.wab-pull-right, .wab-icon-plain.wab-cont.wab-pull-right {
+			.wab-icon-plain.wab-cont.wab-pull-right {
 				right: 10px;
 			}
 
-			.wab-icon-styled #wab_close, .wab-icon-plain #wab_close {
+			.wab-icon-plain #wab_close {
 				display: <?php echo $show_close_button; ?>;
 				align-items: center;
     			justify-content: center;
@@ -313,7 +341,7 @@ class Frontend {
 				cursor: pointer;
 			}
 			
-			#wab_cont.wab-icon-styled.wab-hidden, #wab_cont.wab-icon-plain.wab-hidden {
+			#wab_cont.wab-icon-plain.wab-hidden {
 				<?php echo $button_location ?>: -64px;
 				-webkit-transition: All 0.5s ease;
 				-moz-transition: All 0.5s ease;
@@ -357,6 +385,39 @@ class Frontend {
 			.wab-icon-plain #wab_drag img {
 				height: 4px;
 			}
+
+			<?php if ( $icon_label_enable ) : ?>
+
+			.wab-icon-plain .wab-icon-label-wrapper {
+				display: flex;
+				flex-direction: <?php echo esc_attr( $label_flex_direction ); ?>;
+				gap: <?php echo esc_attr( $icon_label_gap . $icon_label_gap_mu ); ?>;
+				align-items: <?php echo esc_attr( $icon_wrapper_align ); ?>;
+				<?php if ( $icon_wrapper_bg_color ) : ?>background-color: <?php echo esc_attr( $icon_wrapper_bg_color ); ?>;<?php endif; ?>
+				<?php if ( $icon_wrapper_padding > 0 ) : ?>padding: <?php echo esc_attr( $icon_wrapper_padding . $icon_wrapper_padding_mu ); ?>;<?php endif; ?>
+				<?php if ( $icon_wrapper_radius > 0 ) : ?>border-radius: <?php echo esc_attr( $icon_wrapper_radius . $icon_wrapper_radius_mu ); ?>;<?php endif; ?>
+				<?php if ( ! empty( $settings['icon_wrapper_shadow'] ) ) : ?>box-shadow: 0 2px 8px rgba(0,0,0,0.3);<?php endif; ?>
+			}
+
+			.wab-icon-plain .wab-icon-label-wrapper #whatsAppButton {
+				flex-shrink: 0;
+			}
+
+			.wab-icon-plain .wab-icon-label {
+				font-size: <?php echo esc_attr( $icon_label_font_size . $icon_label_font_size_mu ); ?>;
+				color: <?php echo esc_attr( $button_text_color ); ?>;
+				white-space: nowrap;
+				<?php if ( $icon_label_bg_color ) : ?>background-color: <?php echo esc_attr( $icon_label_bg_color ); ?>;<?php endif; ?>
+				<?php if ( $icon_label_padding > 0 ) : ?>padding: <?php echo esc_attr( $icon_label_padding . $icon_label_padding_mu ); ?>;<?php endif; ?>
+				<?php if ( $icon_label_radius > 0 ) : ?>border-radius: <?php echo esc_attr( $icon_label_radius . $icon_label_radius_mu ); ?>;<?php endif; ?>
+				<?php if ( ! empty( $settings['icon_label_shadow'] ) ) : ?>box-shadow: 0 2px 8px rgba(0,0,0,0.3);<?php endif; ?>
+			}
+
+			.wab-icon-plain #wab_close {
+				z-index: 9999999;
+			}
+
+			<?php endif; ?>
 		</style>
 
 		<?php

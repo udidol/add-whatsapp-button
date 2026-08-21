@@ -118,8 +118,14 @@ class Admin_Settings {
 					}
 				}
 	
-				// Strip all HTML and PHP tags and properly handle quoted strings
-				$output[ $key ] = strip_tags( stripslashes( $input[ $key ] ) );
+				// button_text allows limited inline markup for use as icon label
+				if ( $key === 'button_text' ) {
+					$allowed_label_html = [ 'strong' => [], 'em' => [], 'br' => [] ];
+					$output[ $key ] = wp_kses( stripslashes( $input[ $key ] ), $allowed_label_html );
+				} else {
+					// Strip all HTML and PHP tags and properly handle quoted strings
+					$output[ $key ] = strip_tags( stripslashes( $input[ $key ] ) );
+				}
 			} // end if
 		} // end foreach
 	
@@ -155,10 +161,16 @@ class Admin_Settings {
 
 		// Set default button style for Settings Page Preview
 		$button_style = ! empty( $settings['button_type'] ) ? $settings['button_type'] : 'wab-side-rectangle';
-		// Create default button text
-		$button_text = ! empty( $settings['button_text'] ) ? sanitize_text_field( $settings['button_text'] ) : __('Message Us on WhatsApp', 'add-whatsapp-button');
-		// Hide Text if selected button style is "Icon"
-		$displayNoneIfIcon = ( ! empty( $settings['button_type'] ) && ( $settings['button_type'] == 'wab-icon-plain' || $settings['button_type'] == 'wab-icon-styled' ) ) ? 'class="awb-hide"' : '';
+		// Create default button text (allows limited inline markup)
+		$allowed_label_html = [ 'strong' => [], 'em' => [], 'br' => [] ];
+		$button_text = ! empty( $settings['button_text'] ) ? wp_kses( $settings['button_text'], $allowed_label_html ) : esc_html__( 'Message Us on WhatsApp', 'add-whatsapp-button' );
+		// Hide Text span if selected button style is "Icon"
+		$displayNoneIfIcon = ( ! empty( $settings['button_type'] ) && $settings['button_type'] == 'wab-icon-plain' ) ? 'class="awb-hide"' : '';
+		// Show label rows only when icon type is selected and label is enabled
+		$il_no_show_class = (
+			( ! empty( $settings['button_type'] ) && 'wab-icon-plain' !== $settings['button_type'] ) ||
+			empty( $settings['icon_label_enable'] )
+		) ? ' class="awb-hide"' : '';
 		// Set default icon size if the button type is WhatsApp icon
 		$icon_size = ! empty( $settings['icon_size'] ) ? sanitize_text_field( $settings['icon_size'] ) : '80';
 		// If the breakpoint setting is inactive (the "enable breakpoint" checkbox is checked), hide the breakpoint settings.
@@ -225,8 +237,8 @@ class Admin_Settings {
 							<tr>
 								<th scope="row"><label for="awb_settings[button_text]"><?php echo esc_html__( 'Button Text', 'add-whatsapp-button'); ?></label></th>
 								<td>
-									<input name="awb_settings[button_text]" type="text" id="awb_settings[button_text]" value="<?php echo  esc_html( $button_text ); ?>" class="regular-text">
-									<p class="description"><?php echo esc_html__( 'Enter the text you want the button to show. Recommended: up to 18 characters.', 'add-whatsapp-button'); ?></p>
+									<input name="awb_settings[button_text]" type="text" id="awb_settings[button_text]" value="<?php echo esc_attr( ! empty( $settings['button_text'] ) ? $settings['button_text'] : __( 'Message Us on WhatsApp', 'add-whatsapp-button' ) ); ?>" class="regular-text">
+									<p class="description"><?php echo esc_html__( 'Enter the text you want the button to show. Recommended: up to 18 characters. Accepts &lt;strong&gt;, &lt;em&gt; and &lt;br&gt; tags for the icon label.', 'add-whatsapp-button'); ?></p>
 								</td>
 							</tr>
 							<tr>
@@ -369,6 +381,128 @@ class Admin_Settings {
 									<p class="description"><?php echo esc_html__( 'Choose your button\'s size, in pixels. Default is 80.', 'add-whatsapp-button'); ?></p>
 								</td>
 							</tr>
+							<tr id="iconLabelEnableRow"<?php echo $is_no_show_class; ?>>
+								<th scope="row"><label for="awb_settings[icon_label_enable]"><?php echo esc_html__( 'Show Label', 'add-whatsapp-button' ); ?></label></th>
+								<td>
+									<input name="awb_settings[icon_label_enable]" type="checkbox" id="awb_settings[icon_label_enable]" value="1" <?php isset( $settings['icon_label_enable'] ) ? checked( '1', $settings['icon_label_enable'] ) : ''; ?>>
+									<p class="description"><?php echo esc_html__( 'Display a text label alongside the WhatsApp icon. Uses the Button Text field above.', 'add-whatsapp-button' ); ?></p>
+								</td>
+							</tr>
+							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
+								<th scope="row"><label for="awb_settings[icon_label_position]"><?php echo esc_html__( 'Label Position', 'add-whatsapp-button' ); ?></label></th>
+								<td>
+									<select id="awb_settings[icon_label_position]" name="awb_settings[icon_label_position]">
+										<option value="start" <?php selected( $settings['icon_label_position'] ?? 'start', 'start' ); ?>><?php echo esc_html__( 'Start (toward page center)', 'add-whatsapp-button' ); ?></option>
+										<option value="end" <?php selected( $settings['icon_label_position'] ?? 'start', 'end' ); ?>><?php echo esc_html__( 'End (toward screen edge)', 'add-whatsapp-button' ); ?></option>
+										<option value="above" <?php selected( $settings['icon_label_position'] ?? 'start', 'above' ); ?>><?php echo esc_html__( 'Above', 'add-whatsapp-button' ); ?></option>
+										<option value="below" <?php selected( $settings['icon_label_position'] ?? 'start', 'below' ); ?>><?php echo esc_html__( 'Below', 'add-whatsapp-button' ); ?></option>
+									</select>
+									<p class="description"><?php echo esc_html__( 'Where the label appears relative to the icon. "Start" places it between the icon and the center of the page.', 'add-whatsapp-button' ); ?></p>
+								</td>
+							</tr>
+							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
+								<th scope="row"><label for="awb_settings[icon_label_gap]"><?php echo esc_html__( 'Gap Between Icon and Label', 'add-whatsapp-button' ); ?></label></th>
+								<td>
+									<input name="awb_settings[icon_label_gap]" type="number" id="awb_settings[icon_label_gap]" value="<?php echo esc_attr( $settings['icon_label_gap'] ?? '8' ); ?>" class="small-text" />
+									<select class="awb-mu-select" name="awb_settings[icon_label_gap_mu]">
+										<option value="px" <?php selected( $settings['icon_label_gap_mu'] ?? 'px', 'px' ); ?>>px</option>
+										<option value="em" <?php selected( $settings['icon_label_gap_mu'] ?? 'px', 'em' ); ?>>em</option>
+										<option value="rem" <?php selected( $settings['icon_label_gap_mu'] ?? 'px', 'rem' ); ?>>rem</option>
+									</select>
+								</td>
+							</tr>
+							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
+								<th scope="row"><?php echo esc_html__( 'Label Font Size', 'add-whatsapp-button' ); ?></th>
+								<td>
+									<input name="awb_settings[icon_label_font_size]" type="number" value="<?php echo esc_attr( $settings['icon_label_font_size'] ?? '14' ); ?>" class="small-text" />
+									<select class="awb-mu-select" name="awb_settings[icon_label_font_size_mu]">
+										<option value="px" <?php selected( $settings['icon_label_font_size_mu'] ?? 'px', 'px' ); ?>>px</option>
+										<option value="em" <?php selected( $settings['icon_label_font_size_mu'] ?? 'px', 'em' ); ?>>em</option>
+										<option value="rem" <?php selected( $settings['icon_label_font_size_mu'] ?? 'px', 'rem' ); ?>>rem</option>
+									</select>
+								</td>
+							</tr>
+							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
+								<th scope="row"><label for="awb_settings[icon_label_bg_color]"><?php echo esc_html__( 'Label Background Color', 'add-whatsapp-button' ); ?></label></th>
+								<td>
+									<input name="awb_settings[icon_label_bg_color]" type="text" id="awb_settings[icon_label_bg_color]" value="<?php echo esc_attr( $settings['icon_label_bg_color'] ?? '' ); ?>" class="awb-label-bg-color-picker" />
+									<p class="description"><?php echo esc_html__( 'Leave empty for transparent background.', 'add-whatsapp-button' ); ?></p>
+								</td>
+							</tr>
+							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
+								<th scope="row"><?php echo esc_html__( 'Label Padding', 'add-whatsapp-button' ); ?></th>
+								<td>
+									<input name="awb_settings[icon_label_padding]" type="number" value="<?php echo esc_attr( $settings['icon_label_padding'] ?? '8' ); ?>" class="small-text" />
+									<select class="awb-mu-select" name="awb_settings[icon_label_padding_mu]">
+										<option value="px" <?php selected( $settings['icon_label_padding_mu'] ?? 'px', 'px' ); ?>>px</option>
+										<option value="em" <?php selected( $settings['icon_label_padding_mu'] ?? 'px', 'em' ); ?>>em</option>
+										<option value="rem" <?php selected( $settings['icon_label_padding_mu'] ?? 'px', 'rem' ); ?>>rem</option>
+									</select>
+								</td>
+							</tr>
+							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
+								<th scope="row"><?php echo esc_html__( 'Label Border Radius', 'add-whatsapp-button' ); ?></th>
+								<td>
+									<input name="awb_settings[icon_label_radius]" type="number" value="<?php echo esc_attr( $settings['icon_label_radius'] ?? '4' ); ?>" class="small-text" />
+									<select class="awb-mu-select" name="awb_settings[icon_label_radius_mu]">
+										<option value="px" <?php selected( $settings['icon_label_radius_mu'] ?? 'px', 'px' ); ?>>px</option>
+										<option value="em" <?php selected( $settings['icon_label_radius_mu'] ?? 'px', 'em' ); ?>>em</option>
+										<option value="rem" <?php selected( $settings['icon_label_radius_mu'] ?? 'px', 'rem' ); ?>>rem</option>
+									</select>
+								</td>
+							</tr>
+							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
+								<th scope="row"><label for="awb_settings[icon_label_shadow]"><?php echo esc_html__( 'Label Drop Shadow', 'add-whatsapp-button' ); ?></label></th>
+								<td>
+									<input name="awb_settings[icon_label_shadow]" type="checkbox" id="awb_settings[icon_label_shadow]" value="1" <?php isset( $settings['icon_label_shadow'] ) ? checked( '1', $settings['icon_label_shadow'] ) : ''; ?>>
+								</td>
+							</tr>
+							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
+								<th scope="row"><label for="awb_settings[icon_wrapper_bg_color]"><?php echo esc_html__( 'Outer Box Background Color', 'add-whatsapp-button' ); ?></label></th>
+								<td>
+									<input name="awb_settings[icon_wrapper_bg_color]" type="text" id="awb_settings[icon_wrapper_bg_color]" value="<?php echo esc_attr( $settings['icon_wrapper_bg_color'] ?? '' ); ?>" class="awb-wrapper-bg-color-picker" />
+									<p class="description"><?php echo esc_html__( 'Background of the box containing icon + label. Leave empty for transparent.', 'add-whatsapp-button' ); ?></p>
+								</td>
+							</tr>
+							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
+								<th scope="row"><?php echo esc_html__( 'Outer Box Padding', 'add-whatsapp-button' ); ?></th>
+								<td>
+									<input name="awb_settings[icon_wrapper_padding]" type="number" value="<?php echo esc_attr( $settings['icon_wrapper_padding'] ?? '0' ); ?>" class="small-text" />
+									<select class="awb-mu-select" name="awb_settings[icon_wrapper_padding_mu]">
+										<option value="px" <?php selected( $settings['icon_wrapper_padding_mu'] ?? 'px', 'px' ); ?>>px</option>
+										<option value="em" <?php selected( $settings['icon_wrapper_padding_mu'] ?? 'px', 'em' ); ?>>em</option>
+										<option value="rem" <?php selected( $settings['icon_wrapper_padding_mu'] ?? 'px', 'rem' ); ?>>rem</option>
+									</select>
+								</td>
+							</tr>
+							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
+								<th scope="row"><?php echo esc_html__( 'Outer Box Border Radius', 'add-whatsapp-button' ); ?></th>
+								<td>
+									<input name="awb_settings[icon_wrapper_radius]" type="number" value="<?php echo esc_attr( $settings['icon_wrapper_radius'] ?? '0' ); ?>" class="small-text" />
+									<select class="awb-mu-select" name="awb_settings[icon_wrapper_radius_mu]">
+										<option value="px" <?php selected( $settings['icon_wrapper_radius_mu'] ?? 'px', 'px' ); ?>>px</option>
+										<option value="em" <?php selected( $settings['icon_wrapper_radius_mu'] ?? 'px', 'em' ); ?>>em</option>
+										<option value="rem" <?php selected( $settings['icon_wrapper_radius_mu'] ?? 'px', 'rem' ); ?>>rem</option>
+									</select>
+								</td>
+							</tr>
+							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
+								<th scope="row"><label for="awb_settings[icon_wrapper_shadow]"><?php echo esc_html__( 'Outer Box Drop Shadow', 'add-whatsapp-button' ); ?></label></th>
+								<td>
+									<input name="awb_settings[icon_wrapper_shadow]" type="checkbox" id="awb_settings[icon_wrapper_shadow]" value="1" <?php isset( $settings['icon_wrapper_shadow'] ) ? checked( '1', $settings['icon_wrapper_shadow'] ) : ''; ?>>
+								</td>
+							</tr>
+							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
+								<th scope="row"><label for="awb_settings[icon_wrapper_align]"><?php echo esc_html__( 'Icon / Label Alignment', 'add-whatsapp-button' ); ?></label></th>
+								<td>
+									<select id="awb_settings[icon_wrapper_align]" name="awb_settings[icon_wrapper_align]">
+										<option value="center" <?php selected( $settings['icon_wrapper_align'] ?? 'center', 'center' ); ?>><?php echo esc_html__( 'Center', 'add-whatsapp-button' ); ?></option>
+										<option value="flex-start" <?php selected( $settings['icon_wrapper_align'] ?? 'center', 'flex-start' ); ?>><?php echo esc_html__( 'Start', 'add-whatsapp-button' ); ?></option>
+										<option value="flex-end" <?php selected( $settings['icon_wrapper_align'] ?? 'center', 'flex-end' ); ?>><?php echo esc_html__( 'End', 'add-whatsapp-button' ); ?></option>
+									</select>
+									<p class="description"><?php echo esc_html__( 'Cross-axis alignment between the icon and label.', 'add-whatsapp-button' ); ?></p>
+								</td>
+							</tr>
 							<th scope="row"><label for="awb_settings[button_location]"><?php echo esc_html__( 'Button Location on Screen', 'add-whatsapp-button' ); ?></label></th>
 								<td>
 									<select id="awb_settings[button_location]" name="awb_settings[button_location]" style="vertical-align: baseline;">
@@ -403,10 +537,11 @@ class Admin_Settings {
 								</div>
 
 								<div class="gray-row gray-row-box"></div>
-								<div id="admin_wab_cont" class="wab-cont <?php echo $button_style; ?> <?php echo ( $button_style !== 'wab-bottom-rectangle' ) ? 'wab-pull-' . $settings['button_location'] : ''; ?>"> <!-- Button Preview HTML -->
+								<div id="admin_wab_cont" class="wab-cont <?php echo $button_style; ?> <?php echo ( $button_style !== 'wab-bottom-rectangle' ) ? 'wab-pull-' . $settings['button_location'] : ''; ?><?php echo ( ! empty( $settings['icon_label_enable'] ) && $button_style === 'wab-icon-plain' ) ? ' icon-label-active' : ''; ?>"> <!-- Button Preview HTML -->
 									<a id="whatsAppButton"<?php echo $button_inline_styles; ?> href="https://wa.me/<?php echo $settings['phone_number'] . ( ! empty( $settings['default_message'] ) && $settings['enable_message'] == '1' ) ? '/?text='. rawurlencode( $settings['default_message'] ) : ''; ?>" target="_blank">
 										<span id="wab-text" <?php echo $displayNoneIfIcon; ?>><?php echo $button_text; ?></span>
 									</a>
+									<span id="wab-icon-label" class="<?php echo ( empty( $settings['icon_label_enable'] ) || $button_style !== 'wab-icon-plain' ) ? 'awb-hide' : ''; ?>"><?php echo $button_text; ?></span>
 								</div>
 
 							</div> <!-- /screen -->

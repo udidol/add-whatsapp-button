@@ -5,6 +5,7 @@ export default class SettingsHandler extends ModuleBase {
 		return {
 			whatsAppbuttonContainer: '#admin_wab_cont',
 			buttonText: '#wab-text',
+			iconLabelText: '#wab-icon-label',
 			buttonTypeSelect: '#awb_settings\\[button_type\\]',
 			whatsAppButton: '#whatsAppButton',
 			buttonIconSizeInput: '#awb_settings\\[icon_size\\]',
@@ -24,6 +25,10 @@ export default class SettingsHandler extends ModuleBase {
 			distanceFromBottomInput: '#awb_settings\\[distance_from_bottom\\]',
 			distanceFromBottomMeasurementUnitInput: '#awb_settings\\[distance_from_bottom_mu\\]',
 			iconSizeSettingRow: '#iconSizeSettingRow',
+			iconLabelEnableRow: '#iconLabelEnableRow',
+			iconLabelEnableCheckbox: '#awb_settings\\[icon_label_enable\\]',
+			iconLabelRows: '.icon-label-setting-row',
+			iconLabelPositionSelect: '#awb_settings\\[icon_label_position\\]',
 			displayNone: 'awb-hide'
 		};
 	}
@@ -34,6 +39,7 @@ export default class SettingsHandler extends ModuleBase {
 		this.elements = {
 			$buttonContainer: jQuery( selectors.whatsAppbuttonContainer ),
 			$buttonText: jQuery( selectors.buttonText ),
+			$iconLabelText: jQuery( selectors.iconLabelText ),
 			$buttonTypeSelect: jQuery( selectors.buttonTypeSelect ),
 			$buttonIconSizeInput: jQuery( selectors.buttonIconSizeInput ),
 			$buttonIconSizeMeasurementUnitInput: jQuery( selectors.buttonIconSizeMeasurementUnitInput ),
@@ -52,51 +58,94 @@ export default class SettingsHandler extends ModuleBase {
 			$distanceFromBottomInput: jQuery( selectors.distanceFromBottomInput ),
 			$distanceFromBottomMeasurementUnitInput: jQuery( selectors.distanceFromBottomMeasurementUnitInput ),
 			$iconSizeSettingRow: jQuery( selectors.iconSizeSettingRow ),
+			$iconLabelEnableRow: jQuery( selectors.iconLabelEnableRow ),
+			$iconLabelEnableCheckbox: jQuery( selectors.iconLabelEnableCheckbox ),
+			$iconLabelRows: jQuery( selectors.iconLabelRows ),
+			$iconLabelPositionSelect: jQuery( selectors.iconLabelPositionSelect ),
 			$whatsAppButton: jQuery( selectors.whatsAppButton )
 		};
 	}
 
 	bindEvents() {
-		// Update icon size according to the size input.
 		this.elements.$buttonIconSizeInput.on( 'input', () => this.updateIconSize() );
-		// Update icon size according to the selected measurement unit.
 		this.elements.$buttonIconSizeMeasurementUnitInput.on( 'change', () => this.updateIconSize() );
-		// Change the button in the preview according to the selected button type.
 		this.elements.$buttonTypeSelect.on( 'change', () => this.updateButtonType() );
-		// Update button text in the preview in real time according to input value.
-		this.elements.$buttonTextInput.on( 'keyup', () => this.elements.$whatsAppButton.html( this.elements.$buttonTextInput.val() ) )
-		// Display breakpoint input box if breakpoint checkbox is checked, hide otherwise.
+		this.elements.$buttonTextInput.on( 'keyup', () => this.updatePreviewText() );
 		this.elements.$breakpointCheckbox.on( 'change', () => this.elements.$breakpointContainer.toggleClass( 'awb-hide' ) );
-		// Display button hide options (radio buttons) box if the 'Hide Button' checkbox is checked, hide otherwise.
 		this.elements.$hideButtonCheckbox.on( 'change', () => this.elements.$hideButtonContainer.toggleClass( 'awb-hide' ) );
-		// Display 'Display Times' input boxes if the "Limit Display Time" checkbox is checked, hide otherwise.
 		this.elements.$limitHoursCheckbox.on( 'change', () => this.elements.$limitHoursContainer.toggleClass( 'awb-hide' ) );
-		// Display Default Message Textarea if the "Default Message" checkbox is checked, hide otherwise.
 		this.elements.$defaultMessageCheckbox.on( 'change', () => this.elements.$defaultMessageContainer.toggleClass( 'awb-hide' ) );
-		// Update the whatsApp button's background color according to the color picker value.
 		this.elements.$buttonBackground.on( 'change', () => {
 			if ( this.elements.$buttonTypeSelect.val() === 'wab-icon-plain' ) {
 				return;
 			}
-
 			this.elements.$whatsAppButton.css( 'background-color', this.elements.$buttonBackground.val() );
-		});
-		// Update the button's text color in the preview when the color picker value changes.
-		this.elements.$buttonTextColor.on( 'change',  () => this.updateButtonTextColor() );
-		// Control the button location on the preview mockup.
+		} );
+		this.elements.$buttonTextColor.on( 'change', () => this.updateButtonTextColor() );
 		this.elements.$buttonLocationSelect.on( 'change', () => this.updateButtonLocation() );
-		// Change button's distance from bottom (and whether it is determined by % or px)
 		this.elements.$distanceFromBottomInput.on( 'change', () => this.updateDistanceFromBottom() );
 		this.elements.$distanceFromBottomMeasurementUnitInput.on( 'change', () => this.updateDistanceFromBottom() );
+		this.elements.$iconLabelEnableCheckbox.on( 'change', () => this.toggleIconLabelRows() );
+		this.elements.$iconLabelPositionSelect.on( 'change', () => this.updatePreviewLabelPosition() );
+	}
+
+	isIconType() {
+		return this.elements.$buttonTypeSelect.val() === 'wab-icon-plain';
+	}
+
+	isIconLabelEnabled() {
+		return this.isIconType() && this.elements.$iconLabelEnableCheckbox.is( ':checked' );
+	}
+
+	updatePreviewText() {
+		const text = this.elements.$buttonTextInput.val();
+		if ( this.isIconLabelEnabled() ) {
+			this.elements.$iconLabelText.html( text );
+		} else {
+			this.elements.$buttonText.html( text );
+		}
+	}
+
+	toggleIconLabelRows() {
+		const labelEnabled = this.elements.$iconLabelEnableCheckbox.is( ':checked' );
+		this.elements.$iconLabelRows.toggleClass( 'awb-hide', ! labelEnabled );
+		this.elements.$iconLabelText.toggleClass( 'awb-hide', ! labelEnabled );
+		this.elements.$buttonContainer.toggleClass( 'icon-label-active', labelEnabled );
+		if ( labelEnabled ) {
+			this.updatePreviewLabelPosition();
+		} else {
+			this.elements.$buttonContainer.css( { display: '', 'flex-direction': '', 'align-items': '', gap: '' } );
+		}
+	}
+
+	updatePreviewLabelPosition() {
+		if ( ! this.isIconLabelEnabled() ) {
+			return;
+		}
+		const position = this.elements.$iconLabelPositionSelect.val();
+		const location = this.elements.$buttonLocationSelect.val();
+
+		let flexDirection;
+		if ( position === 'above' ) {
+			flexDirection = 'column-reverse';
+		} else if ( position === 'below' ) {
+			flexDirection = 'column';
+		} else if ( position === 'start' ) {
+			flexDirection = ( location === 'right' ) ? 'row-reverse' : 'row';
+		} else {
+			flexDirection = ( location === 'right' ) ? 'row' : 'row-reverse';
+		}
+
+		this.elements.$buttonContainer.css( { display: 'flex', 'flex-direction': flexDirection, 'align-items': 'center' } );
 	}
 
 	updateIconSize() {
 		if ( 'wab-icon-plain' !== this.elements.$buttonTypeSelect.val() ) {
 			return;
 		}
-	
+
 		const size = this.elements.$buttonIconSizeInput.val() + this.elements.$buttonIconSizeMeasurementUnitInput.val();
-	
+
 		this.elements.$whatsAppButton.css( 'width', size );
 		this.elements.$whatsAppButton.css( 'height', size );
 	}
@@ -106,21 +155,20 @@ export default class SettingsHandler extends ModuleBase {
 
 		this.elements.$buttonContainer.removeClass( 'wab-side-rectangle wab-bottom-rectangle wab-icon-plain' );
 		this.elements.$buttonContainer.addClass( selectedValue );
-		
+
 		if ( 'wab-icon-plain' === selectedValue ) {
-			// Hide the button text if the button is an icon.
 			this.elements.$buttonText.addClass( this.selectors.displayNone );
-			// Show the icon size control if the button is an icon.
 			this.elements.$iconSizeSettingRow.removeClass( this.selectors.displayNone );
-			// Make the button background color none if the button is an icon, and disable the background color picker.
+			this.elements.$iconLabelEnableRow.removeClass( this.selectors.displayNone );
 			this.elements.$whatsAppButton.css( 'background-color', '' );
 		} else {
-			// Show the button text if the button is not an icon.
 			this.elements.$buttonText.removeClass( this.selectors.displayNone );
-			// Hide the icon size setting if the button is not an icon.
 			this.elements.$iconSizeSettingRow.addClass( this.selectors.displayNone );
-			// Make the button background color customizable if the button is not an icon, and enable the background color picker.
-			if (this.elements.$buttonBackground.val()) {
+			this.elements.$iconLabelEnableRow.addClass( this.selectors.displayNone );
+			this.elements.$iconLabelRows.addClass( this.selectors.displayNone );
+			this.elements.$iconLabelText.addClass( this.selectors.displayNone );
+			this.elements.$buttonContainer.css( { display: '', 'flex-direction': '', 'align-items': '' } );
+			if ( this.elements.$buttonBackground.val() ) {
 				this.elements.$whatsAppButton.css( 'background-color', this.elements.$buttonBackground.val() );
 			} else {
 				this.elements.$whatsAppButton.css( 'background-color', '#20B038' );
@@ -137,7 +185,7 @@ export default class SettingsHandler extends ModuleBase {
 			this.elements.$whatsAppButton = jQuery( this.selectors.whatsAppButton );
 		}
 
-		this.elements.$whatsAppButton.html( this.elements.$buttonTextInput.value )
+		this.elements.$whatsAppButton.html( this.elements.$buttonTextInput.value );
 	}
 
 	updateButtonTextColor() {
@@ -155,6 +203,9 @@ export default class SettingsHandler extends ModuleBase {
 		} else if ( this.elements.$buttonLocationSelect.val() == 'left' ) {
 			this.elements.$buttonContainer.addClass( 'wab-pull-left' );
 			this.elements.$buttonContainer.removeClass( 'wab-pull-right' );
+		}
+		if ( this.isIconLabelEnabled() ) {
+			this.updatePreviewLabelPosition();
 		}
 	}
 
