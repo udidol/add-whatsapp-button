@@ -122,6 +122,9 @@ class Admin_Settings {
 				if ( $key === 'button_text' ) {
 					$allowed_label_html = [ 'strong' => [], 'em' => [], 'br' => [] ];
 					$output[ $key ] = wp_kses( stripslashes( $input[ $key ] ), $allowed_label_html );
+				} elseif ( $key === 'active_days' ) {
+					// Array of active weekday numbers submitted as awb_settings[active_days][N]
+					$output[ $key ] = is_array( $input[ $key ] ) ? array_values( array_map( 'intval', array_keys( $input[ $key ] ) ) ) : [];
 				} else {
 					// Strip all HTML and PHP tags and properly handle quoted strings
 					$output[ $key ] = strip_tags( stripslashes( $input[ $key ] ) );
@@ -177,6 +180,9 @@ class Admin_Settings {
 		$bp_no_show_class = empty( $settings['enable_breakpoint'] ) ? ' class="awb-hide"' : '';
 		// If the 'limit hours' setting is inactive, hide the hour controls.
 		$lh_no_show_class = empty( $settings['limit_hours'] ) ? ' class="awb-hide"' : '';
+		// Default active days Mon–Fri (1–5) when the setting has not been saved yet.
+		$active_days = isset( $settings['active_days'] ) ? (array) $settings['active_days'] : [ 1, 2, 3, 4, 5 ];
+		$ld_no_show_class = empty( $settings['limit_days'] ) ? ' class="awb-hide"' : '';
 		// If the 'Hide Button' setting is inactive, hide the radio buttons with the hiding settings.
 		$hb_no_show_class = empty( $settings['enable_hide_button'] ) ? ' class="awb-hide"' : '';
 		// If the 'Enable Message' setting is inactive, hide the textarea.
@@ -321,6 +327,28 @@ class Admin_Settings {
 											<?php } ?>
 										</select>
 										<p class="description"><?php echo esc_html__( 'The WhatsApp button will be displayed up until this hour (24 hour clock). If no time is chosen, default is 22 (10PM).', 'add-whatsapp-button'); ?></p>
+										<p style="margin-top: 12px;">
+											<input name="awb_settings[limit_days]" type="checkbox" id="awb_settings[limit_days]" value="1" <?php isset( $settings['limit_days'] ) ? checked( '1', $settings['limit_days'] ) : ''; ?>>
+											<label for="awb_settings[limit_days]"><strong><?php echo esc_html__( 'Limit to specific days of the week', 'add-whatsapp-button' ); ?></strong></label>
+										</p>
+										<div id="awb_limit_days"<?php echo $ld_no_show_class; ?>>
+											<?php
+											$day_labels = [
+												1 => __( 'Mon', 'add-whatsapp-button' ),
+												2 => __( 'Tue', 'add-whatsapp-button' ),
+												3 => __( 'Wed', 'add-whatsapp-button' ),
+												4 => __( 'Thu', 'add-whatsapp-button' ),
+												5 => __( 'Fri', 'add-whatsapp-button' ),
+											];
+											foreach ( $day_labels as $day_num => $day_label ) :
+											?>
+											<label style="margin-right: 10px;">
+												<input type="checkbox" name="awb_settings[active_days][<?php echo $day_num; ?>]" value="<?php echo $day_num; ?>" <?php checked( in_array( $day_num, $active_days, true ) ); ?>>
+												<?php echo esc_html( $day_label ); ?>
+											</label>
+											<?php endforeach; ?>
+											<p class="description"><?php echo esc_html__( 'The button will only be visible on the selected days, using the visitor\'s device clock.', 'add-whatsapp-button' ); ?></p>
+										</div>
 									</div>
 								</td>
 							</tr>
