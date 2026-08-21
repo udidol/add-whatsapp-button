@@ -67,6 +67,10 @@ class Admin_Settings {
 			'',
 			true
 		);
+
+		wp_localize_script( 'awb-admin-script', 'awbAdminData', [
+			'isRtl' => is_rtl(),
+		] );
     }
 
 	/**
@@ -449,7 +453,7 @@ class Admin_Settings {
 							<tr class="icon-label-setting-row"<?php echo $il_no_show_class; ?>>
 								<th scope="row"><label for="awb_settings[icon_label_gap]"><?php echo esc_html__( 'Gap Between Icon and Label', 'add-whatsapp-button' ); ?></label></th>
 								<td>
-									<input name="awb_settings[icon_label_gap]" type="number" id="awb_settings[icon_label_gap]" value="<?php echo esc_attr( $settings['icon_label_gap'] ?? '8' ); ?>" class="small-text" />
+									<input name="awb_settings[icon_label_gap]" type="number" id="awb_settings[icon_label_gap]" value="<?php echo esc_attr( $settings['icon_label_gap'] ?? '4' ); ?>" class="small-text" />
 									<select class="awb-mu-select" name="awb_settings[icon_label_gap_mu]">
 										<option value="px" <?php selected( $settings['icon_label_gap_mu'] ?? 'px', 'px' ); ?>>px</option>
 										<option value="em" <?php selected( $settings['icon_label_gap_mu'] ?? 'px', 'em' ); ?>>em</option>
