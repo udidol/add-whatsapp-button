@@ -58,6 +58,28 @@ form p.submit {
   clear: right;
 }
 
+@media screen and (min-width: 783px) {
+  #bdtab {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  #bdtab .form-table {
+    float: none;
+    flex: 1 1 auto;
+    margin-left: 0;
+  }
+
+  .device-wrapper {
+    float: none;
+    flex: 0 0 auto;
+    position: sticky;
+    top: 32px;
+  }
+}
+
 form p.submit input.button.button-primary {
   margin-left: 10px;
 }
