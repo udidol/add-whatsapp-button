@@ -17,6 +17,8 @@ export default class SettingsHandler extends ModuleBase {
 			hideButtonContainer: '#awb_hide_button',
 			limitHoursCheckbox: '#awb_settings\\[limit_hours\\]',
 			limitHoursContainer: '#awb_limit_hours',
+			limitDaysCheckbox: '#awb_settings\\[limit_days\\]',
+			limitDaysContainer: '#awb_limit_days',
 			defaultMessageCheckbox: '#awb_settings\\[enable_message\\]',
 			defaultMessageContainer: '#awb_enable_message',
 			buttonBackground: '#awb_settings\\[button_bg_color\\]',
@@ -50,6 +52,8 @@ export default class SettingsHandler extends ModuleBase {
 			$hideButtonContainer: jQuery( selectors.hideButtonContainer ),
 			$limitHoursCheckbox: jQuery( selectors.limitHoursCheckbox ),
 			$limitHoursContainer: jQuery( selectors.limitHoursContainer ),
+			$limitDaysCheckbox: jQuery( selectors.limitDaysCheckbox ),
+			$limitDaysContainer: jQuery( selectors.limitDaysContainer ),
 			$defaultMessageCheckbox: jQuery( selectors.defaultMessageCheckbox ),
 			$defaultMessageContainer: jQuery( selectors.defaultMessageContainer ),
 			$buttonBackground: jQuery( selectors.buttonBackground ),
@@ -74,6 +78,7 @@ export default class SettingsHandler extends ModuleBase {
 		this.elements.$breakpointCheckbox.on( 'change', () => this.elements.$breakpointContainer.toggleClass( 'awb-hide' ) );
 		this.elements.$hideButtonCheckbox.on( 'change', () => this.elements.$hideButtonContainer.toggleClass( 'awb-hide' ) );
 		this.elements.$limitHoursCheckbox.on( 'change', () => this.elements.$limitHoursContainer.toggleClass( 'awb-hide' ) );
+		this.elements.$limitDaysCheckbox.on( 'change', () => this.elements.$limitDaysContainer.toggleClass( 'awb-hide' ) );
 		this.elements.$defaultMessageCheckbox.on( 'change', () => this.elements.$defaultMessageContainer.toggleClass( 'awb-hide' ) );
 		this.elements.$buttonBackground.on( 'change', () => {
 			if ( this.elements.$buttonTypeSelect.val() === 'wab-icon-plain' ) {

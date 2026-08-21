@@ -90,6 +90,23 @@ export default class WhatsAppButtonHandler extends ModuleBase {
 		if ( this.settings.limitHours === SETTING_ENABLED ) {
 			this.hideOutsideDisplayHours();
 		}
+
+		if ( this.settings.limitDays === SETTING_ENABLED ) {
+			this.hideOutsideActiveDays();
+		}
+	}
+
+	isOutsideActiveDays() {
+		const today = new Date().getDay();
+		return ! this.settings.activeDays.includes( today );
+	}
+
+	hideOutsideActiveDays() {
+		if ( ! this.isOutsideActiveDays() ) {
+			return;
+		}
+
+		this.elements.$buttonContainer.css( 'display', 'none' );
 	}
 
 	getStorage() {
