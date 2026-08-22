@@ -8,13 +8,14 @@ License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Add Chat App Button enables adding a customizeable click-to-chat button that opens a chat on WhatsApp.
-This plugin is not affiliated with WhatsApp or Facebook in any way, it just provides an easy way to integrate a WhatsApp chat button into your website.
-The plugin lets you choose between a simple WhatsApp icon and a rectangle with a custom text label.
 
 == Description ==
 
 The *Add Chat App Button* plugin enables adding a customizable click-to-chat WhatsApp button.
 The plugin lets you choose between a simple WhatsApp icon and a rectangle with a custom text label (see screenshots).
+
+This plugin is not affiliated with WhatsApp or Facebook in any way, it just provides an easy way to integrate a WhatsApp chat button into your website.
+The plugin lets you choose between a simple WhatsApp icon and a rectangle with a custom text label.
 
 == Screenshots ==
 
