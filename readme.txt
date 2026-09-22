@@ -1,8 +1,8 @@
 === Add Chat App Button ===
 Contributors: udidol
 Tags: whatsapp, button, whatsapp button
-Tested up to: 7.1.1
-Stable tag: 2.2.1
+Tested up to: 7.1.2
+Stable tag: 2.2.2
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -64,6 +64,9 @@ Both use the visitor's device clock, so they follow the visitor's local timezone
 No. The persistent dismiss option stores a small flag in the visitor's browser `localStorage`, not in a cookie. The flag contains no personal data — only a marker indicating the visitor previously dismissed the button. If your site requires a cookie/privacy policy, you may want to mention this localStorage use.
 
 == Changelog ==
+
+= 2.2.2 =
+* Updated compatibility with WordPress 7.1.2
 
 = 2.2.1 =
 * Updated compatibility with WordPress 7.1.1
